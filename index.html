@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Dashboard Monitoring Pelatihan</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Library Excel & Chart -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
@@ -13,76 +14,28 @@
             --text-main: #1e293b; --text-muted: #64748b; --border: #e2e8f0; --success: #10b981;
         }
         
-        html, body { 
-            height: 100%; 
-            overflow: hidden; 
-            margin: 0; 
-            padding: 0; 
-        }
-        body { 
-            font-family: 'Segoe UI', sans-serif; 
-            background: var(--bg); 
-            color: var(--text-main); 
-            display: flex; 
-            flex-direction: column; 
-        }
+        /* LAYOUT UTAMA */
+        html, body { height: 100%; overflow: hidden; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text-main); display: flex; flex-direction: column; }
         
-        .header { 
-            background: #ffffff; 
-            color: var(--text-main); 
-            padding: 0.75rem 2rem;
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            border-bottom: 1px solid var(--border); 
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            flex-shrink: 0;
-        }
+        /* Header */
+        .header { background: #ffffff; color: var(--text-main); padding: 0.75rem 2rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); box-shadow: 0 1px 2px rgba(0,0,0,0.05); flex-shrink: 0; }
         .header h1 { margin: 0; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.02em; color: var(--primary); }
         
         .logo-area { display: flex; align-items: center; gap: 15px; }
         .logo-area img { height: 35px; } 
         #connectionStatus { font-size: 11px; color: #059669; font-weight: bold; }
         
-        .running-text-wrapper { 
-            background: #5203fc; 
-            color: white; 
-            padding: 4px 0; 
-            border-bottom: 1px solid #334155; 
-            flex-shrink: 0; 
-        }
+        .running-text-wrapper { background: #5203fc; color: white; padding: 4px 0; border-bottom: 1px solid #334155; flex-shrink: 0; }
         
-        .grid { 
-            display: grid; 
-            grid-template-columns: minmax(250px, 320px) 1fr; 
-            gap: 1rem; 
-            padding: 1rem; 
-            max-width: 1800px; 
-            margin: 0 auto; 
-            width: 100%;
-            box-sizing: border-box;
-            flex: 1; 
-            min-height: 0; 
-            overflow-y: auto; 
-            overflow-x: hidden;
-        }
+        /* Grid Utama */
+        .grid { display: grid; grid-template-columns: minmax(250px, 320px) 1fr; gap: 1rem; padding: 1rem; max-width: 1800px; margin: 0 auto; width: 100%; box-sizing: border-box; flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; }
         
-        .left { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 0.75rem; 
-            height: 100%; 
-            overflow-y: auto; 
-            padding-right: 5px; 
-        }
+        /* Sidebar Kiri */
+        .left { display: flex; flex-direction: column; gap: 0.75rem; height: 100%; overflow-y: auto; padding-right: 5px; }
         
-        .right { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 0.75rem; 
-            height: 100%; 
-            overflow: hidden; 
-        }
+        /* Area Konten Kanan */
+        .right { display: flex; flex-direction: column; gap: 0.75rem; height: 100%; overflow: hidden; }
         
         .card { background: var(--card-bg); border-radius: 10px; padding: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid var(--border); }
         .card label { display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.8rem; color: var(--text-main); }
@@ -93,92 +46,30 @@
         .btn-gray { background: #e2e8f0; color: #475569; border: none; padding: 0.5rem; border-radius: 6px; cursor: pointer; font-weight: 500; width: 100%; margin-bottom: 0.5rem; font-size: 0.8rem;}
         .btn-green { background: #059669; color: white; border: none; padding: 0.6rem; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; margin-top: 0.25rem; font-size: 0.85rem; }
         
-        .filter-section { 
-            display: flex; 
-            gap: 0.75rem; 
-            background: white; 
-            padding: 0.75rem; 
-            border-radius: 10px; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
-            flex-wrap: wrap; 
-            flex-shrink: 0; 
-        }
-        .filter-item { display: flex; flex-direction: column; flex: 1; min-width: 100px; }
+        /* Filter */
+        .filter-section { display: flex; gap: 0.75rem; background: white; padding: 0.75rem; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); flex-wrap: wrap; flex-shrink: 0; }
+        .filter-item { display: flex; flex-direction: column; flex: 1; min-width: 80px; }
         .filter-item label { font-size: 0.7rem; font-weight: 600; margin-bottom: 0.2rem; color: var(--text-muted); }
         .filter-item input, .filter-item select { padding: 0.4rem; border: 1px solid var(--border); border-radius: 4px; font-size: 0.8rem; }
 
-        .table-container { 
-            background: white; 
-            border-radius: 10px; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
-            flex: 1; 
-            min-height: 100px; 
-            display: flex;
-            flex-direction: column;
-            border: 1px solid var(--border);
-            overflow: hidden; 
-        }
-        .table-wrap { 
-            flex: 1; 
-            overflow-y: auto; 
-            overflow-x: auto; 
-        }
+        /* TABEL */
+        .table-container { background: white; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); flex: 1; min-height: 100px; display: flex; flex-direction: column; border: 1px solid var(--border); overflow: hidden; }
+        .table-wrap { flex: 1; overflow-y: auto; overflow-x: auto; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.75rem; min-width: 900px; } 
         
-        table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.75rem; min-width: 850px; } 
-        
-        th { 
-            background: #f1f5f9; 
-            text-align: left; 
-            padding: 0.5rem; 
-            font-weight: 600; 
-            color: #475569; 
-            border-bottom: 2px solid #e2e8f0; 
-            white-space: nowrap; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1; 
-            font-size: 0.75rem;
-        }
-        th.th-no {
-            text-align: center;
-            width: 45px;
-            min-width: 45px;
-        }
+        th { background: #f1f5f9; text-align: left; padding: 0.5rem; font-weight: 600; color: #475569; border-bottom: 2px solid #e2e8f0; white-space: nowrap; position: sticky; top: 0; z-index: 1; font-size: 0.75rem; }
         td { padding: 0.5rem; border-bottom: 1px solid #f1f5f9; }
-        td.td-no {
-            text-align: center;
-            color: #94a3b8;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
         tr:hover { background: #f8fafc; }
         
-        .charts-grid { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 0.5rem; 
-            flex-shrink: 0; 
-        }
+        /* CHART */
+        .charts-grid { display: flex; flex-direction: column; gap: 0.5rem; flex-shrink: 0; }
         .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
         
-        .chart-box { 
-            background: white; 
-            padding: 0.5rem; 
-            border-radius: 10px; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
-            height: 150px; 
-            position: relative; 
-        }
-        .chart-full { 
-            height: 140px; 
-        }
+        .chart-box { background: white; padding: 0.5rem; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); height: 150px; position: relative; }
+        .chart-full { height: 140px; }
         
-        .summary-box { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 0.5rem; 
-            flex-shrink: 0; 
-        }
+        /* Summary */
+        .summary-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; flex-shrink: 0; }
         .sum-item { background: white; padding: 0.5rem; border-radius: 8px; text-align: center; color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
         .sum-item small { font-size: 0.65rem; opacity: 0.9; display: block; margin-bottom: 2px; }
         .sum-item div { font-size: 1rem; font-weight: 700; }
@@ -186,6 +77,7 @@
         .import-card { border: 1px dashed #cbd5e1; background: #f8fafc; }
         .import-card p { font-size: 10px; color: #64748b; margin-bottom: 8px; line-height: 1.4; }
 
+        /* RESPONSIVE */
         @media (max-width: 1440px) {
             .grid { padding: 0.75rem; gap: 0.75rem; }
             .header h1 { font-size: 1rem; }
@@ -195,49 +87,14 @@
 
         @media (max-height: 800px) {
             .header { padding: 0.5rem 1.5rem; }
-            .header h1 { font-size: 0.95rem; }
-            .running-text-wrapper { padding: 2px 0; }
             .grid { padding: 0.5rem; gap: 0.5rem; }
             .chart-box { height: 120px; }
             .chart-full { height: 110px; }
-            .sum-item { padding: 0.4rem; }
-            .sum-item small { font-size: 0.6rem; }
-            .sum-item div { font-size: 0.9rem; }
-            .filter-section { padding: 0.5rem; gap: 0.5rem; }
-            .card { padding: 0.75rem; }
-        }
-
-        @media (max-width: 1200px) {
-            .grid { grid-template-columns: 260px 1fr; }
         }
 
         @media (max-width: 768px) {
-            html, body {
-                height: auto;
-                overflow-y: auto;
-                overflow-x: hidden;
-            }
-            body {
-                min-height: 100vh;
-            }
-            .grid {
-                grid-template-columns: 1fr;
-                overflow-y: visible;
-                height: auto;
-                flex: none;
-            }
-            .left {
-                height: auto;
-                overflow: visible;
-            }
-            .right {
-                height: auto;
-                overflow: visible;
-            }
-            .table-container {
-                flex: none;
-                height: 400px;
-            }
+            .grid { grid-template-columns: 1fr; overflow-y: auto; height: auto; flex: none; }
+            .left { height: auto; overflow: visible; }
             .chart-row { grid-template-columns: 1fr; }
             .summary-box { grid-template-columns: 1fr; }
         }
@@ -247,7 +104,7 @@
 <div class="header">
     <div class="logo-area">
         <div style="display:flex; align-items:center; gap:10px;">
-        <img src="https://i.ibb.co.com/RpZ6sbpW/bkilogo-1.png" alt="bkilogo (1)" style="height: 35px; width: auto; object-fit: contain;">
+            <img src="https://i.ibb.co.com/RpZ6sbpW/bkilogo-1.png" alt="bkilogo (1)" style="height: 35px; width: auto; object-fit: contain;">
             <div style="width:10px; height:10px; background:#f59e0b; border-radius:50%;"></div>
             <h1>MONITORING PELATIHAN</h1>
         </div>
@@ -257,11 +114,12 @@
 </div>
 
 <div class="running-text-wrapper">
-    <marquee scrollamount="5">Selamat Datang di Sistem Monitoring Pelatihan• Total pengeluaran akan otomatis terupdate setiap ada data baru • Pastikan NUP dan Nama sesuai sebelum menekan tombol simpan.</marquee>
+    <marquee scrollamount="5">Selamat Datang di Sistem Monitoring Pelatihan • Total pengeluaran akan otomatis terupdate setiap ada data baru • Pastikan NUP dan Nama sesuai sebelum menekan tombol simpan.</marquee>
 </div>
 
 <div class="grid">
     <div class="left">
+        <!-- Form Input -->
         <div class="card">
             <label>Input Pelatihan</label>
             <select id="segmen"><option value="Klas">KELAS</option><option value="Dukbis">DUKBIS</option><option value="Komersil">KOMERSIL</option></select>
@@ -270,6 +128,11 @@
                 <option value="Refresher">Refresher</option>
                 <option value="New">New</option>
                 <option value="Practical">Practical</option>
+            </select>
+            <select id="sertifikat">
+                <option value="">-- Jenis Sertifikat --</option>
+                <option value="Brevet">Brevet</option>
+                <option value="Non Brevet">Non Brevet</option>
             </select>
             <input type="text" id="pelatihan" placeholder="Nama Pelatihan">
             <input type="date" id="tanggal">
@@ -317,13 +180,39 @@
                     <option value="Practical">Practical</option>
                 </select>
             </div>
+            <!-- Filter Bulan & Tahun -->
             <div class="filter-item">
-                <label>Nama</label>
-                <input type="text" id="filterNama" placeholder="Cari..." onkeyup="jalankanFilter()">
+                <label>Bulan</label>
+                <select id="filterBulan" onchange="jalankanFilter()">
+                    <option value="">Semua</option>
+                    <option value="1">Januari</option>
+                    <option value="2">Februari</option>
+                    <option value="3">Maret</option>
+                    <option value="4">April</option>
+                    <option value="5">Mei</option>
+                    <option value="6">Juni</option>
+                    <option value="7">Juli</option>
+                    <option value="8">Agustus</option>
+                    <option value="9">September</option>
+                    <option value="10">Oktober</option>
+                    <option value="11">November</option>
+                    <option value="12">Desember</option>
+                </select>
             </div>
             <div class="filter-item">
-                <label>Pelatihan</label>
-                <input type="text" id="filterPelatihan" placeholder="Cari..." onkeyup="jalankanFilter()">
+                <label>Tahun</label>
+                <select id="filterTahun" onchange="jalankanFilter()">
+                    <option value="">Semua</option>
+                </select>
+            </div>
+            <div class="filter-item" style="flex:2;">
+                <label>Nama Peserta</label>
+                <input type="text" id="filterNama" placeholder="Cari..." onkeyup="jalankanFilter()">
+            </div>
+            <!-- Filter Training Baru -->
+            <div class="filter-item" style="flex:2;">
+                <label>Nama Pelatihan</label>
+                <input type="text" id="filterPelatihan" placeholder="Cari pelatihan..." onkeyup="jalankanFilter()">
             </div>
         </div>
 
@@ -332,9 +221,9 @@
                 <table id="tabelUtama">
                     <thead>
                         <tr>
-                            <th class="th-no">No</th>
                             <th>Segmen</th>
                             <th>Kategori</th>
+                            <th>Sertifikat</th>
                             <th>NUP</th><th>Nama</th><th>Unit</th><th>Pelatihan</th>
                             <th>Tanggal</th><th>Biaya Training</th><th>PDS</th><th>Total</th><th>Aksi</th>
                         </tr>
@@ -385,7 +274,7 @@ let myPieKategori = null;
 
 const databasePegawai = {
    "104116": { nama: "IBNU NAFIS", unit: "CABANG UTAMA KLAS BATAM" },
-   "49500": { nama: "ARIEF SULISTIYONO", unit: "CABANG MADYA KLAS BANJARMASIN" },
+    "49500": { nama: "ARIEF SULISTIYONO", unit: "CABANG MADYA KLAS BANJARMASIN" },
     "49199": { nama: "BAMBANG WARDOJO", unit: "CABANG MADYA KLAS BANJARMASIN" },
     "92314": { nama: "EKA NANDA PRATAMA SUNARJO", unit: "CABANG MADYA KLAS BANJARMASIN" },
     "63206": { nama: "KOKO HARIANTO", unit: "CABANG MADYA KLAS BANJARMASIN" },
@@ -1229,9 +1118,7 @@ const databasePegawai = {
     "51036": { nama: "ANSHARULLAH AHMAD", unit: "CABANG PRATAMA KOMERSIAL PALEMBANG" },
     "51037": { nama: "MUHAMMAD ZULKARNAIN", unit: "CABANG PRATAMA KOMERSIAL PALEMBANG" },
     "51038": { nama: "SABRINA HARIYANI", unit: "CABANG PRATAMA KOMERSIAL PALEMBANG" }
-   
 };
-
 function normalizeSegmen(v) {
     if(!v) return "Komersil";
     const c = String(v).trim().toLowerCase();
@@ -1249,6 +1136,14 @@ function normalizeKategori(v) {
     return '-'; 
 }
 
+function normalizeSertifikat(v) {
+    if(!v) return "-";
+    const c = String(v).trim().toLowerCase();
+    if(c.includes('brevet')) return 'Brevet';
+    if(c.includes('non')) return 'Non Brevet';
+    return '-';
+}
+
 function formatTanggalIndo(ds) {
     if(!ds) return "-";
     if(typeof ds === 'number') { const o = XLSX.SSF.parse_date_code(ds); return `${o.d} ${["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"][o.m-1]} ${o.y}`; }
@@ -1264,7 +1159,19 @@ function getNamaBulanIndo(ds) {
     return ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"][d.getMonth()] + " " + d.getFullYear();
 }
 
+function initYearFilter() {
+    const yearSelect = document.getElementById('filterTahun');
+    const currentYear = new Date().getFullYear();
+    for (let y = 2023; y <= currentYear + 1; y++) {
+        const option = document.createElement('option');
+        option.value = y;
+        option.innerText = y;
+        yearSelect.appendChild(option);
+    }
+}
+
 window.onload = function() {
+    initYearFilter();
     const nupField = document.getElementById('nup');
     if(nupField) {
         nupField.addEventListener('input', function() {
@@ -1291,6 +1198,7 @@ function tambahKeAntrean() {
 function kirimKeCloud() {
     const seg = normalizeSegmen(document.getElementById('segmen').value);
     const kat = normalizeKategori(document.getElementById('kategori').value);
+    const sert = normalizeSertifikat(document.getElementById('sertifikat').value);
     const pel = document.getElementById('pelatihan').value;
     const tgl = document.getElementById('tanggal').value;
     const bT = parseInt(document.getElementById('biayaTraining').value) || 0;
@@ -1300,7 +1208,7 @@ function kirimKeCloud() {
     if(kat === "-") return alert("Pilih Kategori Pelatihan!");
 
     antreanLocal.forEach(p => {
-        db.ref('pelatihan').push({ ...p, segmen: seg, kategori: kat, pelatihan: pel, tgl: tgl, bTraining: bT, bPDS: bP });
+        db.ref('pelatihan').push({ ...p, segmen: seg, kategori: kat, sertifikat: sert, pelatihan: pel, tgl: tgl, bTraining: bT, bPDS: bP });
     });
     antreanLocal = []; 
     document.getElementById('antreanList').innerHTML = "";
@@ -1315,35 +1223,44 @@ db.ref('pelatihan').on('value', (snap) => {
 function jalankanFilter() {
     const fSeg = document.getElementById('filterSegmen').value;
     const fKat = document.getElementById('filterKategori').value;
+    const fBulan = document.getElementById('filterBulan').value;
+    const fTahun = document.getElementById('filterTahun').value;
     const fNama = document.getElementById('filterNama').value.toLowerCase();
-    const fPel = document.getElementById('filterPelatihan').value.toLowerCase();
+    const fPel = document.getElementById('filterPelatihan').value.toLowerCase(); // Ambil value filter pelatihan
+    
     const body = document.getElementById('tableBody');
     body.innerHTML = "";
     
     let sT = 0, sP = 0;
-    let noUrut = 0;
     let monthlyData = {};
     let segSum = { "Klas": 0, "Dukbis": 0, "Komersil": 0 };
-    let katSum = { "Refresher": 0, "New": 0, "Practical": 0 };
+    let katSum = { "Refresher": 0, "New": 0, "Practical": 0, "-": 0 };
 
     for (let id in allDataFromCloud) {
         const i = allDataFromCloud[id];
         const currentSegmen = normalizeSegmen(i.segmen);
         const currentKategori = normalizeKategori(i.kategori);
+        const currentSertifikat = normalizeSertifikat(i.sertifikat);
         
         const cNama = (i.nama || "-").toLowerCase();
-        const cPel = (i.pelatihan || "-").toLowerCase();
+        const cPel = (i.pelatihan || "-").toLowerCase(); // Variabel untuk pelatihan
         const cTgl = i.tgl || "-";
         const cBT = i.bTraining || 0;
         const cBP = i.bPDS || 0;
         const total = cBT + cBP;
 
+        const dateObj = new Date(cTgl);
+        const monthData = isNaN(dateObj) ? 0 : dateObj.getMonth() + 1;
+        const yearData = isNaN(dateObj) ? 0 : dateObj.getFullYear();
+
+        // Logika Filter
         if ((fSeg === "" || currentSegmen === fSeg) && 
             (fKat === "" || currentKategori === fKat) && 
-            (cNama.includes(fNama)) && 
-            (cPel.includes(fPel))) {
+            (fBulan === "" || monthData == fBulan) &&
+            (fTahun === "" || yearData == fTahun) &&
+            (cNama.includes(fNama)) &&
+            (cPel.includes(fPel))) { // Cek filter pelatihan
             
-            noUrut++;
             sT += cBT; sP += cBP;
 
             if(segSum.hasOwnProperty(currentSegmen)) segSum[currentSegmen] += total;
@@ -1355,12 +1272,13 @@ function jalankanFilter() {
 
             let bgSeg = '#065f46'; if (currentSegmen === 'Klas') bgSeg = '#1e40af'; else if (currentSegmen === 'Dukbis') bgSeg = '#92400e';
             let bgKat = '#6b7280'; if(currentKategori === 'Refresher') bgKat = '#0ea5e9'; else if(currentKategori === 'New') bgKat = '#8b5cf6'; else if(currentKategori === 'Practical') bgKat = '#22c55e';
+            let bgSert = '#64748b'; if(currentSertifikat === 'Brevet') bgSert = '#dc2626'; else if(currentSertifikat === 'Non Brevet') bgSert = '#2563eb';
 
             body.innerHTML += `
                 <tr>
-                    <td class="td-no">${noUrut}</td>
                     <td><span style="background:${bgSeg}; color:white; padding:2px 5px; border-radius:4px; font-size:10px; font-weight:bold;">${currentSegmen}</span></td>
                     <td><span style="background:${bgKat}; color:white; padding:2px 5px; border-radius:4px; font-size:10px;">${currentKategori}</span></td>
+                    <td><span style="background:${bgSert}; color:white; padding:2px 5px; border-radius:4px; font-size:10px;">${currentSertifikat}</span></td>
                     <td>${i.nup || "-"}</td>
                     <td><strong>${i.nama || "-"}</strong></td>
                     <td>${i.unit || "-"}</td>
@@ -1392,7 +1310,9 @@ function updateCharts(monthly, segData, katData) {
         const yearA = parseInt(partsA[1]);
         const yearB = parseInt(partsB[1]);
         if (yearA !== yearB) return yearA - yearB;
-        return bulanUrut.indexOf(partsA[0]) - bulanUrut.indexOf(partsB[0]);
+        const monthA = bulanUrut.indexOf(partsA[0]);
+        const monthB = bulanUrut.indexOf(partsB[0]);
+        return monthA - monthB;
     });
 
     if(myBarChart) myBarChart.destroy();
@@ -1423,7 +1343,7 @@ function updateCharts(monthly, segData, katData) {
         type: 'doughnut',
         data: {
             labels: Object.keys(katData),
-            datasets: [{ data: Object.values(katData), backgroundColor: ['#0ea5e9', '#8b5cf6', '#22c55e'] }]
+            datasets: [{ data: Object.values(katData), backgroundColor: ['#0ea5e9', '#8b5cf6', '#22c55e', '#94a3b8'] }]
         },
         options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Distribusi Kategori' } } }
     });
@@ -1465,6 +1385,7 @@ function processExcel() {
             jsonData.forEach((row, index) => {
                 const segmen = normalizeSegmen(row['Segmen']);
                 const kategori = normalizeKategori(row['Kategori']);
+                const sertifikat = normalizeSertifikat(row['Sertifikat']);
                 const pelatihan = row['Pelatihan'];
                 let tanggal = row['Tanggal'];
                 const bT = parseInt(row['Biaya Training']) || 0;
@@ -1483,7 +1404,7 @@ function processExcel() {
                 }
 
                 updates[db.ref('pelatihan').push().key] = {
-                    segmen, kategori, pelatihan, tgl: tanggal, bTraining: bT, bPDS: bP, nup, nama, unit
+                    segmen, kategori, sertifikat, pelatihan, tgl: tanggal, bTraining: bT, bPDS: bP, nup, nama, unit
                 };
                 importCount++;
             });
