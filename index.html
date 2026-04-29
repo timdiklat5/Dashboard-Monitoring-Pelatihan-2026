@@ -52,7 +52,7 @@
         
         .btn-blue { background: #2563eb; color: white; border: none; padding: 0.6rem; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; transition: background 0.2s; font-size: 0.85rem; }
         .btn-blue:hover { background: #1d4ed8; }
-        .btn-blue:disabled { background: #94a3b8; cursor: not-allowed; } /* Disabled state */
+        .btn-blue:disabled { background: #94a3b8; cursor: not-allowed; }
         
         .btn-gray { background: #e2e8f0; color: #475569; border: none; padding: 0.5rem; border-radius: 6px; cursor: pointer; font-weight: 500; width: 100%; margin-bottom: 0.5rem; font-size: 0.8rem;}
         .btn-gray:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -80,7 +80,8 @@
 
         /* CHART */
         .charts-grid { display: flex; flex-direction: column; gap: 0.5rem; flex-shrink: 0; }
-        .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+        /* Diubah menjadi 3 kolom */
+        .chart-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; }
         
         .chart-box { background: white; padding: 0.5rem; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); height: 150px; position: relative; }
         .chart-full { height: 140px; }
@@ -112,6 +113,7 @@
         @media (max-width: 768px) {
             .grid { grid-template-columns: 1fr; overflow-y: auto; height: auto; flex: none; }
             .left { height: auto; overflow: visible; }
+            /* Kembali ke 1 kolom di mobile */
             .chart-row { grid-template-columns: 1fr; }
             .summary-box { grid-template-columns: 1fr; }
         }
@@ -127,7 +129,6 @@
         </div>
     </div>
     <div style="display:flex; align-items:center; gap:15px;">
-        <!-- Tombol Lock/Unlock -->
         <button id="authBtn" onclick="toggleAuth()" class="btn-lock locked">
             <span id="authIcon">🔒</span> <span id="authText">UNLOCK</span>
         </button>
@@ -258,6 +259,8 @@
             <div class="chart-row">
                 <div class="chart-box"><canvas id="pieSegmen"></canvas></div>
                 <div class="chart-box"><canvas id="pieKategori"></canvas></div>
+                <!-- Pie Chart Sertifikat Baru -->
+                <div class="chart-box"><canvas id="pieSertifikat"></canvas></div>
             </div>
         </div>
 
@@ -286,8 +289,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// KONFIGURASI PIN ADMIN
-const ADMIN_PIN = "1"; // Ganti PIN ini sesuai keinginan Anda
+const ADMIN_PIN = "123456"; 
 let isAdmin = false;
 
 let antreanLocal = [];
@@ -295,9 +297,10 @@ let allDataFromCloud = {};
 let myBarChart = null;
 let myPieSegmen = null;
 let myPieKategori = null;
+let myPieSertifikat = null; // Variabel baru
 
 const databasePegawai = {
-   "104116": { nama: "IBNU NAFIS", unit: "CABANG UTAMA KLAS BATAM" },
+  "104116": { nama: "IBNU NAFIS", unit: "CABANG UTAMA KLAS BATAM" },
     "49500": { nama: "ARIEF SULISTIYONO", unit: "CABANG MADYA KLAS BANJARMASIN" },
     "49199": { nama: "BAMBANG WARDOJO", unit: "CABANG MADYA KLAS BANJARMASIN" },
     "92314": { nama: "EKA NANDA PRATAMA SUNARJO", unit: "CABANG MADYA KLAS BANJARMASIN" },
@@ -1143,15 +1146,13 @@ const databasePegawai = {
     "51037": { nama: "MUHAMMAD ZULKARNAIN", unit: "CABANG PRATAMA KOMERSIAL PALEMBANG" },
     "51038": { nama: "SABRINA HARIYANI", unit: "CABANG PRATAMA KOMERSIAL PALEMBANG" }
 };
-// Fungsi Autentikasi
+
 function toggleAuth() {
     if (isAdmin) {
-        // Proses Lock
         isAdmin = false;
         updateUIState();
         alert("Sistem dikunci.");
     } else {
-        // Proses Unlock
         let pin = prompt("Masukkan PIN Admin:");
         if (pin === ADMIN_PIN) {
             isAdmin = true;
@@ -1189,7 +1190,6 @@ function updateUIState() {
         btnAdd.disabled = true;
         btnImport.disabled = true;
     }
-    // Refresh tabel untuk update status tombol hapus
     jalankanFilter(); 
 }
 
@@ -1246,7 +1246,7 @@ function initYearFilter() {
 
 window.onload = function() {
     initYearFilter();
-    updateUIState(); // Set initial lock state
+    updateUIState();
     
     const nupField = document.getElementById('nup');
     if(nupField) {
@@ -1263,7 +1263,6 @@ window.onload = function() {
 
 function tambahKeAntrean() {
     if (!isAdmin) return alert("Silakan unlock terlebih dahulu!");
-    
     const nup = document.getElementById('nup').value;
     const nama = document.getElementById('nama').value;
     const unit = document.getElementById('unit').value;
@@ -1275,7 +1274,6 @@ function tambahKeAntrean() {
 
 function kirimKeCloud() {
     if (!isAdmin) return alert("Silakan unlock terlebih dahulu!");
-    
     const seg = normalizeSegmen(document.getElementById('segmen').value);
     const kat = normalizeKategori(document.getElementById('kategori').value);
     const sert = normalizeSertifikat(document.getElementById('sertifikat').value);
@@ -1315,6 +1313,7 @@ function jalankanFilter() {
     let monthlyData = {};
     let segSum = { "Klas": 0, "Dukbis": 0, "Komersil": 0 };
     let katSum = { "Refresher": 0, "New": 0, "Practical": 0, "-": 0 };
+    let sertSum = {}; // Objek dinamis untuk sertifikat
 
     for (let id in allDataFromCloud) {
         const i = allDataFromCloud[id];
@@ -1344,6 +1343,11 @@ function jalankanFilter() {
 
             if(segSum.hasOwnProperty(currentSegmen)) segSum[currentSegmen] += total;
             if(katSum.hasOwnProperty(currentKategori)) katSum[currentKategori] += total;
+            
+            // Hitung Sertifikat
+            if(currentSertifikat !== "-") {
+                sertSum[currentSertifikat] = (sertSum[currentSertifikat] || 0) + total;
+            }
 
             const bln = i.tgl ? getNamaBulanIndo(i.tgl) : 'N/A';
             if(!monthlyData[bln]) monthlyData[bln] = { t: 0, p: 0 };
@@ -1353,11 +1357,7 @@ function jalankanFilter() {
             let bgKat = '#6b7280'; if(currentKategori === 'Refresher') bgKat = '#0ea5e9'; else if(currentKategori === 'New') bgKat = '#8b5cf6'; else if(currentKategori === 'Practical') bgKat = '#22c55e';
             let bgSert = '#64748b'; if(currentSertifikat === 'Brevet') bgSert = '#dc2626'; else if(currentSertifikat === 'Non Brevet') bgSert = '#2563eb';
 
-            // Logika Tombol Hapus
             let btnHapus = `<button onclick="hapus('${id}')" class="btn-delete" ${!isAdmin ? 'disabled' : ''}>✕</button>`;
-            if (!isAdmin) {
-                // Bisa juga disembunyikan total: btnHapus = '-';
-            }
 
             body.innerHTML += `
                 <tr>
@@ -1381,10 +1381,10 @@ function jalankanFilter() {
     document.getElementById('totalTText').innerText = "Rp " + sT.toLocaleString();
     document.getElementById('totalPText').innerText = "Rp " + sP.toLocaleString();
     document.getElementById('totalGText').innerText = "Rp " + (sT+sP).toLocaleString();
-    updateCharts(monthlyData, segSum, katSum);
+    updateCharts(monthlyData, segSum, katSum, sertSum);
 }
 
-function updateCharts(monthly, segData, katData) {
+function updateCharts(monthly, segData, katData, sertData) {
     const bulanUrut = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
     
     const labels = Object.keys(monthly).sort((a, b) => {
@@ -1413,6 +1413,7 @@ function updateCharts(monthly, segData, katData) {
         options: { responsive: true, maintainAspectRatio: false }
     });
 
+    // Pie Segmen
     if(myPieSegmen) myPieSegmen.destroy();
     myPieSegmen = new Chart(document.getElementById('pieSegmen'), {
         type: 'pie',
@@ -1423,6 +1424,7 @@ function updateCharts(monthly, segData, katData) {
         options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Distribusi Segmen' } } }
     });
 
+    // Pie Kategori (Tanpa Abu-abu)
     const katLabels = Object.keys(katData).filter(k => k !== "-");
     const katValues = katLabels.map(k => katData[k]);
     const katColors = ['#0ea5e9', '#8b5cf6', '#22c55e']; 
@@ -1438,6 +1440,29 @@ function updateCharts(monthly, segData, katData) {
             }]
         },
         options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Distribusi Kategori' } } }
+    });
+
+    // Pie Sertifikat Baru
+    // Urutkan label agar warna konsisten (Brevet Merah, Non Brevet Biru)
+    let sertLabels = Object.keys(sertData);
+    let sertValues = sertLabels.map(k => sertData[k]);
+    let sertColors = sertLabels.map(k => {
+        if(k === 'Brevet') return '#dc2626'; // Merah
+        if(k === 'Non Brevet') return '#2563eb'; // Biru
+        return '#94a3b8'; // Abu fallback
+    });
+
+    if(myPieSertifikat) myPieSertifikat.destroy();
+    myPieSertifikat = new Chart(document.getElementById('pieSertifikat'), {
+        type: 'doughnut',
+        data: {
+            labels: sertLabels,
+            datasets: [{ 
+                data: sertValues, 
+                backgroundColor: sertColors
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Distribusi Sertifikat' } } }
     });
 }
 
