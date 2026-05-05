@@ -376,7 +376,7 @@
 </div>
 
 <div class="running-text-wrapper">
-    <marquee scrollamount="5">Selamat Datang di Sistem Monitoring Pelatihan• Total pengeluaran akan otomatis terupdate setiap ada data baru • Pastikan NUP dan Nama sesuai sebelum menekan tombol Simpan=></marquee>
+    <marquee scrollamount="5">Selamat Datang di Sistem Monitoring Pelatihan• Total pengeluaran akan otomatis terupdate setiap ada data baru • Pastikan NUP dan Nama sesuai sebelum menekan tombol Simpan=>.</marquee>
 </div>
 
 <div class="grid">
@@ -633,9 +633,12 @@ function normalizeKategori(v) {
     if(!v) return "-"; const c = String(v).trim().toLowerCase();
     if(c === 'refresher') return 'Refresher'; if(c === 'new') return 'New'; if(c === 'practical') return 'Practical'; return '-';
 }
+/* FIX: cek 'non' DULU sebelum 'brevet', karena "Non Brevet" mengandung kata "brevet" */
 function normalizeSertifikat(v) {
     if(!v) return "-"; const c = String(v).trim().toLowerCase();
-    if(c.includes('brevet')) return 'Brevet'; if(c.includes('non')) return 'Non Brevet'; return String(v).trim();
+    if(c.includes('non')) return 'Non Brevet';
+    if(c.includes('brevet')) return 'Brevet';
+    return String(v).trim();
 }
 function parseDateRobust(ds) {
     if (!ds) return null; if (ds instanceof Date) return ds;
@@ -944,7 +947,7 @@ function updateCharts(monthly, segData, katData, sertData) {
     });
     renderLegend('legKategori', katLabels, katColors);
 
-    /* ===== PIE SERTIFIKAT — persentase dari 800 pegawai, tanpa judul ===== */
+    /* ===== PIE SERTIFIKAT — persentase dari 800 pegawai ===== */
     let sertLabels = Object.keys(sertData);
     let sertValues = sertLabels.map(k => sertData[k]);
     let sertColors = sertLabels.map(k => sertColorMap[k] || '#94a3b8');
@@ -962,9 +965,14 @@ function updateCharts(monthly, segData, katData, sertData) {
         data: { labels: sertLabels, datasets: [{ data: sertValues, backgroundColor: sertColors }] },
         options: {
             responsive: true, maintainAspectRatio: false,
-            layout: { padding: { bottom: 0, top: 0 } },
+            layout: { padding: { bottom: 2, top: 2 } },
             plugins: {
-                title: { display: false },
+                title: {
+                    display: true,
+                    text: 'Kategori Sertifikat',
+                    font: { size: 11, weight: 'bold' },
+                    padding: { bottom: 4 }
+                },
                 legend: { display: false },
                 tooltip: {
                     callbacks: {
