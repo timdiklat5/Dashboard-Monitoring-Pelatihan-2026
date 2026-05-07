@@ -470,6 +470,7 @@
                 <table id="tabelUtama">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Segmen</th><th>Kategori</th><th>Sertifikat</th>
                             <th>NUP</th><th>Nama</th><th>Unit</th><th>Pelatihan</th>
                             <th>Tanggal</th><th>Biaya Training</th><th>PDS</th><th>Total</th><th>Aksi</th>
@@ -633,7 +634,6 @@ function normalizeKategori(v) {
     if(!v) return "-"; const c = String(v).trim().toLowerCase();
     if(c === 'refresher') return 'Refresher'; if(c === 'new') return 'New'; if(c === 'practical') return 'Practical'; return '-';
 }
-/* FIX: cek 'non' DULU sebelum 'brevet', karena "Non Brevet" mengandung kata "brevet" */
 function normalizeSertifikat(v) {
     if(!v) return "-"; const c = String(v).trim().toLowerCase();
     if(c.includes('non')) return 'Non Brevet';
@@ -754,6 +754,7 @@ function jalankanFilter() {
     let segSum = { "Klas": 0, "Dukbis": 0, "Komersil": 0 };
     let katSum = { "Refresher": 0, "New": 0, "Practical": 0, "-": 0 };
     let sertSum = {};
+    let noUrut = 1;
 
     for (let id in allDataFromCloud) {
         const i = allDataFromCloud[id];
@@ -776,6 +777,7 @@ function jalankanFilter() {
             let bgSr='#64748b'; if(cSert==='Brevet') bgSr='#dc2626'; else if(cSert==='Non Brevet') bgSr='#2563eb';
 
             body.innerHTML += `<tr>
+                <td style="text-align:center; color:#64748b; font-weight:600;">${noUrut++}</td>
                 <td><span style="background:${bgS};color:white;padding:2px 5px;border-radius:4px;font-size:10px;font-weight:bold;">${cSeg}</span></td>
                 <td><span style="background:${bgK};color:white;padding:2px 5px;border-radius:4px;font-size:10px;">${cKat}</span></td>
                 <td><span style="background:${bgSr};color:white;padding:2px 5px;border-radius:4px;font-size:10px;">${cSert}</span></td>
