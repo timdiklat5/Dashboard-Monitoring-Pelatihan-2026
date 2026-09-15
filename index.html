@@ -198,6 +198,16 @@
         .rpb-bar-inner { height: 100%; border-radius: 4px; transition: width 0.8s cubic-bezier(0.22,1,0.36,1); background: linear-gradient(90deg, #34d399, #6ee7b7, #a7f3d0); background-size: 200% 100%; animation: rpbShimmer 3s ease infinite; }
         @keyframes rpbShimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
         [data-theme="dark"] .rekap-pegawai-banner { background: linear-gradient(135deg, #022c22 0%, #064e3b 50%, #065f46 100%); border-color: #047857; }
+        .rekap-pegawai-banner.rekap-2025 { background: linear-gradient(135deg, #0f4c5c 0%, #0e5b66 50%, #116979 100%); border-color: #14b8a6; box-shadow: 0 2px 10px rgba(15,76,92,0.25); }
+        [data-theme="dark"] .rekap-pegawai-banner.rekap-2025 { background: linear-gradient(135deg, #083344 0%, #0e4e5e 50%, #155e75 100%); border-color: #0891b2; }
+        .rekap-pegawai-banner.rekap-2025 .rpb-label { color: #a5f3fc; }
+        .rekap-pegawai-banner.rekap-2025 .rpb-total { color: #38bdf8; }
+        .rekap-pegawai-banner.rekap-2025 .rpb-sudah { color: #67e8f9; }
+        .rekap-pegawai-banner.rekap-2025 .rpb-belum { color: #fca5a5; }
+        .rekap-pegawai-banner.rekap-2025 .rpb-pct { color: #38bdf8; }
+        .rekap-pegawai-banner.rekap-2025 .rpb-pct-inline { color: #cffafe; background: rgba(255,255,255,0.15); }
+        .rekap-pegawai-banner.rekap-2025 .rbp-info { color: #a5f3fc; }
+        .rekap-pegawai-banner.rekap-2025 .rpb-bar-inner { background: linear-gradient(90deg, #06b6d4, #22d3ee, #67e8f9); }
         .budget-banner { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; padding: 0.6rem 0.85rem; border-radius: 10px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; flex-shrink: 0; font-size: 0.75rem; box-shadow: 0 2px 8px rgba(15,23,42,0.2); border: 1px solid #334155; }
         [data-theme="dark"] .budget-banner { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-color: #475569; }
         .budget-banner.budget-banner-2025 { border-color: #1e3a8a; }
@@ -406,17 +416,32 @@
                 <div class="chart-box" id="boxPieSertifikat"><div class="chart-canvas-wrap"><canvas id="pieSertifikat"></canvas></div><div class="chart-legend-custom" id="legSertifikat"></div></div>
             </div>
         </div>
-        <div class="rekap-pegawai-banner">
-            <div class="rpb-left">
-                <div><div class="rpb-label">Total Pegawai</div><div class="rpb-total" id="rpbTotal">800</div></div>
-                <div class="rpb-divider"></div>
-                <div><div class="rpb-label">Sudah Mengikuti Pelatihan</div><div class="rpb-sudah" id="rpbSudah">0 orang <span class="rpb-pct-inline" id="rpbSudahPct">0%</span></div></div>
-                <div class="rpb-divider"></div>
-                <div><div class="rpb-label">Belum Mengikuti Pelatihan</div><div class="rpb-belum" id="rpbBelum">800 orang <span class="rpb-pct-inline" id="rpbBelumPct">100%</span></div></div>
+        <div class="rekap-section-wrap" style="display: flex; flex-direction: column; gap: 0.4rem; flex-shrink: 0;">
+            <div class="rekap-pegawai-banner" id="rekapBanner2026">
+                <div class="rpb-left">
+                    <div><div class="rpb-label" id="rpbLabel2026"><span class="year-badge yb-2026">2026</span> Total Pegawai</div><div class="rpb-total" id="rpbTotal">877</div></div>
+                    <div class="rpb-divider"></div>
+                    <div><div class="rpb-label" id="rpbSudahLabel2026">Sudah Pelatihan 2026</div><div class="rpb-sudah" id="rpbSudah">0 orang <span class="rpb-pct-inline" id="rpbSudahPct">0%</span></div></div>
+                    <div class="rpb-divider"></div>
+                    <div><div class="rpb-label" id="rpbBelumLabel2026">Belum Pelatihan 2026</div><div class="rpb-belum" id="rpbBelum">877 orang <span class="rpb-pct-inline" id="rpbBelumPct">100%</span></div></div>
+                </div>
+                <div class="rpb-right">
+                    <div class="rpb-bar-outer"><div class="rpb-bar-inner" id="rpbBarFill" style="width:0%"></div></div>
+                    <div class="rpb-pct-wrap"><div class="rpb-pct" id="rpbPct">0%</div><div class="rbp-info">kepesertaan</div></div>
+                </div>
             </div>
-            <div class="rpb-right">
-                <div class="rpb-bar-outer"><div class="rpb-bar-inner" id="rpbBarFill" style="width:0%"></div></div>
-                <div class="rpb-pct-wrap"><div class="rpb-pct" id="rpbPct">0%</div><div class="rbp-info">kepesertaan</div></div>
+            <div class="rekap-pegawai-banner rekap-2025" id="rekapBanner2025">
+                <div class="rpb-left">
+                    <div><div class="rpb-label" id="rpbLabel2025"><span class="year-badge yb-2025">2025</span> Total Pegawai</div><div class="rpb-total" id="rpbTotal2025">800</div></div>
+                    <div class="rpb-divider"></div>
+                    <div><div class="rpb-label">Sudah Pelatihan 2025</div><div class="rpb-sudah" id="rpbSudah2025">0 orang <span class="rpb-pct-inline" id="rpbSudahPct2025">0%</span></div></div>
+                    <div class="rpb-divider"></div>
+                    <div><div class="rpb-label">Belum Pelatihan 2025</div><div class="rpb-belum" id="rpbBelum2025">800 orang <span class="rpb-pct-inline" id="rpbBelumPct2025">100%</span></div></div>
+                </div>
+                <div class="rpb-right">
+                    <div class="rpb-bar-outer"><div class="rpb-bar-inner" id="rpbBarFill2025" style="width:0%"></div></div>
+                    <div class="rpb-pct-wrap"><div class="rpb-pct" id="rpbPct2025">0%</div><div class="rbp-info">kepesertaan</div></div>
+                </div>
             </div>
         </div>
         <div class="budget-section-wrap" style="display: flex; flex-direction: column; gap: 0.4rem; flex-shrink: 0;">
@@ -479,7 +504,7 @@
 
 <script>
 Chart.register(ChartDataLabels);
-var ANGGARAN_2026=7000000000, ANGGARAN_2025=5200000000, ANGGARAN_DEFAULT=7000000000, ANGGARAN=7000000000, TOTAL_PEGAWAI=800;
+var ANGGARAN_2026=7000000000, ANGGARAN_2025=5200000000, ANGGARAN_DEFAULT=7000000000, ANGGARAN=7000000000, TOTAL_PEGAWAI_2026=877, TOTAL_PEGAWAI_2025=800, TOTAL_PEGAWAI=877;
 function getTahunFromDate(tgl){if(!tgl)return '';if(typeof tgl==='string'&&/^\d{4}/.test(tgl)){return tgl.substring(0,4);}var d=new Date(typeof tgl==='string'?tgl.replace(/-/g,'/'):tgl);return isNaN(d.getTime())?'':String(d.getFullYear());}
 function getBulanFromDate(tgl){if(!tgl)return '';if(typeof tgl==='string'&&/^\d{4}-\d{2}/.test(tgl)){return parseInt(tgl.substring(5,7),10);}var d=new Date(typeof tgl==='string'?tgl.replace(/-/g,'/'):tgl);return isNaN(d.getTime())?'':d.getMonth()+1;}
 var currentTheme = localStorage.getItem('dashboard-theme') || 'light';
@@ -494,7 +519,7 @@ function invalidatePegawaiCache(){cachedPegawaiList=null;}
 var debouncedFilterText=debounce(jalankanFilter,120);
 function persenAnggaran(r,ang){ang=ang||ANGGARAN;return Math.min((r/ang)*100,100).toFixed(1);}
 function sisaAnggaran(r,ang){ang=ang||ANGGARAN;return Math.max(0,ang-r);}
-function persenPegawai(j){return((j/TOTAL_PEGAWAI)*100).toFixed(1);}
+function persenPegawai(j,tot){tot=tot||TOTAL_PEGAWAI;return((j/tot)*100).toFixed(1);}
 function renderLegend(cid,labels,colors){var el=document.getElementById(cid);if(!el)return;el.innerHTML='';for(var i=0;i<labels.length;i++){var it=document.createElement('span');it.className='leg-item';it.innerHTML='<span class="leg-dot" style="background:'+(colors[i]||'#94a3b8')+'"></span>'+labels[i];el.appendChild(it);}}
 function formatRp(n){return 'Rp '+Number(n||0).toLocaleString('id-ID');}
 function escapeHtml(t){var d=document.createElement('div');d.textContent=t||'';return d.innerHTML;}
@@ -1391,6 +1416,7 @@ var databasePegawai={
 "51038": { nama: "SABRINA HARIYANI", unit: "CABANG PRATAMA KOMERSIAL PALEMBANG" },
 "51042": { nama: "RISMAN GURIUM", unit: "CABANG PRATAMA KLAS AMBON" }
 };
+
 function buildPegawaiList(){var list={},k;for(k in databasePegawai)list[k]={nama:databasePegawai[k].nama,unit:databasePegawai[k].unit,nup:k};for(k in allDataFromCloud){var d=allDataFromCloud[k];if(d.nup&&d.nama){var nk=String(d.nup).trim();if(!list[nk])list[nk]={nama:d.nama,unit:d.unit||'',nup:nk};}}return list;}
 function positionDropdown(dd,inp){var r=inp.getBoundingClientRect();dd.style.position='fixed';dd.style.top=(r.bottom+2)+'px';dd.style.left=r.left+'px';dd.style.width=r.width+'px';dd.style.zIndex='10000';}
 function showDropdown(dd,inp,matches){positionDropdown(dd,inp);dd.innerHTML='';activeDropdownIndex=-1;if(!matches.length){dd.innerHTML='<div class="dd-empty">Tidak ditemukan</div>';dd.classList.add('show');return;}for(var i=0;i<matches.length;i++){(function(p,idx){var it=document.createElement('div');it.className='dd-item';it.dataset.index=idx;it.innerHTML='<div><span class="dd-nama">'+highlightMatch(p.nama,inp.value)+'</span><span class="dd-nup">NUP: '+p.nup+'</span></div><div class="dd-unit">'+(p.unit||'-')+'</div>';it.addEventListener('mousedown',function(e){e.preventDefault();selectPeserta(p);hideAllDropdowns();});it.addEventListener('mouseenter',function(){clearActiveItem(dd);this.classList.add('active');activeDropdownIndex=idx;});dd.appendChild(it);})(matches[i],i);}dd.classList.add('show');}
@@ -1453,6 +1479,7 @@ function jalankanFilter(){
         updateCharts(filtered);
         updateBudget(filtered);
         updateSummary(filtered);
+        updateRekapPegawai();
     },150);
 }
 
@@ -1584,7 +1611,87 @@ function updateSummary(data){
     document.getElementById('barG').className='sum-bar-fill'+(tG>=targetAnggaran?' full':'');
 }
 
-function updateRekapPegawai(){var uniqueNup={};for(var k in allDataFromCloud){var d=allDataFromCloud[k];if(d.nup){var nk=String(d.nup).trim();if(nk)uniqueNup[nk]=true;}}var sudah=Object.keys(uniqueNup).length;var belum=Math.max(0,TOTAL_PEGAWAI-sudah);var pctSudah=persenPegawai(sudah);var pctBelum=persenPegawai(belum);document.getElementById('rpbSudah').innerHTML=sudah+' orang <span class="rpb-pct-inline" id="rpbSudahPct">'+pctSudah+'%</span>';document.getElementById('rpbBelum').innerHTML=belum+' orang <span class="rpb-pct-inline" id="rpbBelumPct">'+pctBelum+'%</span>';document.getElementById('rpbPct').textContent=pctSudah+'%';document.getElementById('rpbBarFill').style.width=Math.min(parseFloat(pctSudah),100)+'%';}
+function updateRekapPegawai(){
+    var fTah=document.getElementById('filterTahun')?document.getElementById('filterTahun').value:'';
+    var unique2026={}, unique2025={};
+    for(var k in allDataFromCloud){
+        var d=allDataFromCloud[k];
+        var nk=d.nup?String(d.nup).trim():(d.nama?String(d.nama).trim().toLowerCase():'');
+        if(!nk) continue;
+        var y=getTahunFromDate(d.tanggal||d.tanggalSelesai||'');
+        if(y==='2025'){
+            unique2025[nk]=true;
+        }else if(y==='2026'||!y){
+            unique2026[nk]=true;
+        }else if(fTah===y){
+            unique2026[nk]=true;
+        }
+    }
+
+    // Rekap 2026 (Total Pegawai: 877)
+    var totalPeg2026=TOTAL_PEGAWAI_2026;
+    var labelYear='2026';
+    if(fTah&&fTah!=='2025'&&fTah!=='2026'){
+        labelYear=fTah;
+    }
+    var sudah2026=Object.keys(unique2026).length;
+    var belum2026=Math.max(0,totalPeg2026-sudah2026);
+    var pctSudah2026=persenPegawai(sudah2026,totalPeg2026);
+    var pctBelum2026=persenPegawai(belum2026,totalPeg2026);
+
+    var rpbTotalEl=document.getElementById('rpbTotal');
+    if(rpbTotalEl) rpbTotalEl.textContent=totalPeg2026;
+    var rpbLabel2026El=document.getElementById('rpbLabel2026');
+    if(rpbLabel2026El) rpbLabel2026El.innerHTML='<span class="year-badge yb-2026">'+labelYear+'</span> Total Pegawai';
+    var rpbSudahLbl=document.getElementById('rpbSudahLabel2026');
+    if(rpbSudahLbl) rpbSudahLbl.textContent='Sudah Pelatihan '+labelYear;
+    var rpbBelumLbl=document.getElementById('rpbBelumLabel2026');
+    if(rpbBelumLbl) rpbBelumLbl.textContent='Belum Pelatihan '+labelYear;
+
+    var elSudah=document.getElementById('rpbSudah');
+    if(elSudah) elSudah.innerHTML=sudah2026+' orang <span class="rpb-pct-inline" id="rpbSudahPct">'+pctSudah2026+'%</span>';
+    var elBelum=document.getElementById('rpbBelum');
+    if(elBelum) elBelum.innerHTML=belum2026+' orang <span class="rpb-pct-inline" id="rpbBelumPct">'+pctBelum2026+'%</span>';
+    var elPct=document.getElementById('rpbPct');
+    if(elPct) elPct.textContent=pctSudah2026+'%';
+    var elFill=document.getElementById('rpbBarFill');
+    if(elFill) elFill.style.width=Math.min(parseFloat(pctSudah2026),100)+'%';
+
+    // Rekap 2025 (Total Pegawai: 800)
+    var totalPeg2025=TOTAL_PEGAWAI_2025;
+    var sudah2025=Object.keys(unique2025).length;
+    var belum2025=Math.max(0,totalPeg2025-sudah2025);
+    var pctSudah2025=persenPegawai(sudah2025,totalPeg2025);
+    var pctBelum2025=persenPegawai(belum2025,totalPeg2025);
+
+    var elTotal25=document.getElementById('rpbTotal2025');
+    if(elTotal25) elTotal25.textContent=totalPeg2025;
+    var elSudah25=document.getElementById('rpbSudah2025');
+    if(elSudah25) elSudah25.innerHTML=sudah2025+' orang <span class="rpb-pct-inline" id="rpbSudahPct2025">'+pctSudah2025+'%</span>';
+    var elBelum25=document.getElementById('rpbBelum2025');
+    if(elBelum25) elBelum25.innerHTML=belum2025+' orang <span class="rpb-pct-inline" id="rpbBelumPct2025">'+pctBelum2025+'%</span>';
+    var elPct25=document.getElementById('rpbPct2025');
+    if(elPct25) elPct25.textContent=pctSudah2025+'%';
+    var elFill25=document.getElementById('rpbBarFill2025');
+    if(elFill25) elFill25.style.width=Math.min(parseFloat(pctSudah2025),100)+'%';
+
+    // Toggle visibility based on selected year
+    var elRekap2026=document.getElementById('rekapBanner2026');
+    var elRekap2025=document.getElementById('rekapBanner2025');
+    if(fTah==='2025'){
+        if(elRekap2026) elRekap2026.style.display='none';
+        if(elRekap2025) elRekap2025.style.display='flex';
+    }else if(fTah==='2026'){
+        if(elRekap2026) elRekap2026.style.display='flex';
+        if(elRekap2025) elRekap2025.style.display='none';
+    }else if(fTah){
+        if(elRekap2026) elRekap2026.style.display='flex';
+        if(elRekap2025) elRekap2025.style.display='none';
+    }else{
+        if(elRekap2026) elRekap2026.style.display='flex';
+        if(elRekap2025) elRekap2025.style.display='flex';
+    }
+}
 
 /* ========== FILTER TAHUN S/D 2030 ========== */
 function populateFilterDropdowns(){
