@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>Dashboard Monitoring Pelatihan</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard monitoring pelatihan, sertifikat, kepesertaan dan anggaran dengan integrasi Firebase." />
+    <meta property="og:title" content="Dashboard Monitoring Pelatihan" />
+    <meta property="og:description" content="Dashboard monitoring pelatihan, sertifikat, kepesertaan dan anggaran dengan integrasi Firebase." />
+    <meta property="og:type" content="website" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
@@ -196,6 +200,12 @@
         [data-theme="dark"] .rekap-pegawai-banner { background: linear-gradient(135deg, #022c22 0%, #064e3b 50%, #065f46 100%); border-color: #047857; }
         .budget-banner { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; padding: 0.6rem 0.85rem; border-radius: 10px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; flex-shrink: 0; font-size: 0.75rem; box-shadow: 0 2px 8px rgba(15,23,42,0.2); border: 1px solid #334155; }
         [data-theme="dark"] .budget-banner { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-color: #475569; }
+        .budget-banner.budget-banner-2025 { border-color: #1e3a8a; }
+        .budget-banner.budget-banner-2025 .bb-realized span { color: #38bdf8; }
+        .budget-banner.budget-banner-2025 .bb-bar-fill { background: #38bdf8; }
+        .year-badge { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 0.62rem; font-weight: 800; letter-spacing: 0.04em; margin-right: 4px; vertical-align: middle; }
+        .year-badge.yb-2026 { background: rgba(251,191,36,0.18); color: #fbbf24; border: 1px solid rgba(251,191,36,0.4); }
+        .year-badge.yb-2025 { background: rgba(96,165,250,0.18); color: #93c5fd; border: 1px solid rgba(96,165,250,0.4); }
         .budget-banner .bb-left { display: flex; align-items: center; gap: 1.2rem; }
         .budget-banner .bb-label { color: #94a3b8; font-weight: 500; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; }
         .budget-banner .bb-anggaran { font-weight: 800; color: #fbbf24; font-size: 0.95rem; }
@@ -247,7 +257,7 @@
         .modal-close:hover { background: rgba(255,255,255,0.3); }
         .modal-body { padding: 1.25rem; }
         .query-search-bar { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: flex-end; }
-        .query-search-bar .qs-field { display: flex; flex-direction: column; flex: 1; min-width: 180px; }
+        .query-search-bar .qs-field { display: flex; flex-direction: column; flex: 1; min-width: 140px; }
         .query-search-bar .qs-field label { font-size: 0.7rem; font-weight: 600; color: #64748b; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.03em; }
         [data-theme="dark"] .query-search-bar .qs-field label { color: #94a3b8; }
         .query-search-bar .qs-field input, .query-search-bar .qs-field select { padding: 0.55rem 0.75rem; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 0.85rem; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; box-sizing: border-box; }
@@ -309,6 +319,7 @@
                 <div class="qs-field"><label>Nama Peserta</label><input type="text" id="queryNama" placeholder="Ketik nama peserta..." onkeyup="if(event.key==='Enter')jalankanQuery()"></div>
                 <div class="qs-field"><label>NUP</label><input type="text" id="queryNup" placeholder="NUP" onkeyup="if(event.key==='Enter')jalankanQuery()"></div>
                 <div class="qs-field"><label>Unit Kerja</label><select id="queryUnit"><option value="">Semua Unit</option></select></div>
+                <div class="qs-field"><label>Sertifikat</label><select id="querySertifikat"><option value="">Semua</option><option value="Brevet">Brevet</option><option value="Non Brevet">Non Brevet</option></select></div>
                 <button class="btn-search-query" onclick="jalankanQuery()">&#128269; CARI</button>
             </div>
             <div id="queryResults"></div>
@@ -334,7 +345,7 @@
 </div>
 
 <div class="running-text-wrapper">
-    <marquee scrollamount="5">=>>Selamat Datang di Sistem Monitoring Pelatihan &#8226; Total pengeluaran akan otomatis terupdate setiap ada data baru &#8226; Pastikan NUP dan Nama sesuai sebelum menekan tombol Simpan=&gt; &#8226; Gunakan fitur Query Peserta untuk melihat riwayat pelatihan per individu<==</marquee>
+    <marquee scrollamount="5">=>>Selamat Datang di Sistem Monitoring Pelatihan &#8226; Total pengeluaran akan otomatis terupdate setiap ada data baru &#8226; Pastikan NUP dan Nama sesuai sebelum menekan tombol Simpan=&gt; &#8226; Gunakan fitur Query Peserta untuk melihat riwayat pelatihan per individu&lt;==</marquee>
 </div>
 
 <div class="grid">
@@ -377,6 +388,7 @@
         <div class="filter-section">
             <div class="filter-item"><label>Segmen</label><select id="filterSegmen" onchange="jalankanFilter()"><option value="">Semua</option><option value="Klas">Klas</option><option value="Dukbis">Dukbis</option><option value="Komersil">Komersil</option></select></div>
             <div class="filter-item"><label>Kategori</label><select id="filterKategori" onchange="jalankanFilter()"><option value="">Semua</option><option value="Refresher">Refresher</option><option value="New">New</option><option value="Practical">Practical</option></select></div>
+            <div class="filter-item"><label>Sertifikat</label><select id="filterSertifikat" onchange="jalankanFilter()"><option value="">Semua</option><option value="Brevet">Brevet</option><option value="Non Brevet">Non Brevet</option></select></div>
             <div class="filter-item"><label>Bulan</label><select id="filterBulan" onchange="jalankanFilter()"><option value="">Semua</option><option value="1">Januari</option><option value="2">Februari</option><option value="3">Maret</option><option value="4">April</option><option value="5">Mei</option><option value="6">Juni</option><option value="7">Juli</option><option value="8">Agustus</option><option value="9">September</option><option value="10">Oktober</option><option value="11">November</option><option value="12">Desember</option></select></div>
             <div class="filter-item"><label>Tahun</label><select id="filterTahun" onchange="jalankanFilter()"><option value="">Semua</option></select></div>
             <div class="filter-item" style="flex:2;"><label>Unit Kerja</label><select id="filterUnit" onchange="jalankanFilter()"><option value="">Semua</option></select></div>
@@ -407,9 +419,49 @@
                 <div class="rpb-pct-wrap"><div class="rpb-pct" id="rpbPct">0%</div><div class="rbp-info">kepesertaan</div></div>
             </div>
         </div>
-        <div class="budget-banner">
-            <div class="bb-left"><div><div class="bb-label">Anggaran</div><div class="bb-anggaran">Rp 7.000.000.000</div></div><div class="bb-divider"></div><div><div class="bb-label">Realisasi</div><div class="bb-realized" id="bbRealized"><span>Rp 0</span></div></div></div>
-            <div class="bb-right"><div><div class="bb-sisa-label">Sisa Anggaran</div><div class="bb-sisa-val" id="bbSisa">Rp 7.000.000.000</div></div><div class="bb-bar-wrap"><div class="bb-bar-fill" id="bbBarFill" style="width:0%"></div></div><div class="bb-pct" id="bbPct">0%</div></div>
+        <div class="budget-section-wrap" style="display: flex; flex-direction: column; gap: 0.4rem; flex-shrink: 0;">
+            <div class="budget-banner" id="banner2026">
+                <div class="bb-left">
+                    <div>
+                        <div class="bb-label" id="bbLabel2026"><span class="year-badge yb-2026">2026</span> Anggaran</div>
+                        <div class="bb-anggaran" id="bbAnggaran2026">Rp 7.000.000.000</div>
+                    </div>
+                    <div class="bb-divider"></div>
+                    <div>
+                        <div class="bb-label" id="bbRealizedLabel2026">Realisasi 2026</div>
+                        <div class="bb-realized" id="bbRealized"><span>Rp 0</span></div>
+                    </div>
+                </div>
+                <div class="bb-right">
+                    <div>
+                        <div class="bb-sisa-label" id="bbSisaLabel2026">Sisa Anggaran 2026</div>
+                        <div class="bb-sisa-val" id="bbSisa">Rp 7.000.000.000</div>
+                    </div>
+                    <div class="bb-bar-wrap"><div class="bb-bar-fill" id="bbBarFill" style="width:0%"></div></div>
+                    <div class="bb-pct" id="bbPct">0%</div>
+                </div>
+            </div>
+            <div class="budget-banner budget-banner-2025" id="banner2025">
+                <div class="bb-left">
+                    <div>
+                        <div class="bb-label" id="bbLabel2025"><span class="year-badge yb-2025">2025</span> Anggaran</div>
+                        <div class="bb-anggaran" id="bbAnggaran2025" style="color: #60a5fa;">Rp 5.200.000.000</div>
+                    </div>
+                    <div class="bb-divider"></div>
+                    <div>
+                        <div class="bb-label">Realisasi 2025</div>
+                        <div class="bb-realized" id="bbRealized2025"><span>Rp 0</span></div>
+                    </div>
+                </div>
+                <div class="bb-right">
+                    <div>
+                        <div class="bb-sisa-label">Sisa Anggaran 2025</div>
+                        <div class="bb-sisa-val" id="bbSisa2025">Rp 5.200.000.000</div>
+                    </div>
+                    <div class="bb-bar-wrap"><div class="bb-bar-fill" id="bbBarFill2025" style="width:0%"></div></div>
+                    <div class="bb-pct" id="bbPct2025" style="color: #38bdf8;">0%</div>
+                </div>
+            </div>
         </div>
         <div class="summary-box">
             <div class="sum-item" style="background: #4f46e5;"><small>Biaya Training</small><div class="sum-value" id="totalTText">Rp 0</div><span class="sum-pct" id="totalTPct">0% anggaran</span><div class="sum-bar-bg"><div class="sum-bar-fill" id="barT" style="width:0%"></div></div></div>
@@ -427,7 +479,9 @@
 
 <script>
 Chart.register(ChartDataLabels);
-var ANGGARAN=7000000000,TOTAL_PEGAWAI=800;
+var ANGGARAN_2026=7000000000, ANGGARAN_2025=5200000000, ANGGARAN_DEFAULT=7000000000, ANGGARAN=7000000000, TOTAL_PEGAWAI=800;
+function getTahunFromDate(tgl){if(!tgl)return '';if(typeof tgl==='string'&&/^\d{4}/.test(tgl)){return tgl.substring(0,4);}var d=new Date(typeof tgl==='string'?tgl.replace(/-/g,'/'):tgl);return isNaN(d.getTime())?'':String(d.getFullYear());}
+function getBulanFromDate(tgl){if(!tgl)return '';if(typeof tgl==='string'&&/^\d{4}-\d{2}/.test(tgl)){return parseInt(tgl.substring(5,7),10);}var d=new Date(typeof tgl==='string'?tgl.replace(/-/g,'/'):tgl);return isNaN(d.getTime())?'':d.getMonth()+1;}
 var currentTheme = localStorage.getItem('dashboard-theme') || 'light';
 function setTheme(theme){currentTheme=theme;localStorage.setItem('dashboard-theme',theme);applyTheme();jalankanFilter();}
 function applyTheme(){if(currentTheme==='dark'){document.documentElement.setAttribute('data-theme','dark');}else{document.documentElement.removeAttribute('data-theme');}var sel=document.getElementById('themeSelect');if(sel)sel.value=currentTheme;}
@@ -438,8 +492,8 @@ var cachedPegawaiList=null;
 function getCachedPegawaiList(){if(!cachedPegawaiList)cachedPegawaiList=buildPegawaiList();return cachedPegawaiList;}
 function invalidatePegawaiCache(){cachedPegawaiList=null;}
 var debouncedFilterText=debounce(jalankanFilter,120);
-function persenAnggaran(r){return Math.min((r/ANGGARAN)*100,100).toFixed(1);}
-function sisaAnggaran(r){return Math.max(0,ANGGARAN-r);}
+function persenAnggaran(r,ang){ang=ang||ANGGARAN;return Math.min((r/ang)*100,100).toFixed(1);}
+function sisaAnggaran(r,ang){ang=ang||ANGGARAN;return Math.max(0,ang-r);}
 function persenPegawai(j){return((j/TOTAL_PEGAWAI)*100).toFixed(1);}
 function renderLegend(cid,labels,colors){var el=document.getElementById(cid);if(!el)return;el.innerHTML='';for(var i=0;i<labels.length;i++){var it=document.createElement('span');it.className='leg-item';it.innerHTML='<span class="leg-dot" style="background:'+(colors[i]||'#94a3b8')+'"></span>'+labels[i];el.appendChild(it);}}
 function formatRp(n){return 'Rp '+Number(n||0).toLocaleString('id-ID');}
@@ -1337,7 +1391,6 @@ var databasePegawai={
 "51038": { nama: "SABRINA HARIYANI", unit: "CABANG PRATAMA KOMERSIAL PALEMBANG" },
 "51042": { nama: "RISMAN GURIUM", unit: "CABANG PRATAMA KLAS AMBON" }
 };
-
 function buildPegawaiList(){var list={},k;for(k in databasePegawai)list[k]={nama:databasePegawai[k].nama,unit:databasePegawai[k].unit,nup:k};for(k in allDataFromCloud){var d=allDataFromCloud[k];if(d.nup&&d.nama){var nk=String(d.nup).trim();if(!list[nk])list[nk]={nama:d.nama,unit:d.unit||'',nup:nk};}}return list;}
 function positionDropdown(dd,inp){var r=inp.getBoundingClientRect();dd.style.position='fixed';dd.style.top=(r.bottom+2)+'px';dd.style.left=r.left+'px';dd.style.width=r.width+'px';dd.style.zIndex='10000';}
 function showDropdown(dd,inp,matches){positionDropdown(dd,inp);dd.innerHTML='';activeDropdownIndex=-1;if(!matches.length){dd.innerHTML='<div class="dd-empty">Tidak ditemukan</div>';dd.classList.add('show');return;}for(var i=0;i<matches.length;i++){(function(p,idx){var it=document.createElement('div');it.className='dd-item';it.dataset.index=idx;it.innerHTML='<div><span class="dd-nama">'+highlightMatch(p.nama,inp.value)+'</span><span class="dd-nup">NUP: '+p.nup+'</span></div><div class="dd-unit">'+(p.unit||'-')+'</div>';it.addEventListener('mousedown',function(e){e.preventDefault();selectPeserta(p);hideAllDropdowns();});it.addEventListener('mouseenter',function(){clearActiveItem(dd);this.classList.add('active');activeDropdownIndex=idx;});dd.appendChild(it);})(matches[i],i);}dd.classList.add('show');}
@@ -1362,33 +1415,191 @@ function editData(id){var d=allDataFromCloud[id];if(!d)return;if(!isAdmin){showT
 
 function deleteData(id){if(!isAdmin){showToast('Akses Ditolak','Unlock admin terlebih dahulu','error');return;}if(!confirm('Hapus data ini?'))return;db.ref('pelatihan/'+id).remove().then(function(){showToast('Berhasil','Data dihapus','success');}).catch(function(err){showToast('Error','Gagal hapus: '+err.message,'error');});}
 
-function jalankanFilter(){var fSeg=document.getElementById('filterSegmen').value;var fKat=document.getElementById('filterKategori').value;var fBul=document.getElementById('filterBulan').value;var fTah=document.getElementById('filterTahun').value;var fUni=document.getElementById('filterUnit').value;var fNam=document.getElementById('filterNama').value.trim().toLowerCase();var fPel=document.getElementById('filterPelatihan').value.trim().toLowerCase();var filtered=[];var keys=Object.keys(allDataFromCloud);for(var i=0;i<keys.length;i++){var d=allDataFromCloud[keys[i]];var ok=true;if(fSeg&&d.segmen!==fSeg)ok=false;if(fKat&&d.kategori!==fKat)ok=false;if(fBul){var tglRef=d.tanggal||d.tanggalSelesai||'';var bul=tglRef?new Date(tglRef).getMonth()+1:'';if(String(bul)!==fBul)ok=false;}if(fTah){var tglRef2=d.tanggal||d.tanggalSelesai||'';var tah=tglRef2?new Date(tglRef2).getFullYear():'';if(String(tah)!==fTah)ok=false;}if(fUni&&d.unit!==fUni)ok=false;if(fNam&&d.nama&&d.nama.toLowerCase().indexOf(fNam)===-1)ok=false;if(fPel&&d.pelatihan&&d.pelatihan.toLowerCase().indexOf(fPel)===-1)ok=false;if(ok)filtered.push(d);}renderTable(filtered);clearTimeout(chartUpdateTimer);chartUpdateTimer=setTimeout(function(){updateCharts(filtered);updateBudget(filtered);updateSummary(filtered);},150);}
+function jalankanFilter(){
+    var fSeg=document.getElementById('filterSegmen').value;
+    var fKat=document.getElementById('filterKategori').value;
+    var fSer=document.getElementById('filterSertifikat')?document.getElementById('filterSertifikat').value:'';
+    var fBul=document.getElementById('filterBulan').value;
+    var fTah=document.getElementById('filterTahun').value;
+    var fUni=document.getElementById('filterUnit').value;
+    var fNam=document.getElementById('filterNama').value.trim().toLowerCase();
+    var fPel=document.getElementById('filterPelatihan').value.trim().toLowerCase();
+    var filtered=[];
+    var keys=Object.keys(allDataFromCloud);
+    for(var i=0;i<keys.length;i++){
+        var d=allDataFromCloud[keys[i]];
+        var ok=true;
+        if(fSeg&&d.segmen!==fSeg)ok=false;
+        if(fKat&&d.kategori!==fKat)ok=false;
+        if(fSer&&d.sertifikat!==fSer)ok=false;
+        if(fBul){
+            var tglRef=d.tanggal||d.tanggalSelesai||'';
+            var bul=getBulanFromDate(tglRef);
+            if(String(bul)!==fBul)ok=false;
+        }
+        if(fTah){
+            var tglRef2=d.tanggal||d.tanggalSelesai||'';
+            var tah=getTahunFromDate(tglRef2);
+            if(String(tah)!==fTah)ok=false;
+        }
+        if(fUni&&d.unit!==fUni)ok=false;
+        if(fNam&&d.nama&&d.nama.toLowerCase().indexOf(fNam)===-1)ok=false;
+        if(fPel&&d.pelatihan&&d.pelatihan.toLowerCase().indexOf(fPel)===-1)ok=false;
+        if(ok)filtered.push(d);
+    }
+    renderTable(filtered);
+    clearTimeout(chartUpdateTimer);
+    chartUpdateTimer=setTimeout(function(){
+        updateCharts(filtered);
+        updateBudget(filtered);
+        updateSummary(filtered);
+    },150);
+}
 
 function renderTable(data){var tbody=document.getElementById('tableBody');if(!data.length){tbody.innerHTML='<tr><td colspan="15" style="text-align:center;padding:2rem;color:#94a3b8;">Tidak ada data</td></tr>';return;}var html='';for(var i=0;i<data.length;i++){var d=data[i];var bt=d.biayaTraining||0;var bp=d.biayaPDS||0;var total=bt+bp;var olehHtml='';if(d.olehEdit){olehHtml='<span class="oleh-tag edit-by"><span class="oleh-icon">&#9998;</span>'+d.olehEdit+'</span>';}else if(d.olehInput){olehHtml='<span class="oleh-tag input-by"><span class="oleh-icon">&#10003;</span>'+d.olehInput+'</span>';}html+='<tr>';html+='<td>'+(i+1)+'</td><td>'+escapeHtml(d.segmen)+'</td><td>'+escapeHtml(d.kategori)+'</td><td>'+escapeHtml(d.sertifikat)+'</td>';html+='<td>'+escapeHtml(d.nup)+'</td><td>'+escapeHtml(d.nama)+'</td><td>'+escapeHtml(d.unit)+'</td><td>'+escapeHtml(d.pelatihan)+'</td>';html+='<td class="td-tgl-mulai">'+formatTglShort(d.tanggal)+'</td><td class="td-tgl-selesai">'+formatTglShort(d.tanggalSelesai)+'</td>';html+='<td>'+formatRp(bt)+'</td><td>'+formatRp(bp)+'</td>';html+='<td style="font-weight:700;">'+formatRp(total)+'</td><td>'+olehHtml+'</td>';html+='<td><div class="action-wrapper"><button class="action-btn btn-edit" onclick="editData(\''+d._id+'\')" title="Edit"'+(!isAdmin?' disabled':'')+'>&#9998;</button><button class="action-btn btn-delete" onclick="deleteData(\''+d._id+'\')" title="Hapus"'+(!isAdmin?' disabled':'')+'>&#128465;</button></div></td>';html+='</tr>';}tbody.innerHTML=html;}
 
-function updateCharts(data){var cc=getChartColors();var monthData={};for(var i=0;i<data.length;i++){var tglRef=data[i].tanggal||data[i].tanggalSelesai||'';var m=tglRef?new Date(tglRef).getMonth():-1;var label=m>=0?['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Ags','Sep','Okt','Nov','Des'][m]:'Tanpa Tgl';if(!monthData[label])monthData[label]=0;monthData[label]+=(data[i].biayaTraining||0)+(data[i].biayaPDS||0);}var barLabels=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Ags','Sep','Okt','Nov','Des'];var barValues=[];for(var i=0;i<barLabels.length;i++)barValues.push(monthData[barLabels[i]]||0);if(monthData['Tanpa Tgl']){barLabels.push('Tanpa Tgl');barValues.push(monthData['Tanpa Tgl']);}if(myBarChart)myBarChart.destroy();myBarChart=new Chart(document.getElementById('barChart'),{type:'bar',data:{labels:barLabels,datasets:[{label:'Total Biaya',data:barValues,backgroundColor:'rgba(99,102,241,0.7)',borderRadius:4,barThickness:20}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false}},scales:{x:{ticks:{color:cc.textMuted,font:{size:10}},grid:{display:false}},y:{ticks:{color:cc.textMuted,font:{size:10},callback:function(v){return v>=1e6?(v/1e6)+'jt':v>=1e3?(v/1e3)+'rb':v;}},grid:{color:cc.grid}}}}});var segmenCount={},kategoriCount={},sertifikatCount={};for(var i=0;i<data.length;i++){var s=data[i].segmen||'Lainnya';var k=data[i].kategori||'Lainnya';var sr=data[i].sertifikat||'Lainnya';segmenCount[s]=(segmenCount[s]||0)+1;kategoriCount[k]=(kategoriCount[k]||0)+1;sertifikatCount[sr]=(sertifikatCount[sr]||0)+1;}var segColors=['#6366f1','#f59e0b','#10b981','#ef4444','#8b5cf6'];var katColors=['#3b82f6','#f97316','#22c55e','#ec4899'];var serColors=['#0ea5e9','#a855f7'];if(myPieSegmen)myPieSegmen.destroy();var sL=Object.keys(segmenCount),sV=sL.map(function(l){return segmenCount[l];});myPieSegmen=new Chart(document.getElementById('pieSegmen'),{type:'doughnut',data:{labels:sL,datasets:[{data:sV,backgroundColor:segColors.slice(0,sL.length),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{color:'#fff',font:{size:9,weight:'bold'},formatter:function(v){return v;}}},cutout:'55%'}});renderLegend('legSegmen',sL,segColors);if(myPieKategori)myPieKategori.destroy();var kL=Object.keys(kategoriCount),kV=kL.map(function(l){return kategoriCount[l];});myPieKategori=new Chart(document.getElementById('pieKategori'),{type:'doughnut',data:{labels:kL,datasets:[{data:kV,backgroundColor:katColors.slice(0,kL.length),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{color:'#fff',font:{size:9,weight:'bold'},formatter:function(v){return v;}}},cutout:'55%'}});renderLegend('legKategori',kL,katColors);if(myPieSertifikat)myPieSertifikat.destroy();var srL=Object.keys(sertifikatCount),srV=srL.map(function(l){return sertifikatCount[l];});myPieSertifikat=new Chart(document.getElementById('pieSertifikat'),{type:'doughnut',data:{labels:srL,datasets:[{data:srV,backgroundColor:serColors.slice(0,srL.length),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{color:'#fff',font:{size:9,weight:'bold'},formatter:function(v){return v;}}},cutout:'55%'}});renderLegend('legSertifikat',srL,serColors);}
+function updateCharts(data){var cc=getChartColors();var monthData={};for(var i=0;i<data.length;i++){var tglRef=data[i].tanggal||data[i].tanggalSelesai||'';var m=tglRef?getBulanFromDate(tglRef)-1:-1;var label=m>=0?['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Ags','Sep','Okt','Nov','Des'][m]:'Tanpa Tgl';if(!monthData[label])monthData[label]=0;monthData[label]+=(data[i].biayaTraining||0)+(data[i].biayaPDS||0);}var barLabels=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Ags','Sep','Okt','Nov','Des'];var barValues=[];for(var i=0;i<barLabels.length;i++)barValues.push(monthData[barLabels[i]]||0);if(monthData['Tanpa Tgl']){barLabels.push('Tanpa Tgl');barValues.push(monthData['Tanpa Tgl']);}if(myBarChart)myBarChart.destroy();myBarChart=new Chart(document.getElementById('barChart'),{type:'bar',data:{labels:barLabels,datasets:[{label:'Total Biaya',data:barValues,backgroundColor:'rgba(99,102,241,0.7)',borderRadius:4,barThickness:20}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{display:false}},scales:{x:{ticks:{color:cc.textMuted,font:{size:10}},grid:{display:false}},y:{ticks:{color:cc.textMuted,font:{size:10},callback:function(v){return v>=1e6?(v/1e6)+'jt':v>=1e3?(v/1e3)+'rb':v;}},grid:{color:cc.grid}}}}});var segmenCount={},kategoriCount={},sertifikatCount={};for(var i=0;i<data.length;i++){var s=data[i].segmen||'Lainnya';var k=data[i].kategori||'Lainnya';var sr=data[i].sertifikat||'Lainnya';segmenCount[s]=(segmenCount[s]||0)+1;kategoriCount[k]=(kategoriCount[k]||0)+1;sertifikatCount[sr]=(sertifikatCount[sr]||0)+1;}var segColors=['#6366f1','#f59e0b','#10b981','#ef4444','#8b5cf6'];var katColors=['#3b82f6','#f97316','#22c55e','#ec4899'];var serColors=['#0ea5e9','#a855f7'];if(myPieSegmen)myPieSegmen.destroy();var sL=Object.keys(segmenCount),sV=sL.map(function(l){return segmenCount[l];});myPieSegmen=new Chart(document.getElementById('pieSegmen'),{type:'doughnut',data:{labels:sL,datasets:[{data:sV,backgroundColor:segColors.slice(0,sL.length),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{color:'#fff',font:{size:9,weight:'bold'},formatter:function(v){return v;}}},cutout:'55%'}});renderLegend('legSegmen',sL,segColors);if(myPieKategori)myPieKategori.destroy();var kL=Object.keys(kategoriCount),kV=kL.map(function(l){return kategoriCount[l];});myPieKategori=new Chart(document.getElementById('pieKategori'),{type:'doughnut',data:{labels:kL,datasets:[{data:kV,backgroundColor:katColors.slice(0,kL.length),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{color:'#fff',font:{size:9,weight:'bold'},formatter:function(v){return v;}}},cutout:'55%'}});renderLegend('legKategori',kL,katColors);if(myPieSertifikat)myPieSertifikat.destroy();var srL=Object.keys(sertifikatCount),srV=srL.map(function(l){return sertifikatCount[l];});myPieSertifikat=new Chart(document.getElementById('pieSertifikat'),{type:'doughnut',data:{labels:srL,datasets:[{data:srV,backgroundColor:serColors.slice(0,srL.length),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{color:'#fff',font:{size:9,weight:'bold'},formatter:function(v){return v;}}},cutout:'55%'}});renderLegend('legSertifikat',srL,serColors);}
 
-function updateBudget(data){var total=0;for(var i=0;i<data.length;i++)total+=(data[i].biayaTraining||0)+(data[i].biayaPDS||0);var pct=persenAnggaran(total);var sisa=sisaAnggaran(total);document.getElementById('bbRealized').innerHTML='<span>'+formatRp(total)+'</span>';document.getElementById('bbSisa').textContent=formatRp(sisa);document.getElementById('bbSisa').className='bb-sisa-val'+(sisa<=0?' over':'');document.getElementById('bbBarFill').style.width=pct+'%';document.getElementById('bbBarFill').className='bb-bar-fill'+(total>=ANGGARAN?' full':'');document.getElementById('bbPct').textContent=pct+'%';document.getElementById('bbPct').className='bb-pct'+(total>=ANGGARAN?' full':'');}
+function updateBudget(data){
+    var fTah=document.getElementById('filterTahun').value;
+    var total2026=0,total2025=0,totalLain=0;
+    for(var i=0;i<data.length;i++){
+        var d=data[i];
+        var biaya=(d.biayaTraining||0)+(d.biayaPDS||0);
+        var y=getTahunFromDate(d.tanggal||d.tanggalSelesai||'');
+        if(y==='2025'){
+            total2025+=biaya;
+        }else if(y==='2026'||!y){
+            total2026+=biaya;
+        }else{
+            totalLain+=biaya;
+            if(fTah===y) total2026+=biaya;
+        }
+    }
 
-function updateSummary(data){var tT=0,tP=0;for(var i=0;i<data.length;i++){tT+=(data[i].biayaTraining||0);tP+=(data[i].biayaPDS||0);}var tG=tT+tP;document.getElementById('totalTText').textContent=formatRp(tT);document.getElementById('totalTPct').textContent=persenAnggaran(tT)+'% anggaran';document.getElementById('barT').style.width=persenAnggaran(tT)+'%';document.getElementById('barT').className='sum-bar-fill'+(tT>=ANGGARAN?' full':'');document.getElementById('totalPText').textContent=formatRp(tP);document.getElementById('totalPPct').textContent=persenAnggaran(tP)+'% anggaran';document.getElementById('barP').style.width=persenAnggaran(tP)+'%';document.getElementById('barP').className='sum-bar-fill'+(tP>=ANGGARAN?' full':'');document.getElementById('totalGText').textContent=formatRp(tG);document.getElementById('totalGPct').textContent=persenAnggaran(tG)+'% anggaran';document.getElementById('barG').style.width=persenAnggaran(tG)+'%';document.getElementById('barG').className='sum-bar-fill'+(tG>=ANGGARAN?' full':'');}
+    // Anggaran 2026
+    var ang2026=ANGGARAN_2026;
+    var labelYear='2026';
+    if(fTah&&fTah!=='2025'&&fTah!=='2026'){
+        labelYear=fTah;
+    }
+    var pct2026=persenAnggaran(total2026,ang2026);
+    var sisa2026=sisaAnggaran(total2026,ang2026);
+    document.getElementById('bbRealized').innerHTML='<span>'+formatRp(total2026)+'</span>';
+    document.getElementById('bbSisa').textContent=formatRp(sisa2026);
+    document.getElementById('bbSisa').className='bb-sisa-val'+(sisa2026<=0?' over':'');
+    document.getElementById('bbBarFill').style.width=pct2026+'%';
+    document.getElementById('bbBarFill').className='bb-bar-fill'+(total2026>=ang2026?' full':'');
+    document.getElementById('bbPct').textContent=pct2026+'%';
+    document.getElementById('bbPct').className='bb-pct'+(total2026>=ang2026?' full':'');
+    var lbl2026=document.getElementById('bbLabel2026');
+    if(lbl2026) lbl2026.innerHTML='<span class="year-badge yb-2026">'+labelYear+'</span> Anggaran';
+    var rlb2026=document.getElementById('bbRealizedLabel2026');
+    if(rlb2026) rlb2026.textContent='Realisasi '+labelYear;
+    var slb2026=document.getElementById('bbSisaLabel2026');
+    if(slb2026) slb2026.textContent='Sisa Anggaran '+labelYear;
+
+    // Anggaran 2025
+    var elBanner2025=document.getElementById('banner2025');
+    if(elBanner2025){
+        var ang2025=ANGGARAN_2025;
+        var pct2025=persenAnggaran(total2025,ang2025);
+        var sisa2025=sisaAnggaran(total2025,ang2025);
+        var elR2025=document.getElementById('bbRealized2025');
+        if(elR2025) elR2025.innerHTML='<span style="color:#38bdf8;">'+formatRp(total2025)+'</span>';
+        var elS2025=document.getElementById('bbSisa2025');
+        if(elS2025){
+            elS2025.textContent=formatRp(sisa2025);
+            elS2025.className='bb-sisa-val'+(sisa2025<=0?' over':'');
+        }
+        var elF2025=document.getElementById('bbBarFill2025');
+        if(elF2025){
+            elF2025.style.width=pct2025+'%';
+            elF2025.className='bb-bar-fill'+(total2025>=ang2025?' full':'');
+        }
+        var elP2025=document.getElementById('bbPct2025');
+        if(elP2025){
+            elP2025.textContent=pct2025+'%';
+            elP2025.className='bb-pct'+(total2025>=ang2025?' full':'');
+        }
+    }
+
+    // Toggle visibility based on selected year
+    var elBanner2026=document.getElementById('banner2026');
+    if(fTah==='2025'){
+        if(elBanner2026) elBanner2026.style.display='none';
+        if(elBanner2025) elBanner2025.style.display='flex';
+    }else if(fTah==='2026'){
+        if(elBanner2026) elBanner2026.style.display='flex';
+        if(elBanner2025) elBanner2025.style.display='none';
+    }else if(fTah){
+        if(elBanner2026) elBanner2026.style.display='flex';
+        if(elBanner2025) elBanner2025.style.display='none';
+    }else{
+        if(elBanner2026) elBanner2026.style.display='flex';
+        if(elBanner2025) elBanner2025.style.display='flex';
+    }
+}
+
+function updateSummary(data){
+    var fTah=document.getElementById('filterTahun').value;
+    var tT=0,tP=0;
+    for(var i=0;i<data.length;i++){
+        tT+=(data[i].biayaTraining||0);
+        tP+=(data[i].biayaPDS||0);
+    }
+    var tG=tT+tP;
+
+    var targetAnggaran;
+    var labelSuffix='anggaran';
+    if(fTah==='2025'){
+        targetAnggaran=ANGGARAN_2025;
+        labelSuffix='anggaran 2025';
+    }else if(fTah==='2026'){
+        targetAnggaran=ANGGARAN_2026;
+        labelSuffix='anggaran 2026';
+    }else if(fTah){
+        targetAnggaran=ANGGARAN_DEFAULT;
+        labelSuffix='anggaran '+fTah;
+    }else{
+        targetAnggaran=ANGGARAN_2026+ANGGARAN_2025;
+        labelSuffix='total anggaran';
+    }
+
+    var pctT=persenAnggaran(tT,targetAnggaran);
+    var pctP=persenAnggaran(tP,targetAnggaran);
+    var pctG=persenAnggaran(tG,targetAnggaran);
+
+    document.getElementById('totalTText').textContent=formatRp(tT);
+    document.getElementById('totalTPct').textContent=pctT+'% '+labelSuffix;
+    document.getElementById('barT').style.width=pctT+'%';
+    document.getElementById('barT').className='sum-bar-fill'+(tT>=targetAnggaran?' full':'');
+    document.getElementById('totalPText').textContent=formatRp(tP);
+    document.getElementById('totalPPct').textContent=pctP+'% '+labelSuffix;
+    document.getElementById('barP').style.width=pctP+'%';
+    document.getElementById('barP').className='sum-bar-fill'+(tP>=targetAnggaran?' full':'');
+    document.getElementById('totalGText').textContent=formatRp(tG);
+    document.getElementById('totalGPct').textContent=pctG+'% '+labelSuffix;
+    document.getElementById('barG').style.width=pctG+'%';
+    document.getElementById('barG').className='sum-bar-fill'+(tG>=targetAnggaran?' full':'');
+}
 
 function updateRekapPegawai(){var uniqueNup={};for(var k in allDataFromCloud){var d=allDataFromCloud[k];if(d.nup){var nk=String(d.nup).trim();if(nk)uniqueNup[nk]=true;}}var sudah=Object.keys(uniqueNup).length;var belum=Math.max(0,TOTAL_PEGAWAI-sudah);var pctSudah=persenPegawai(sudah);var pctBelum=persenPegawai(belum);document.getElementById('rpbSudah').innerHTML=sudah+' orang <span class="rpb-pct-inline" id="rpbSudahPct">'+pctSudah+'%</span>';document.getElementById('rpbBelum').innerHTML=belum+' orang <span class="rpb-pct-inline" id="rpbBelumPct">'+pctBelum+'%</span>';document.getElementById('rpbPct').textContent=pctSudah+'%';document.getElementById('rpbBarFill').style.width=Math.min(parseFloat(pctSudah),100)+'%';}
 
-/* ========== FILTER TAHUN S/D 2030 (DIUBAH) ========== */
+/* ========== FILTER TAHUN S/D 2030 ========== */
 function populateFilterDropdowns(){
     var tahunSet={},unitSet={};
-    for(var k in allDataFromCloud){var d=allDataFromCloud[k];var tglRef=d.tanggal||d.tanggalSelesai||'';if(tglRef){var y=new Date(tglRef).getFullYear();if(y)tahunSet[y]=true;}if(d.unit)unitSet[d.unit]=true;}
-    // Tambah tahun dasar 2024 s/d 2030
+    for(var k in allDataFromCloud){var d=allDataFromCloud[k];var tglRef=d.tanggal||d.tanggalSelesai||'';if(tglRef){var y=getTahunFromDate(tglRef);if(y)tahunSet[y]=true;}if(d.unit)unitSet[d.unit]=true;}
     var baseYear = 2024;
     var endYear = 2030;
     for(var y=baseYear;y<=endYear;y++){tahunSet[y]=true;}
-    // Populate tahun
+    
     var tahunSel=document.getElementById('filterTahun');var currentTahun=tahunSel.value;tahunSel.innerHTML='<option value="">Semua</option>';
     var years=Object.keys(tahunSet).sort(function(a,b){return b-a;});
     for(var i=0;i<years.length;i++){var opt=document.createElement('option');opt.value=years[i];opt.textContent=years[i];tahunSel.appendChild(opt);}tahunSel.value=currentTahun;
-    // Populate unit
+    
     var unitSel=document.getElementById('filterUnit');var currentUnit=unitSel.value;unitSel.innerHTML='<option value="">Semua</option>';var units=Object.keys(unitSet).sort();for(var i=0;i<units.length;i++){var opt=document.createElement('option');opt.value=units[i];opt.textContent=units[i];unitSel.appendChild(opt);}unitSel.value=currentUnit;
-    // Populate query unit
+    
     var qUnitSel=document.getElementById('queryUnit');var qCurrent=qUnitSel.value;qUnitSel.innerHTML='<option value="">Semua Unit</option>';for(var i=0;i<units.length;i++){var opt=document.createElement('option');opt.value=units[i];opt.textContent=units[i];qUnitSel.appendChild(opt);}qUnitSel.value=qCurrent;
 }
 /* ========== AKHIR FILTER TAHUN ========== */
@@ -1402,23 +1613,24 @@ document.getElementById('excelFile').addEventListener('change',function(){docume
 function openQueryModal(){document.getElementById('queryModal').classList.add('show');document.getElementById('queryNama').focus();}
 function closeQueryModal(){document.getElementById('queryModal').classList.remove('show');document.getElementById('queryResults').innerHTML='';}
 
-/* ========== QUERY PESERTA SESUAI SCREENSHOT (DIUBAH) ========== */
+/* ========== QUERY PESERTA ========== */
 function jalankanQuery(){
     var qNama=document.getElementById('queryNama').value.trim().toLowerCase();
     var qNup=document.getElementById('queryNup').value.trim();
     var qUnit=document.getElementById('queryUnit').value;
+    var qSer=document.getElementById('querySertifikat')?document.getElementById('querySertifikat').value:'';
     var results=[];
     for(var k in allDataFromCloud){
         var d=allDataFromCloud[k];var ok=true;
         if(qNama&&d.nama&&d.nama.toLowerCase().indexOf(qNama)===-1)ok=false;
         if(qNup&&d.nup&&String(d.nup).indexOf(qNup)===-1)ok=false;
         if(qUnit&&d.unit!==qUnit)ok=false;
+        if(qSer&&d.sertifikat!==qSer)ok=false;
         if(ok)results.push(d);
     }
     var container=document.getElementById('queryResults');
     if(!results.length){container.innerHTML='<div class="query-empty"><span class="qe-icon">&#128269;</span><div class="qe-text">Tidak ditemukan</div><div class="qe-sub">Coba ubah kata kunci pencarian</div></div>';return;}
 
-    // Hitung terpisah: biaya training, biaya PDS, total
     var totalTraining=0, totalPDS=0;
     var katSet={};
     for(var i=0;i<results.length;i++){
@@ -1430,13 +1642,11 @@ function jalankanQuery(){
     }
     var grandTotal=totalTraining+totalPDS;
 
-    // Info peserta
     var html='<div class="query-peserta-info">';
     html+='<div class="qpi-avatar">'+(results[0].nama?results[0].nama.charAt(0):'?')+'</div>';
     html+='<div class="qpi-details"><div class="qpi-name">'+escapeHtml(results[0].nama||'-')+'</div>';
     html+='<div class="qpi-meta"><span>NUP: '+escapeHtml(results[0].nup||'-')+'</span><span>Unit: '+escapeHtml(results[0].unit||'-')+'</span></div></div></div>';
 
-    // 4 kartu summary sesuai screenshot
     html+='<div class="query-summary">';
     html+='<div class="qs-card" style="background:#4f46e5;"><small>Total Pelatihan</small><div class="qs-val">'+results.length+'x</div></div>';
     html+='<div class="qs-card" style="background:#059669;"><small>Biaya Training</small><div class="qs-val">'+formatRp(totalTraining)+'</div></div>';
@@ -1444,10 +1654,9 @@ function jalankanQuery(){
     html+='<div class="qs-card" style="background:#1e1b4b;"><small>Total</small><div class="qs-val">'+formatRp(grandTotal)+'</div></div>';
     html+='</div>';
 
-    // Kategori chips
     var katKeys=Object.keys(katSet);
     if(katKeys.length){
-        html+='<div class="query-kategori-chips>';
+        html+='<div class="query-kategori-chips">';
         var katColors={'Refresher':'#3b82f6','New':'#10b981','Practical':'#f59e0b','Lainnya':'#94a3b8'};
         for(var i=0;i<katKeys.length;i++){
             var c=katColors[katKeys[i]]||'#94a3b8';
@@ -1456,7 +1665,6 @@ function jalankanQuery(){
         html+='</div>';
     }
 
-    // Tabel lengkap sesuai screenshot
     html+='<div class="query-result-table-wrap"><table><thead><tr><th>No</th><th>Pelatihan</th><th>Segmen</th><th>Kategori</th><th>Sertifikat</th><th>Tgl Mulai</th><th>Tgl Selesai</th><th>Biaya Training</th><th>PDS</th><th>Total</th></tr></thead><tbody>';
     for(var i=0;i<results.length;i++){
         var r=results[i];
@@ -1482,7 +1690,35 @@ function jalankanQuery(){
 }
 /* ========== AKHIR QUERY PESERTA ========== */
 
-function toggleAuth(){if(isAdmin){isAdmin=false;currentAdmin='';document.getElementById('authBtn').className='btn-lock locked';document.getElementById('authIcon').innerHTML='&#128274;';document.getElementById('authText').textContent='UNLOCK';document.getElementById('adminBadge').classList.remove('show');jalankanFilter();}else{var name=prompt('Masukkan nama admin:');if(!name)return;name=name.trim();if(ALLOWED_ADMINS.indexOf(name)===-1){showToast('Akses Ditolak','Nama "'+name+'" tidak terdaftar sebagai admin','error');return;}isAdmin=true;currentAdmin=name;document.getElementById('authBtn').className='btn-lock unlocked';document.getElementById('authIcon').innerHTML='&#128275;';document.getElementById('authText').textContent='UNLOCKED';document.getElementById('admin-badge').classList.add('show');document.getElementById('adminBadgeName').textContent=name;jalankanFilter();}}
+function toggleAuth(){
+    if(isAdmin){
+        isAdmin=false;
+        currentAdmin='';
+        document.getElementById('authBtn').className='btn-lock locked';
+        document.getElementById('authIcon').innerHTML='&#128274;';
+        document.getElementById('authText').textContent='UNLOCK';
+        var b = document.getElementById('adminBadge') || document.getElementById('admin-badge');
+        if(b) b.classList.remove('show');
+        jalankanFilter();
+    } else {
+        var name=prompt('Masukkan nama admin:');
+        if(!name)return;
+        name=name.trim();
+        if(ALLOWED_ADMINS.indexOf(name)===-1){
+            showToast('Akses Ditolak','Nama "'+name+'" tidak terdaftar sebagai admin','error');
+            return;
+        }
+        isAdmin=true;
+        currentAdmin=name;
+        document.getElementById('authBtn').className='btn-lock unlocked';
+        document.getElementById('authIcon').innerHTML='&#128275;';
+        document.getElementById('authText').textContent='UNLOCKED';
+        var b = document.getElementById('adminBadge') || document.getElementById('admin-badge');
+        if(b) b.classList.add('show');
+        document.getElementById('adminBadgeName').textContent=name;
+        jalankanFilter();
+    }
+}
 
 applyTheme();
 
