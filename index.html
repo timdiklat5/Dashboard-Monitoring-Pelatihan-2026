@@ -292,6 +292,9 @@
         .year-badge { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 0.62rem; font-weight: 800; letter-spacing: 0.04em; margin-right: 4px; vertical-align: middle; }
         .year-badge.yb-2026 { background: rgba(251,191,36,0.18); color: #fbbf24; border: 1px solid rgba(251,191,36,0.4); }
         .year-badge.yb-2025 { background: rgba(96,165,250,0.18); color: #93c5fd; border: 1px solid rgba(96,165,250,0.4); }
+        .year-badge.yb-all { background: rgba(167,243,208,0.22); color: #6ee7b7; border: 1px solid rgba(110,231,183,0.4); }
+        .rpb-filter-badge { display: inline-flex; align-items: center; gap: 3px; background: rgba(2,132,199,0.25); color: #bae6fd; border: 1px solid rgba(56,189,248,0.4); padding: 1px 7px; border-radius: 12px; font-size: 0.6rem; font-weight: 700; letter-spacing: normal; text-transform: none; vertical-align: middle; margin-left: 6px; }
+        [data-theme="dark"] .rpb-filter-badge { background: rgba(2,132,199,0.3); color: #7dd3fc; border-color: rgba(56,189,248,0.5); }
         .budget-banner .bb-left { display: flex; align-items: center; gap: 1.2rem; }
         .budget-banner .bb-label { color: #94a3b8; font-weight: 500; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; }
         .budget-banner .bb-anggaran { font-weight: 800; color: #fbbf24; font-size: 0.95rem; }
@@ -397,12 +400,22 @@
         .rekap-item-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 4px; margin-bottom: 2px; }
         .rekap-nama { font-weight: 700; color: var(--text-main); font-size: 0.75rem; line-height: 1.2; }
         .badge-freq { display: inline-flex; align-items: center; padding: 1px 6px; border-radius: 12px; font-size: 0.62rem; font-weight: 800; white-space: nowrap; flex-shrink: 0; }
+        .badge-freq.freq-0 { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
         .badge-freq.freq-1 { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
         .badge-freq.freq-2 { background: #dbeafe; color: #1d4ed8; border: 1px solid #93c5fd; }
         .badge-freq.freq-multi { background: #fae8ff; color: #86198f; border: 1px solid #f0abfc; }
+        [data-theme="dark"] .badge-freq.freq-0 { background: #451a03; color: #fcd34d; border-color: #78350f; }
         [data-theme="dark"] .badge-freq.freq-1 { background: #052e16; color: #4ade80; border-color: #166534; }
         [data-theme="dark"] .badge-freq.freq-2 { background: #172554; color: #60a5fa; border-color: #1e40af; }
         [data-theme="dark"] .badge-freq.freq-multi { background: #4a044e; color: #f472b6; border-color: #86198f; }
+        .rpb-clickable { cursor: pointer; border-radius: 8px; padding: 3px 6px; margin: -3px -6px; transition: background-color 0.2s ease, transform 0.15s ease; }
+        .rpb-clickable:hover { background: rgba(14, 165, 233, 0.12); transform: translateY(-1px); }
+        .rpb-view-hint { font-size: 0.6rem; font-weight: 700; color: #0284c7; margin-left: 4px; padding: 1px 5px; background: #e0f2fe; border-radius: 4px; display: inline-block; vertical-align: middle; }
+        [data-theme="dark"] .rpb-view-hint { background: #0369a1; color: #bae6fd; }
+        .rekap-pill-group { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 0.65rem; }
+        .rekap-pill { background: var(--card-bg); border: 1px solid var(--border); font-size: 0.72rem; font-weight: 700; color: var(--text-muted); padding: 4px 10px; border-radius: 20px; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 4px; }
+        .rekap-pill:hover { border-color: #0284c7; color: var(--text-main); }
+        .rekap-pill.active { background: #0284c7; color: white; border-color: #0284c7; box-shadow: 0 1px 3px rgba(2,132,199,0.25); }
         .rekap-meta { font-size: 0.64rem; color: var(--text-muted); margin-bottom: 4px; }
         .rekap-trainings-list { font-size: 0.65rem; color: #334155; display: flex; flex-direction: column; gap: 2px; padding-left: 2px; }
         [data-theme="dark"] .rekap-trainings-list { color: #cbd5e1; }
@@ -613,18 +626,28 @@
 </div>
 
 <div class="modal-overlay" id="rekapModal">
-    <div class="modal-box" style="max-width: 1080px;">
+    <div class="modal-box" style="max-width: 1100px;">
         <div class="modal-header-rekap">
-            <h2>&#128101; Rekapan Frekuensi Pelatihan Tiap Pegawai</h2>
+            <h2>&#128101; Rekapan Status Pelatihan Pegawai (Sudah & Belum Pelatihan)</h2>
             <button class="modal-close" onclick="closeRekapModal()">&times;</button>
         </div>
         <div class="modal-body">
             <!-- Top Summary Metric Cards -->
-            <div class="query-summary" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 0.85rem;">
-                <div class="qs-card" style="background:#0284c7;"><small>Total Pegawai Ikut Training</small><div class="qs-val" id="rmStatTotalPegawai">0 orang</div></div>
-                <div class="qs-card" style="background:#059669;"><small>1x Pelatihan Saja</small><div class="qs-val" id="rmStat1x">0 orang</div></div>
-                <div class="qs-card" style="background:#d97706;"><small>2x Pelatihan</small><div class="qs-val" id="rmStat2x">0 orang</div></div>
-                <div class="qs-card" style="background:#7c3aed;"><small>&#8805;3x Pelatihan (Multi)</small><div class="qs-val" id="rmStat3x">0 orang</div></div>
+            <div class="query-summary" style="grid-template-columns: repeat(5, 1fr); margin-bottom: 0.75rem;">
+                <div class="qs-card" style="background:#0284c7;"><small>Total Master Pegawai</small><div class="qs-val" id="rmStatTotalPegawai">0 orang</div></div>
+                <div class="qs-card" style="background:#059669;"><small>Sudah Pelatihan (1x)</small><div class="qs-val" id="rmStatSudah">0 orang</div></div>
+                <div class="qs-card" style="background:#d97706;"><small>Belum Pelatihan</small><div class="qs-val" id="rmStatBelum">0 orang</div></div>
+                <div class="qs-card" style="background:#4f46e5;"><small>1x Pelatihan Saja</small><div class="qs-val" id="rmStat1x">0 orang</div></div>
+                <div class="qs-card" style="background:#7c3aed;"><small>&#8805;2x Pelatihan (Multi)</small><div class="qs-val" id="rmStatMulti">0 orang</div></div>
+            </div>
+
+            <!-- Quick Filter Pills -->
+            <div class="rekap-pill-group">
+                <button type="button" class="rekap-pill active" id="rpillAll" onclick="setRekapPillFilter('', this)">👥 Semua Pegawai (<span id="pillCountAll">0</span>)</button>
+                <button type="button" class="rekap-pill" id="rpillSudah" onclick="setRekapPillFilter('sudah', this)">✅ Sudah Pelatihan (Dihitung 1x) (<span id="pillCountSudah">0</span>)</button>
+                <button type="button" class="rekap-pill" id="rpillBelum" onclick="setRekapPillFilter('belum', this)">⏳ Belum Pelatihan (<span id="pillCountBelum">0</span>)</button>
+                <button type="button" class="rekap-pill" id="rpill1x" onclick="setRekapPillFilter('1', this)">1x Saja (<span id="pillCount1x">0</span>)</button>
+                <button type="button" class="rekap-pill" id="rpillMulti" onclick="setRekapPillFilter('multi', this)">🔁 &#8805;2x Pelatihan (<span id="pillCountMulti">0</span>)</button>
             </div>
 
             <!-- Search, Filter & Sort Bar -->
@@ -632,9 +655,9 @@
                 <div class="qs-field" style="flex:2; min-width:160px;"><label>Cari Pegawai / NUP / Pelatihan</label><input type="text" id="rmCari" placeholder="Cari nama, NUP, atau pelatihan..." onkeyup="jalankanRekapFilter()"></div>
                 <div class="qs-field"><label>Unit Kerja</label><select id="rmFilterUnit" onchange="jalankanRekapFilter()"><option value="">Semua Unit</option></select></div>
                 <div class="qs-field"><label>Tahun Pelatihan</label><select id="rmFilterTahun" onchange="jalankanRekapFilter()"><option value="">Semua Tahun</option></select></div>
-                <div class="qs-field"><label>Frekuensi Pelatihan</label><select id="rmFilterFreq" onchange="jalankanRekapFilter()"><option value="">Semua Frekuensi</option><option value="1">1x Pelatihan</option><option value="2">2x Pelatihan</option><option value="3+">&#8805; 3x Pelatihan</option><option value="multi">&#8805; 2x Pelatihan (Multi)</option></select></div>
-                <div class="qs-field"><label>Urutkan</label><select id="rmSortBy" onchange="jalankanRekapFilter()"><option value="freq-desc">Frekuensi Terbanyak &#8595;</option><option value="freq-asc">Frekuensi Tersedikit &#8593;</option><option value="nama-asc">Nama Pegawai A-Z</option><option value="biaya-desc">Total Biaya Terbesar &#8595;</option></select></div>
-                <button type="button" class="btn-green" style="height:fit-content; margin-top:0; padding:0.55rem 1rem; width:auto; font-size:0.8rem; white-space:nowrap;" onclick="exportRekapPegawaiKeExcel()">&#128196; EXPORT REKAP</button>
+                <div class="qs-field"><label>Status & Frekuensi</label><select id="rmFilterFreq" onchange="syncPillFromSelect(); jalankanRekapFilter()"><option value="">Semua Status</option><option value="sudah">✅ Sudah Pelatihan (Dihitung 1x)</option><option value="belum">⏳ Belum Pelatihan (Tahun Terpilih)</option><option value="1">1x Pelatihan Saja</option><option value="2">2x Pelatihan</option><option value="3+">&#8805; 3x Pelatihan</option><option value="multi">&#8805; 2x Pelatihan (Multi)</option></select></div>
+                <div class="qs-field"><label>Urutkan</label><select id="rmSortBy" onchange="jalankanRekapFilter()"><option value="freq-desc">Frekuensi Terbanyak &#8595;</option><option value="freq-asc">Frekuensi Tersedikit (Belum Dulu) &#8593;</option><option value="nama-asc">Nama Pegawai A-Z</option><option value="biaya-desc">Total Biaya Terbesar &#8595;</option></select></div>
+                <button type="button" class="btn-green" style="height:fit-content; margin-top:0; padding:0.55rem 1rem; width:auto; font-size:0.8rem; white-space:nowrap;" onclick="exportRekapPegawaiKeExcel()">&#128196; EXPORT REKAP EXCEL</button>
             </div>
 
             <!-- Table -->
@@ -645,11 +668,11 @@
                             <th style="width:35px; text-align:center;">No</th>
                             <th style="width:90px;">NUP</th>
                             <th style="width:170px;">Nama Pegawai</th>
-                            <th style="width:140px;">Unit Kerja</th>
-                            <th style="width:110px; text-align:center;">Frekuensi</th>
-                            <th>Daftar Pelatihan yang Diikuti (Berbeda atau Sama)</th>
-                            <th style="width:130px;">Total Biaya</th>
-                            <th style="width:65px; text-align:center;">Aksi</th>
+                            <th style="width:150px;">Unit Kerja</th>
+                            <th style="width:130px; text-align:center;">Status & Frekuensi</th>
+                            <th>Daftar Pelatihan yang Diikuti (Tahun Terpilih)</th>
+                            <th style="width:125px; text-align:right;">Total Biaya</th>
+                            <th style="width:75px; text-align:center;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="rekapTableBody">
@@ -1010,10 +1033,10 @@
         </div>
         <button id="btnSimpan" class="btn-blue" onclick="submitData()" disabled>SIMPAN=&gt;&gt;</button>
         <button id="btnCancel" class="btn-gray" onclick="resetForm()" style="display:none;">BATAL EDIT</button>
-        <button class="btn-green" onclick="exportKeExcel()">EXPORT EXCEL</button>
+        <button class="btn-green" id="btnExportExcel" onclick="exportKeExcel()" title="Download file Excel sesuai filter tahun yang dipilih">EXPORT EXCEL <span id="exportExcelYearHint" style="font-size:0.72rem; font-weight:normal; opacity:0.95;"></span></button>
         <div class="query-btn-row">
             <button class="btn-query" style="margin-top:0; flex:1;" onclick="openQueryModal()" title="Cari data peserta spesifik">&#128269; QUERY PESERTA</button>
-            <button class="btn-rekap" id="btnRekapPegawai" style="margin-top:0; flex:1;" onclick="openRekapModal()" title="Buka Rekap Tabel Lengkap Frekuensi Pelatihan">&#128101; REKAP PEGAWAI</button>
+            <button class="btn-rekap" id="btnRekapPegawai" style="margin-top:0; flex:1;" onclick="openRekapModal()" title="Buka Rekap Tabel Lengkap Status & Frekuensi Pelatihan Pegawai">&#128101; REKAP PEGAWAI</button>
         </div>
         <div class="card rekap-sidebar-card" id="rekapSidebarCard" style="margin-top:0.35rem;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 5px;">
@@ -1026,7 +1049,9 @@
                 <span>Total: <strong id="sidebarRekapCount" style="color:var(--text-main);">0</strong> pegawai</span>
                 <div class="rekap-filter-tabs">
                     <button type="button" class="rf-tab active" id="tabFreqAll" onclick="setSidebarFreqFilter('all', this)">Semua</button>
-                    <button type="button" class="rf-tab" id="tabFreqMulti" onclick="setSidebarFreqFilter('multi', this)">&#8805;2x Ikut</button>
+                    <button type="button" class="rf-tab" id="tabFreqSudah" onclick="setSidebarFreqFilter('sudah', this)" title="Pegawai yang sudah pelatihan (dihitung 1x)">Sudah</button>
+                    <button type="button" class="rf-tab" id="tabFreqBelum" onclick="setSidebarFreqFilter('belum', this)" title="Pegawai yang belum pelatihan">Belum</button>
+                    <button type="button" class="rf-tab" id="tabFreqMulti" onclick="setSidebarFreqFilter('multi', this)">&#8805;2x</button>
                 </div>
             </div>
             <input type="text" id="cariRekapSidebar" placeholder="Cari nama / NUP..." onkeyup="renderSidebarRekap()" style="width:100%; padding: 0.32rem 0.45rem; font-size:0.72rem; margin-bottom: 5px; box-sizing:border-box;">
@@ -1135,26 +1160,13 @@
                 <div class="rpb-left">
                     <div><div class="rpb-label" id="rpbLabel2026"><span class="year-badge yb-2026">2026</span> Total Pegawai</div><div class="rpb-total" id="rpbTotal">800</div></div>
                     <div class="rpb-divider"></div>
-                    <div><div class="rpb-label" id="rpbSudahLabel2026">Sudah Pelatihan 2026</div><div class="rpb-sudah" id="rpbSudah">0 orang <span class="rpb-pct-inline" id="rpbSudahPct">0%</span></div></div>
+                    <div class="rpb-clickable" onclick="bukaRekapStatus('sudah')" title="Klik untuk lihat daftar nama pegawai yang SUDAH pelatihan (dihitung 1x)"><div class="rpb-label" id="rpbSudahLabel2026">Sudah Pelatihan <span class="rpb-view-hint">👁️ Lihat</span></div><div class="rpb-sudah" id="rpbSudah">0 orang <span class="rpb-pct-inline" id="rpbSudahPct">0%</span></div></div>
                     <div class="rpb-divider"></div>
-                    <div><div class="rpb-label" id="rpbBelumLabel2026">Belum Pelatihan 2026</div><div class="rpb-belum" id="rpbBelum">800 orang <span class="rpb-pct-inline" id="rpbBelumPct">100%</span></div></div>
+                    <div class="rpb-clickable" onclick="bukaRekapStatus('belum')" title="Klik untuk lihat daftar nama pegawai yang BELUM pelatihan"><div class="rpb-label" id="rpbBelumLabel2026">Belum Pelatihan <span class="rpb-view-hint">👁️ Lihat</span></div><div class="rpb-belum" id="rpbBelum">800 orang <span class="rpb-pct-inline" id="rpbBelumPct">100%</span></div></div>
                 </div>
                 <div class="rpb-right">
                     <div class="rpb-bar-outer"><div class="rpb-bar-inner" id="rpbBarFill" style="width:0%"></div></div>
                     <div class="rpb-pct-wrap"><div class="rpb-pct" id="rpbPct">0%</div><div class="rbp-info">kepesertaan</div></div>
-                </div>
-            </div>
-            <div class="rekap-pegawai-banner rekap-2025" id="rekapBanner2025" style="display:none;">
-                <div class="rpb-left">
-                    <div><div class="rpb-label" id="rpbLabel2025"><span class="year-badge yb-2025">2025</span> Total Pegawai</div><div class="rpb-total" id="rpbTotal2025">800</div></div>
-                    <div class="rpb-divider"></div>
-                    <div><div class="rpb-label">Sudah Pelatihan 2025</div><div class="rpb-sudah" id="rpbSudah2025">0 orang <span class="rpb-pct-inline" id="rpbSudahPct2025">0%</span></div></div>
-                    <div class="rpb-divider"></div>
-                    <div><div class="rpb-label">Belum Pelatihan 2025</div><div class="rpb-belum" id="rpbBelum2025">800 orang <span class="rpb-pct-inline" id="rpbBelumPct2025">100%</span></div></div>
-                </div>
-                <div class="rpb-right">
-                    <div class="rpb-bar-outer"><div class="rpb-bar-inner" id="rpbBarFill2025" style="width:0%"></div></div>
-                    <div class="rpb-pct-wrap"><div class="rpb-pct" id="rpbPct2025">0%</div><div class="rbp-info">kepesertaan</div></div>
                 </div>
             </div>
         </div>
@@ -2162,7 +2174,7 @@ var databasePegawai={
 "51042": { nama: "RISMAN GURIUM", unit: "CABANG PRATAMA KLAS AMBON" }
 };
 
-function buildPegawaiList(){var list={},k;for(k in databasePegawai)list[k]={nama:databasePegawai[k].nama,unit:databasePegawai[k].unit,nup:k};for(k in allDataFromCloud){var d=allDataFromCloud[k];if(d.nup&&d.nama){var nk=String(d.nup).trim();if(!list[nk])list[nk]={nama:d.nama,unit:d.unit||'',nup:nk};}}return list;}
+function buildPegawaiList(){var list={},k;for(k in databasePegawai)list[k]={nama:databasePegawai[k].nama,unit:databasePegawai[k].unit,nup:k};for(k in allDataFromCloud){var d=allDataFromCloud[k];if(d&&d.nama){var nk=d.nup?String(d.nup).trim():('NAMA_'+d.nama.trim().toLowerCase());if(!list[nk])list[nk]={nama:d.nama.trim(),unit:d.unit||'',nup:d.nup?String(d.nup).trim():''};else if((!list[nk].unit||list[nk].unit==='-')&&d.unit){list[nk].unit=d.unit;}}}return list;}
 function positionDropdown(dd,inp){var r=inp.getBoundingClientRect();dd.style.position='fixed';dd.style.top=(r.bottom+2)+'px';dd.style.left=r.left+'px';dd.style.width=r.width+'px';dd.style.zIndex='10000';}
 function showDropdown(dd,inp,matches){positionDropdown(dd,inp);dd.innerHTML='';activeDropdownIndex=-1;if(!matches.length){dd.innerHTML='<div class="dd-empty">Tidak ditemukan</div>';dd.classList.add('show');return;}for(var i=0;i<matches.length;i++){(function(p,idx){var it=document.createElement('div');it.className='dd-item';it.dataset.index=idx;it.innerHTML='<div><span class="dd-nama">'+highlightMatch(p.nama,inp.value)+'</span><span class="dd-nup">NUP: '+p.nup+'</span></div><div class="dd-unit">'+(p.unit||'-')+'</div>';it.addEventListener('mousedown',function(e){e.preventDefault();selectPeserta(p);hideAllDropdowns();});it.addEventListener('mouseenter',function(){clearActiveItem(dd);this.classList.add('active');activeDropdownIndex=idx;});dd.appendChild(it);})(matches[i],i);}dd.classList.add('show');}
 function highlightMatch(t,q){if(!q)return t;var i=t.toLowerCase().indexOf(q.toLowerCase());if(i===-1)return t;return t.substring(0,i)+'<strong style="color:var(--highlight-color);">'+t.substring(i,i+q.length)+'</strong>'+t.substring(i+q.length);}
@@ -2219,12 +2231,16 @@ function jalankanFilter(){
         if(ok)filtered.push(d);
     }
     renderTable(filtered);
+    var expHint = document.getElementById('exportExcelYearHint');
+    if (expHint) {
+        expHint.textContent = fTah ? ('(' + fTah + ')') : '(Semua)';
+    }
     clearTimeout(chartUpdateTimer);
     chartUpdateTimer=setTimeout(function(){
         updateCharts(filtered);
         updateBudget(filtered);
         updateSummary(filtered);
-        updateRekapPegawai();
+        updateRekapPegawai(filtered);
         renderSidebarRekap();
     },150);
 }
@@ -2635,77 +2651,151 @@ function updateSummary(data){
     document.getElementById('barG').className='sum-bar-fill'+(tG>=targetAnggaran?' full':'');
 }
 
-function updateRekapPegawai(){
-    var fTah=document.getElementById('filterTahun')?document.getElementById('filterTahun').value:'';
-    var labelYear = fTah ? fTah : TAHUN_BERJALAN;
-    var uniquePrimary={}, unique2025={};
-    for(var k in allDataFromCloud){
-        var d=allDataFromCloud[k];
-        var nk=d.nup?String(d.nup).trim():(d.nama?String(d.nama).trim().toLowerCase():'');
-        if(!nk) continue;
-        var y=getTahunFromDate(d.tanggal||d.tanggalSelesai||'');
-        if(y==='2025'){
-            unique2025[nk]=true;
-        }
-        if(fTah){
-            if(y===fTah) uniquePrimary[nk]=true;
-        }else{
-            if(y===TAHUN_BERJALAN||!y) uniquePrimary[nk]=true;
+function updateRekapPegawai(data){
+    var fSeg = document.getElementById('filterSegmen') ? document.getElementById('filterSegmen').value : '';
+    var fKat = document.getElementById('filterKategori') ? document.getElementById('filterKategori').value : '';
+    var fSer = document.getElementById('filterSertifikat') ? document.getElementById('filterSertifikat').value : '';
+    var fBul = document.getElementById('filterBulan') ? document.getElementById('filterBulan').value : '';
+    var fTah = document.getElementById('filterTahun') ? document.getElementById('filterTahun').value : '';
+    var fUni = document.getElementById('filterUnit') ? document.getElementById('filterUnit').value : '';
+    var fNam = document.getElementById('filterNama') ? document.getElementById('filterNama').value.trim().toLowerCase() : '';
+    var fPel = document.getElementById('filterPelatihan') ? document.getElementById('filterPelatihan').value.trim().toLowerCase() : '';
+
+    // Jika data tidak disediakan, saring langsung dari allDataFromCloud sesuai filter aktif
+    if (!data) {
+        data = [];
+        for (var k in allDataFromCloud) {
+            var d = allDataFromCloud[k];
+            if (!d) continue;
+            if (fSeg && d.segmen !== fSeg) continue;
+            if (fKat && d.kategori !== fKat) continue;
+            if (fSer && d.sertifikat !== fSer) continue;
+            if (fBul) {
+                var tglRef = d.tanggal || d.tanggalSelesai || '';
+                if (String(getBulanFromDate(tglRef)) !== fBul) continue;
+            }
+            if (fTah) {
+                var tglRef2 = d.tanggal || d.tanggalSelesai || '';
+                if (String(getTahunFromDate(tglRef2)) !== fTah) continue;
+            }
+            if (fUni && d.unit !== fUni) continue;
+            if (fNam && d.nama && d.nama.toLowerCase().indexOf(fNam) === -1) continue;
+            if (fPel && d.pelatihan && d.pelatihan.toLowerCase().indexOf(fPel) === -1) continue;
+            data.push(d);
         }
     }
 
-    // Rekap Primary (Tahun Berjalan / Tahun Filter)
-    var totalPegPrimary=getTotalPegawai(labelYear);
-    var sudahPrimary=Object.keys(uniquePrimary).length;
-    var belumPrimary=Math.max(0,totalPegPrimary-sudahPrimary);
-    var pctSudahPrimary=persenPegawai(sudahPrimary,totalPegPrimary);
-    var pctBelumPrimary=persenPegawai(belumPrimary,totalPegPrimary);
+    // Hitung peserta unik dari data yang difilter (setiap pegawai dihitung 1x unik)
+    var uniqueFiltered = {};
+    for (var i = 0; i < data.length; i++) {
+        var row = data[i];
+        if (!row) continue;
+        var cleanNup = row.nup ? String(row.nup).trim() : '';
+        var cleanNama = (row.nama || '').trim().toLowerCase();
+        var nk = cleanNup ? ('NUP_' + cleanNup) : ('NAMA_' + cleanNama);
+        if (!nk || nk === 'NAMA_') continue;
+        uniqueFiltered[nk] = true;
+    }
+    var sudahPrimary = Object.keys(uniqueFiltered).length;
 
-    var rpbTotalEl=document.getElementById('rpbTotal');
-    if(rpbTotalEl) rpbTotalEl.textContent=totalPegPrimary;
-    var rpbLabelPrimaryEl=document.getElementById('rpbLabel2026');
-    if(rpbLabelPrimaryEl) rpbLabelPrimaryEl.innerHTML='<span class="year-badge yb-2026">'+labelYear+'</span> Total Pegawai';
-    var rpbSudahLbl=document.getElementById('rpbSudahLabel2026');
-    if(rpbSudahLbl) rpbSudahLbl.textContent='Sudah Pelatihan '+labelYear;
-    var rpbBelumLbl=document.getElementById('rpbBelumLabel2026');
-    if(rpbBelumLbl) rpbBelumLbl.textContent='Belum Pelatihan '+labelYear;
+    // Hitung total populasi pegawai sesuai lingkup filter (Unit Kerja, pencarian nama, atau target tahunan)
+    var totalPegPrimary;
+    var masterList = getCachedPegawaiList();
+    if (fUni) {
+        var totalUnitMaster = 0;
+        for (var mk in masterList) {
+            if (masterList[mk].unit === fUni) totalUnitMaster++;
+        }
+        totalPegPrimary = Math.max(totalUnitMaster, sudahPrimary);
+        if (totalPegPrimary === 0) totalPegPrimary = Math.max(sudahPrimary, 1);
+    } else if (fNam) {
+        var totalNameMaster = 0;
+        for (var nk2 in masterList) {
+            var mp = masterList[nk2];
+            if (mp.nama.toLowerCase().indexOf(fNam) !== -1 || (mp.nup && String(mp.nup).indexOf(fNam) !== -1)) {
+                totalNameMaster++;
+            }
+        }
+        totalPegPrimary = Math.max(totalNameMaster, sudahPrimary);
+        if (totalPegPrimary === 0) totalPegPrimary = Math.max(sudahPrimary, 1);
+    } else {
+        var baseYear = fTah ? fTah : TAHUN_BERJALAN;
+        totalPegPrimary = getTotalPegawai(baseYear);
+        if (sudahPrimary > totalPegPrimary) {
+            totalPegPrimary = sudahPrimary;
+        }
+    }
 
-    var elSudah=document.getElementById('rpbSudah');
-    if(elSudah) elSudah.innerHTML=sudahPrimary+' orang <span class="rpb-pct-inline" id="rpbSudahPct">'+pctSudahPrimary+'%</span>';
-    var elBelum=document.getElementById('rpbBelum');
-    if(elBelum) elBelum.innerHTML=belumPrimary+' orang <span class="rpb-pct-inline" id="rpbBelumPct">'+pctBelumPrimary+'%</span>';
-    var elPct=document.getElementById('rpbPct');
-    if(elPct) elPct.textContent=pctSudahPrimary+'%';
-    var elFill=document.getElementById('rpbBarFill');
-    if(elFill) elFill.style.width=Math.min(parseFloat(pctSudahPrimary),100)+'%';
+    var belumPrimary = Math.max(0, totalPegPrimary - sudahPrimary);
+    var pctSudahPrimary = totalPegPrimary > 0 ? persenPegawai(sudahPrimary, totalPegPrimary) : '0';
+    var pctBelumPrimary = totalPegPrimary > 0 ? persenPegawai(belumPrimary, totalPegPrimary) : '0';
 
-    // Rekap 2025 (Hanya aktif ketika difilter ke 2025)
-    var totalPeg2025=getTotalPegawai('2025');
-    var sudah2025=Object.keys(unique2025).length;
-    var belum2025=Math.max(0,totalPeg2025-sudah2025);
-    var pctSudah2025=persenPegawai(sudah2025,totalPeg2025);
-    var pctBelum2025=persenPegawai(belum2025,totalPeg2025);
+    // Rangkum info filter aktif untuk banner
+    var labelYear = fTah ? fTah : 'Semua Tahun';
+    var filterParts = [];
+    if (fUni) filterParts.push(fUni);
+    if (fSeg) filterParts.push('Segmen: ' + fSeg);
+    if (fKat) filterParts.push('Kategori: ' + fKat);
+    if (fSer) filterParts.push('Sertifikat: ' + fSer);
+    if (fBul) {
+        var bNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+        filterParts.push('Bulan ' + (bNames[parseInt(fBul, 10)] || fBul));
+    }
+    if (fPel) filterParts.push('Diklat: "' + fPel + '"');
+    if (fNam) filterParts.push('Nama: "' + fNam + '"');
 
-    var elTotal25=document.getElementById('rpbTotal2025');
-    if(elTotal25) elTotal25.textContent=totalPeg2025;
-    var elSudah25=document.getElementById('rpbSudah2025');
-    if(elSudah25) elSudah25.innerHTML=sudah2025+' orang <span class="rpb-pct-inline" id="rpbSudahPct2025">'+pctSudah2025+'%</span>';
-    var elBelum25=document.getElementById('rpbBelum2025');
-    if(elBelum25) elBelum25.innerHTML=belum2025+' orang <span class="rpb-pct-inline" id="rpbBelumPct2025">'+pctBelum2025+'%</span>';
-    var elPct25=document.getElementById('rpbPct2025');
-    if(elPct25) elPct25.textContent=pctSudah2025+'%';
-    var elFill25=document.getElementById('rpbBarFill2025');
-    if(elFill25) elFill25.style.width=Math.min(parseFloat(pctSudah2025),100)+'%';
+    var hasFilterActive = filterParts.length > 0;
+    var filterSummaryText = filterParts.join(' • ');
 
-    // Toggle visibility: 2025 hanya tampil ketika filter = 2025, selain itu sembunyikan
-    var elRekapPrimary=document.getElementById('rekapBanner2026');
-    var elRekap2025=document.getElementById('rekapBanner2025');
-    if(fTah==='2025'){
-        if(elRekapPrimary) elRekapPrimary.style.display='none';
-        if(elRekap2025) elRekap2025.style.display='flex';
-    }else{
-        if(elRekapPrimary) elRekapPrimary.style.display='flex';
-        if(elRekap2025) elRekap2025.style.display='none';
+    var ybClass = fTah === '2025' ? 'yb-2025' : (fTah ? 'yb-2026' : 'yb-all');
+    var badgeHtml = '<span class="year-badge ' + ybClass + '">' + labelYear + '</span>';
+    var filterBadgeHtml = hasFilterActive ? ' <span class="rpb-filter-badge" title="Filter Aktif: ' + escapeHtml(filterSummaryText) + '">🔍 ' + escapeHtml(filterParts[0] + (filterParts.length > 1 ? ' (+' + (filterParts.length - 1) + ')' : '')) + '</span>' : '';
+
+    var rpbLabelPrimaryEl = document.getElementById('rpbLabel2026');
+    if (rpbLabelPrimaryEl) {
+        rpbLabelPrimaryEl.innerHTML = badgeHtml + ' Total Pegawai' + filterBadgeHtml;
+    }
+
+    var rpbTotalEl = document.getElementById('rpbTotal');
+    if (rpbTotalEl) rpbTotalEl.textContent = totalPegPrimary;
+
+    var scopeSuffix = (fTah ? ' ' + fTah : '') + (hasFilterActive ? ' (Filter)' : '');
+
+    var rpbSudahLbl = document.getElementById('rpbSudahLabel2026');
+    if (rpbSudahLbl) {
+        rpbSudahLbl.innerHTML = 'Sudah Pelatihan' + scopeSuffix + ' <span class="rpb-view-hint">👁️ Lihat</span>';
+    }
+
+    var rpbBelumLbl = document.getElementById('rpbBelumLabel2026');
+    if (rpbBelumLbl) {
+        rpbBelumLbl.innerHTML = 'Belum Pelatihan' + scopeSuffix + ' <span class="rpb-view-hint">👁️ Lihat</span>';
+    }
+
+    var elSudah = document.getElementById('rpbSudah');
+    if (elSudah) elSudah.innerHTML = sudahPrimary + ' orang <span class="rpb-pct-inline" id="rpbSudahPct">' + pctSudahPrimary + '%</span>';
+
+    var elBelum = document.getElementById('rpbBelum');
+    if (elBelum) elBelum.innerHTML = belumPrimary + ' orang <span class="rpb-pct-inline" id="rpbBelumPct">' + pctBelumPrimary + '%</span>';
+
+    var elPct = document.getElementById('rpbPct');
+    if (elPct) elPct.textContent = pctSudahPrimary + '%';
+
+    var elFill = document.getElementById('rpbBarFill');
+    if (elFill) elFill.style.width = Math.min(parseFloat(pctSudahPrimary), 100) + '%';
+
+    // Sesuaikan tema warna banner (cyan untuk 2025, emerald untuk lainnya)
+    var elBannerPrimary = document.getElementById('rekapBanner2026');
+    if (elBannerPrimary) {
+        if (fTah === '2025') {
+            elBannerPrimary.classList.add('rekap-2025');
+        } else {
+            elBannerPrimary.classList.remove('rekap-2025');
+        }
+        var clickableCards = elBannerPrimary.querySelectorAll('.rpb-clickable');
+        if (clickableCards.length >= 2) {
+            clickableCards[0].title = 'Klik untuk lihat ' + sudahPrimary + ' nama pegawai yang SUDAH pelatihan' + (hasFilterActive ? ' sesuai filter aktif' : '') + ' (dihitung 1x)';
+            clickableCards[1].title = 'Klik untuk lihat ' + belumPrimary + ' nama pegawai yang BELUM pelatihan' + (hasFilterActive ? ' sesuai filter aktif' : '');
+        }
     }
 }
 
@@ -2752,7 +2842,70 @@ function populateFilterDropdowns(){
 }
 /* ========== AKHIR FILTER TAHUN ========== */
 
-function exportKeExcel(){var rows=[];var keys=Object.keys(allDataFromCloud);for(var i=0;i<keys.length;i++){var d=allDataFromCloud[keys[i]];rows.push({Segmen:d.segmen||'',Kategori:d.kategori||'',Sertifikat:d.sertifikat||'',NUP:d.nup||'',Nama:d.nama||'',Unit:d.unit||'',Pelatihan:d.pelatihan||'','Tgl Mulai':d.tanggal||'','Tgl Selesai':d.tanggalSelesai||'','Biaya Training':d.biayaTraining||0,'Biaya PDS':d.biayaPDS||0,'Total':(d.biayaTraining||0)+(d.biayaPDS||0),'Oleh Input':d.olehInput||'','Oleh Edit':d.olehEdit||''});}if(!rows.length){showToast('Info','Tidak ada data untuk diexport','info');return;}var ws=XLSX.utils.json_to_sheet(rows);var wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Pelatihan');XLSX.writeFile(wb,'Rekap_Pelatihan_'+new Date().toISOString().slice(0,10)+'.xlsx');showToast('Berhasil','File Excel berhasil diunduh','success');}
+function exportKeExcel(){
+    var fTah=document.getElementById('filterTahun')?document.getElementById('filterTahun').value:'';
+    var rows=[];
+    var keys=Object.keys(allDataFromCloud);
+    for(var i=0;i<keys.length;i++){
+        var d=allDataFromCloud[keys[i]];
+        if(!d) continue;
+        var yr=getTahunFromDate(d.tanggal||d.tanggalSelesai||'');
+        if(fTah && String(yr)!==String(fTah)){
+            continue;
+        }
+        rows.push({
+            'No': rows.length+1,
+            'Tahun': yr||'-',
+            'Segmen': d.segmen||'',
+            'Kategori': d.kategori||'',
+            'Sertifikat': d.sertifikat||'',
+            'NUP': d.nup||'',
+            'Nama': d.nama||'',
+            'Unit': d.unit||'',
+            'Pelatihan': d.pelatihan||'',
+            'Tgl Mulai': d.tanggal||'',
+            'Tgl Selesai': d.tanggalSelesai||'',
+            'Biaya Training': d.biayaTraining||0,
+            'Biaya PDS': d.biayaPDS||0,
+            'Total': (d.biayaTraining||0)+(d.biayaPDS||0),
+            'Oleh Input': d.olehInput||'',
+            'Oleh Edit': d.olehEdit||''
+        });
+    }
+    if(!rows.length){
+        showToast('Info','Tidak ada data pelatihan '+(fTah?'pada tahun '+fTah:'')+' untuk diexport','info');
+        return;
+    }
+    var ws=XLSX.utils.json_to_sheet(rows);
+    var wb=XLSX.utils.book_new();
+    var sheetName=fTah?('Pelatihan_'+fTah):'Pelatihan';
+    XLSX.utils.book_append_sheet(wb,ws,sheetName);
+
+    // Tambahkan sheet Status Pegawai (Sudah vs Belum & Dihitung 1x)
+    var rekapData=getRekapPegawaiData(fTah);
+    if(rekapData&&rekapData.length){
+        var rekapRows=[];
+        for(var r=0;r<rekapData.length;r++){
+            var rp=rekapData[r];
+            rekapRows.push({
+                'No': r+1,
+                'NUP': rp.nup||'',
+                'Nama Pegawai': rp.nama,
+                'Unit Kerja': rp.unit,
+                'Status Pelatihan': rp.count>0?'Sudah Pelatihan':'Belum Pelatihan',
+                'Frekuensi (Kali)': rp.count,
+                'Dihitung Peserta Unik': rp.count>0?'1x (Tetap 1x)':'0x',
+                'Total Biaya': rp.totalBiaya
+            });
+        }
+        var wsRekap=XLSX.utils.json_to_sheet(rekapRows);
+        XLSX.utils.book_append_sheet(wb,wsRekap,'Status Pegawai '+(fTah||'Semua'));
+    }
+
+    var fileName='Rekap_Pelatihan_'+(fTah?'Tahun_'+fTah+'_':'Semua_Tahun_')+new Date().toISOString().slice(0,10)+'.xlsx';
+    XLSX.writeFile(wb,fileName);
+    showToast('Berhasil','File Excel Pelatihan '+(fTah?'Tahun '+fTah:'Semua Tahun')+' ('+rows.length+' data) berhasil diunduh','success');
+}
 
 function processExcel(){var fileInput=document.getElementById('excelFile');if(!fileInput.files.length){showToast('Peringatan','Pilih file Excel terlebih dahulu','error');return;}if(!isAdmin){showToast('Akses Ditolak','Unlock admin terlebih dahulu','error');return;}var reader=new FileReader();reader.onload=function(e){try{var data=new Uint8Array(e.target.result);var wb=XLSX.read(data,{type:'array'});var ws=wb.Sheets[wb.SheetNames[0]];var json=XLSX.utils.sheet_to_json(ws);if(!json.length){showToast('Error','File Excel kosong','error');return;}var promises=[],count=0;for(var i=0;i<json.length;i++){var row=json[i];if(!row.NUP||!row.Pelatihan)continue;count++;var obj={segmen:row.Segmen||'Klas',kategori:row.Kategori||'',sertifikat:row.Sertifikat||'',pelatihan:row.Pelatihan,tanggal:row.Tanggal||row['Tgl Mulai']||'',tanggalSelesai:row['Tanggal Selesai']||row['Tgl Selesai']||'',biayaTraining:parseInt(row['Biaya Training'])||0,biayaPDS:parseInt(row['Biaya PDS'])||0,nup:String(row.NUP).trim(),nama:row.Nama||'',unit:row.Unit||'',olehInput:currentAdmin||'System',waktuInput:new Date().toISOString()};promises.push(db.ref('pelatihan').push(obj));}Promise.all(promises).then(function(){showToast('Berhasil',count+' data berhasil diimport','success');fileInput.value='';document.getElementById('uploadStatus').textContent='';document.getElementById('btnImport').disabled=true;}).catch(function(err){showToast('Error','Gagal import: '+err.message,'error');});}catch(err){showToast('Error','Gagal membaca file: '+err.message,'error');}};reader.readAsArrayBuffer(fileInput.files[0]);}
 
@@ -2838,11 +2991,11 @@ function jalankanQuery(){
 }
 /* ========== AKHIR QUERY PESERTA ========== */
 
-/* ========== REKAP FREKUENSI PELATIHAN TIAP PEGAWAI ========== */
+/* ========== REKAP FREKUENSI & STATUS PELATIHAN TIAP PEGAWAI ========== */
 var currentSidebarFreqFilter = 'all';
 
 function setSidebarFreqFilter(type, btn) {
-    currentSidebarFreqFilter = type;
+    currentSidebarFreqFilter = type; // 'all', 'sudah', 'belum', 'multi'
     var tabs = document.querySelectorAll('.rekap-filter-tabs .rf-tab');
     for (var i = 0; i < tabs.length; i++) {
         tabs[i].classList.remove('active');
@@ -2852,11 +3005,34 @@ function setSidebarFreqFilter(type, btn) {
 }
 
 function getRekapPegawaiData(tahunFilter) {
+    var masterList = getCachedPegawaiList();
     var pegawaiMap = {};
+
+    // 1. Inisialisasi dari master data pegawai agar pegawai yang belum pernah pelatihan tetap terdaftar
+    for (var k in masterList) {
+        var mp = masterList[k];
+        var cleanNup = mp.nup ? String(mp.nup).trim() : '';
+        var cleanNama = (mp.nama || '').trim();
+        var key = cleanNup ? ('NUP_' + cleanNup) : ('NAMA_' + cleanNama.toLowerCase());
+        if (!key || key === 'NAMA_') continue;
+
+        pegawaiMap[key] = {
+            key: key,
+            nup: cleanNup,
+            nama: cleanNama || '(Tanpa Nama)',
+            unit: mp.unit || '-',
+            trainings: [],
+            totalBiaya: 0,
+            count: 0,
+            status: 'belum'
+        };
+    }
+
+    // 2. Agregasi rekaman pelatihan dari cloud untuk tahun yang difilter
     for (var k in allDataFromCloud) {
         var d = allDataFromCloud[k];
         if (!d) continue;
-        
+
         var tglRef = d.tanggal || d.tanggalSelesai || '';
         var yr = getTahunFromDate(tglRef) || '';
         if (tahunFilter && String(yr) !== String(tahunFilter)) {
@@ -2875,7 +3051,9 @@ function getRekapPegawaiData(tahunFilter) {
                 nama: cleanNama || '(Tanpa Nama)',
                 unit: d.unit || '-',
                 trainings: [],
-                totalBiaya: 0
+                totalBiaya: 0,
+                count: 0,
+                status: 'belum'
             };
         } else {
             if ((!pegawaiMap[key].unit || pegawaiMap[key].unit === '-') && d.unit) {
@@ -2900,10 +3078,12 @@ function getRekapPegawaiData(tahunFilter) {
         pegawaiMap[key].totalBiaya += biayaItem;
     }
 
+    // 3. Finalisasi frekuensi dan status (Pegawai A ikut 3x dihitung 1x pegawai unik)
     var list = [];
     for (var pKey in pegawaiMap) {
         var item = pegawaiMap[pKey];
         item.count = item.trainings.length;
+        item.status = item.count > 0 ? 'sudah' : 'belum';
         list.push(item);
     }
     return list;
@@ -2915,6 +3095,7 @@ function renderSidebarRekap() {
     if (!listEl) return;
 
     var fTah = document.getElementById('filterTahun') ? document.getElementById('filterTahun').value : '';
+    var fUni = document.getElementById('filterUnit') ? document.getElementById('filterUnit').value : '';
     var allPegawai = getRekapPegawaiData(fTah);
 
     allPegawai.sort(function(a, b) {
@@ -2927,7 +3108,10 @@ function renderSidebarRekap() {
     var filtered = [];
     for (var i = 0; i < allPegawai.length; i++) {
         var p = allPegawai[i];
+        if (fUni && p.unit !== fUni) continue;
         if (currentSidebarFreqFilter === 'multi' && p.count < 2) continue;
+        if (currentSidebarFreqFilter === 'sudah' && p.count === 0) continue;
+        if (currentSidebarFreqFilter === 'belum' && p.count > 0) continue;
 
         if (cariTxt) {
             var match = false;
@@ -2950,20 +3134,22 @@ function renderSidebarRekap() {
     if (countEl) countEl.textContent = filtered.length;
 
     if (!filtered.length) {
-        listEl.innerHTML = '<div style="font-size:0.68rem; color:var(--text-muted); text-align:center; padding:1rem 0;">Tidak ada pegawai yang sesuai</div>';
+        listEl.innerHTML = '<div style="font-size:0.68rem; color:var(--text-muted); text-align:center; padding:1rem 0;">Tidak ada pegawai yang sesuai filter</div>';
         return;
     }
 
     var html = '';
-    var maxShow = Math.min(filtered.length, 50);
+    var maxShow = Math.min(filtered.length, 60);
     for (var i = 0; i < maxShow; i++) {
         var p = filtered[i];
-        var badgeCls = p.count >= 3 ? 'freq-multi' : (p.count === 2 ? 'freq-2' : 'freq-1');
-        
-        html += '<div class="rekap-item" onclick="openQueryForPeserta(\'' + escapeHtml(p.nama).replace(/'/g, "\\'") + '\', \'' + escapeHtml(p.nup).replace(/'/g, "\\'") + '\')" title="Klik untuk query riwayat ' + escapeHtml(p.nama) + '">';
+        var isBelum = p.count === 0;
+        var badgeCls = isBelum ? 'freq-0' : (p.count >= 3 ? 'freq-multi' : (p.count === 2 ? 'freq-2' : 'freq-1'));
+        var badgeText = isBelum ? 'Belum Ikut (0x)' : (p.count + 'x Pelatihan');
+
+        html += '<div class="rekap-item" onclick="openQueryForPeserta(\'' + escapeHtml(p.nama).replace(/'/g, "\\'") + '\', \'' + escapeHtml(p.nup).replace(/'/g, "\\'") + '\')" title="Klik untuk lihat riwayat ' + escapeHtml(p.nama) + '">';
         html += '<div class="rekap-item-header">';
         html += '<span class="rekap-nama">' + escapeHtml(p.nama) + '</span>';
-        html += '<span class="badge-freq ' + badgeCls + '">' + p.count + 'x Pelatihan</span>';
+        html += '<span class="badge-freq ' + badgeCls + '">' + badgeText + '</span>';
         html += '</div>';
 
         html += '<div class="rekap-meta">';
@@ -2971,20 +3157,24 @@ function renderSidebarRekap() {
         html += escapeHtml(p.unit);
         html += '</div>';
 
-        html += '<div class="rekap-trainings-list">';
-        var tShow = Math.min(p.trainings.length, 3);
-        for (var j = 0; j < tShow; j++) {
-            var tr = p.trainings[j];
-            html += '<div class="rekap-train-row">';
-            html += '<span class="rekap-train-bullet">' + (j + 1) + '.</span>';
-            html += '<span style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="' + escapeHtml(tr.pelatihan) + '">' + escapeHtml(tr.pelatihan) + '</span>';
-            if (tr.tahun) html += '<span class="rekap-train-badge-year">' + tr.tahun + '</span>';
+        if (isBelum) {
+            html += '<div style="font-size:0.62rem; color:var(--text-muted); font-style:italic;">Belum mengikuti pelatihan ' + (fTah ? 'tahun ' + fTah : '') + '</div>';
+        } else {
+            html += '<div class="rekap-trainings-list">';
+            var tShow = Math.min(p.trainings.length, 3);
+            for (var j = 0; j < tShow; j++) {
+                var tr = p.trainings[j];
+                html += '<div class="rekap-train-row">';
+                html += '<span class="rekap-train-bullet">' + (j + 1) + '.</span>';
+                html += '<span style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="' + escapeHtml(tr.pelatihan) + '">' + escapeHtml(tr.pelatihan) + '</span>';
+                if (tr.tahun) html += '<span class="rekap-train-badge-year">' + tr.tahun + '</span>';
+                html += '</div>';
+            }
+            if (p.trainings.length > 3) {
+                html += '<div style="font-size:0.6rem; color:#0284c7; font-weight:600; padding-left:12px;">+' + (p.trainings.length - 3) + ' pelatihan lainnya...</div>';
+            }
             html += '</div>';
         }
-        if (p.trainings.length > 3) {
-            html += '<div style="font-size:0.6rem; color:#0284c7; font-weight:600; padding-left:12px;">+' + (p.trainings.length - 3) + ' pelatihan lainnya...</div>';
-        }
-        html += '</div>';
         html += '</div>';
     }
 
@@ -3008,6 +3198,65 @@ function closeRekapModal() {
     if (modal) modal.classList.remove('show');
 }
 
+function setRekapPillFilter(val, btn) {
+    var sel = document.getElementById('rmFilterFreq');
+    if (sel) sel.value = val;
+    var pills = document.querySelectorAll('.rekap-pill-group .rekap-pill');
+    for (var i = 0; i < pills.length; i++) pills[i].classList.remove('active');
+    if (btn) btn.classList.add('active');
+    jalankanRekapFilter();
+}
+
+function syncPillFromSelect() {
+    var val = document.getElementById('rmFilterFreq') ? document.getElementById('rmFilterFreq').value : '';
+    var pills = document.querySelectorAll('.rekap-pill-group .rekap-pill');
+    for (var i = 0; i < pills.length; i++) pills[i].classList.remove('active');
+    if (val === 'sudah' && document.getElementById('rpillSudah')) document.getElementById('rpillSudah').classList.add('active');
+    else if (val === 'belum' && document.getElementById('rpillBelum')) document.getElementById('rpillBelum').classList.add('active');
+    else if (val === '1' && document.getElementById('rpill1x')) document.getElementById('rpill1x').classList.add('active');
+    else if (val === 'multi' && document.getElementById('rpillMulti')) document.getElementById('rpillMulti').classList.add('active');
+    else if (document.getElementById('rpillAll')) document.getElementById('rpillAll').classList.add('active');
+}
+
+function bukaRekapStatus(status, tahun) {
+    openRekapModal();
+    var fTah = document.getElementById('filterTahun') ? document.getElementById('filterTahun').value : '';
+    var fUni = document.getElementById('filterUnit') ? document.getElementById('filterUnit').value : '';
+    var fNam = document.getElementById('filterNama') ? document.getElementById('filterNama').value.trim() : '';
+    var fPel = document.getElementById('filterPelatihan') ? document.getElementById('filterPelatihan').value.trim() : '';
+
+    var targetTahun = (typeof tahun !== 'undefined' && tahun !== null) ? tahun : fTah;
+
+    var selTahun = document.getElementById('rmFilterTahun');
+    if (selTahun) {
+        selTahun.value = targetTahun || '';
+    }
+    var selUnit = document.getElementById('rmFilterUnit');
+    if (selUnit) {
+        selUnit.value = fUni || '';
+    }
+    var inpCari = document.getElementById('rmCari');
+    if (inpCari) {
+        inpCari.value = fNam || fPel || '';
+    }
+    var selFreq = document.getElementById('rmFilterFreq');
+    if (selFreq) {
+        selFreq.value = status || '';
+    }
+    syncPillFromSelect();
+    jalankanRekapFilter();
+}
+
+function usulkanDiklatUntukPeserta(nama, nup, unit) {
+    closeRekapModal();
+    if (document.getElementById('nup')) document.getElementById('nup').value = nup || '';
+    if (document.getElementById('nama')) document.getElementById('nama').value = nama || '';
+    if (document.getElementById('unit')) document.getElementById('unit').value = unit || '';
+    checkAddButton();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    showToast('Siap Diusulkan', 'Profil ' + nama + ' telah diisikan ke formulir. Silakan pilih pelatihan.', 'info');
+}
+
 function jalankanRekapFilter() {
     var fCari = (document.getElementById('rmCari') ? document.getElementById('rmCari').value : '').trim().toLowerCase();
     var fUnit = document.getElementById('rmFilterUnit') ? document.getElementById('rmFilterUnit').value : '';
@@ -3017,19 +3266,35 @@ function jalankanRekapFilter() {
 
     var allPegawai = getRekapPegawaiData(fTahun);
 
-    var statTotal = allPegawai.length;
+    // Hitung ringkasan statistik yang sesuai dengan lingkup Unit terpilih (jika ada)
+    var statTotal = 0, statSudah = 0, statBelum = 0;
     var stat1x = 0, stat2x = 0, stat3x = 0;
     for (var i = 0; i < allPegawai.length; i++) {
-        var c = allPegawai[i].count;
-        if (c === 1) stat1x++;
-        else if (c === 2) stat2x++;
-        else if (c >= 3) stat3x++;
+        var p = allPegawai[i];
+        if (fUnit && p.unit !== fUnit) continue;
+        statTotal++;
+        var c = p.count;
+        if (c > 0) {
+            statSudah++; // Setiap pegawai yang ikut pelatihan dihitung tepat 1x unik
+            if (c === 1) stat1x++;
+            else if (c === 2) stat2x++;
+            else if (c >= 3) stat3x++;
+        } else {
+            statBelum++;
+        }
     }
 
     if (document.getElementById('rmStatTotalPegawai')) document.getElementById('rmStatTotalPegawai').textContent = statTotal + ' orang';
+    if (document.getElementById('rmStatSudah')) document.getElementById('rmStatSudah').textContent = statSudah + ' orang';
+    if (document.getElementById('rmStatBelum')) document.getElementById('rmStatBelum').textContent = statBelum + ' orang';
     if (document.getElementById('rmStat1x')) document.getElementById('rmStat1x').textContent = stat1x + ' orang';
-    if (document.getElementById('rmStat2x')) document.getElementById('rmStat2x').textContent = stat2x + ' orang';
-    if (document.getElementById('rmStat3x')) document.getElementById('rmStat3x').textContent = stat3x + ' orang';
+    if (document.getElementById('rmStatMulti')) document.getElementById('rmStatMulti').textContent = (stat2x + stat3x) + ' orang';
+
+    if (document.getElementById('pillCountAll')) document.getElementById('pillCountAll').textContent = statTotal;
+    if (document.getElementById('pillCountSudah')) document.getElementById('pillCountSudah').textContent = statSudah;
+    if (document.getElementById('pillCountBelum')) document.getElementById('pillCountBelum').textContent = statBelum;
+    if (document.getElementById('pillCount1x')) document.getElementById('pillCount1x').textContent = stat1x;
+    if (document.getElementById('pillCountMulti')) document.getElementById('pillCountMulti').textContent = (stat2x + stat3x);
 
     var filtered = [];
     for (var i = 0; i < allPegawai.length; i++) {
@@ -3037,6 +3302,8 @@ function jalankanRekapFilter() {
 
         if (fUnit && p.unit !== fUnit) continue;
 
+        if (fFreq === 'sudah' && p.count === 0) continue;
+        if (fFreq === 'belum' && p.count > 0) continue;
         if (fFreq === '1' && p.count !== 1) continue;
         if (fFreq === '2' && p.count !== 2) continue;
         if (fFreq === '3+' && p.count < 3) continue;
@@ -3093,34 +3360,44 @@ function jalankanRekapFilter() {
     var html = '';
     for (var i = 0; i < filtered.length; i++) {
         var p = filtered[i];
-        var badgeCls = p.count >= 3 ? 'freq-multi' : (p.count === 2 ? 'freq-2' : 'freq-1');
+        var isBelum = p.count === 0;
+        var badgeCls = isBelum ? 'freq-0' : (p.count >= 3 ? 'freq-multi' : (p.count === 2 ? 'freq-2' : 'freq-1'));
 
         html += '<tr>';
         html += '<td style="text-align:center; font-weight:600; color:var(--text-muted);">' + (i + 1) + '</td>';
         html += '<td>' + escapeHtml(p.nup || '-') + '</td>';
         html += '<td style="font-weight:700; color:var(--text-main);">' + escapeHtml(p.nama) + '</td>';
         html += '<td>' + escapeHtml(p.unit) + '</td>';
-        html += '<td style="text-align:center;"><span class="badge-freq ' + badgeCls + '">' + p.count + 'x Ikut</span></td>';
         
-        html += '<td>';
-        html += '<div style="display:flex; flex-direction:column; gap:4px;">';
-        for (var j = 0; j < p.trainings.length; j++) {
-            var tr = p.trainings[j];
-            html += '<div style="display:flex; align-items:center; gap:6px; font-size:0.75rem; flex-wrap:wrap;">';
-            html += '<span style="color:#0284c7; font-weight:700; font-size:0.72rem;">' + (j + 1) + '.</span>';
-            html += '<span style="font-weight:600;">' + escapeHtml(tr.pelatihan) + '</span>';
-            if (tr.tahun) html += '<span class="rekap-train-badge-year">' + tr.tahun + '</span>';
-            if (tr.kategori) html += '<span style="font-size:0.6rem; background:#f1f5f9; border:1px solid #cbd5e1; border-radius:3px; padding:0 4px; color:#475569;">' + escapeHtml(tr.kategori) + '</span>';
-            if (tr.sertifikat) html += '<span style="font-size:0.6rem; background:#ecfdf5; border:1px solid #a7f3d0; border-radius:3px; padding:0 4px; color:#047857;">' + escapeHtml(tr.sertifikat) + '</span>';
+        if (isBelum) {
+            html += '<td style="text-align:center;"><span class="badge-freq ' + badgeCls + '">⏳ Belum (0x)</span><div style="font-size:0.58rem; color:#b45309; font-weight:600; margin-top:2px;">Target Diklat</div></td>';
+            html += '<td><span style="color:var(--text-muted); font-size:0.75rem; font-style:italic;">Belum mengikuti pelatihan pada tahun ' + (fTahun || 'terpilih') + '</span></td>';
+            html += '<td style="font-weight:700; text-align:right; color:var(--text-muted);">Rp 0</td>';
+            html += '<td style="text-align:center;">';
+            html += '<button type="button" class="action-btn" style="width:auto; padding:3px 8px; font-size:0.7rem; border-radius:4px; background:#10b981; color:white; border:none; cursor:pointer;" onclick="usulkanDiklatUntukPeserta(\'' + escapeHtml(p.nama).replace(/'/g, "\\'") + '\', \'' + escapeHtml(p.nup).replace(/'/g, "\\'") + '\', \'' + escapeHtml(p.unit).replace(/'/g, "\\'") + '\')" title="Input usulan pelatihan untuk ' + escapeHtml(p.nama) + '">+ Usulkan</button>';
+            html += '</td>';
+        } else {
+            html += '<td style="text-align:center;"><span class="badge-freq ' + badgeCls + '">✅ ' + p.count + 'x Ikut</span><div style="font-size:0.58rem; color:#0284c7; font-weight:700; margin-top:2px;">Dihitung 1x Pegawai</div></td>';
+            html += '<td>';
+            html += '<div style="display:flex; flex-direction:column; gap:4px;">';
+            for (var j = 0; j < p.trainings.length; j++) {
+                var tr = p.trainings[j];
+                html += '<div style="display:flex; align-items:center; gap:6px; font-size:0.75rem; flex-wrap:wrap;">';
+                html += '<span style="color:#0284c7; font-weight:700; font-size:0.72rem;">' + (j + 1) + '.</span>';
+                html += '<span style="font-weight:600;">' + escapeHtml(tr.pelatihan) + '</span>';
+                if (tr.tahun) html += '<span class="rekap-train-badge-year">' + tr.tahun + '</span>';
+                if (tr.kategori) html += '<span style="font-size:0.6rem; background:#f1f5f9; border:1px solid #cbd5e1; border-radius:3px; padding:0 4px; color:#475569;">' + escapeHtml(tr.kategori) + '</span>';
+                if (tr.sertifikat) html += '<span style="font-size:0.6rem; background:#ecfdf5; border:1px solid #a7f3d0; border-radius:3px; padding:0 4px; color:#047857;">' + escapeHtml(tr.sertifikat) + '</span>';
+                html += '</div>';
+            }
             html += '</div>';
+            html += '</td>';
+            html += '<td style="font-weight:700; text-align:right;">' + formatRp(p.totalBiaya) + '</td>';
+            html += '<td style="text-align:center;">';
+            html += '<button type="button" class="action-btn btn-edit" style="width:auto; padding:3px 8px; font-size:0.7rem; border-radius:4px;" onclick="openQueryForPeserta(\'' + escapeHtml(p.nama).replace(/'/g, "\\'") + '\', \'' + escapeHtml(p.nup).replace(/'/g, "\\'") + '\')" title="Lihat detail di Query">&#128269; Query</button>';
+            html += '</td>';
         }
-        html += '</div>';
-        html += '</td>';
 
-        html += '<td style="font-weight:700;">' + formatRp(p.totalBiaya) + '</td>';
-        html += '<td style="text-align:center;">';
-        html += '<button type="button" class="action-btn btn-edit" style="width:auto; padding:3px 8px; font-size:0.7rem; border-radius:4px;" onclick="openQueryForPeserta(\'' + escapeHtml(p.nama).replace(/'/g, "\\'") + '\', \'' + escapeHtml(p.nup).replace(/'/g, "\\'") + '\')" title="Lihat detail di Query">&#128269; Query</button>';
-        html += '</td>';
         html += '</tr>';
     }
 
@@ -3150,30 +3427,69 @@ function exportRekapPegawaiKeExcel() {
         return a.nama.localeCompare(b.nama);
     });
 
-    var rows = [];
+    // Sheet 1: Semua Pegawai
+    var rowsAll = [];
+    var rowsSudah = [];
+    var rowsBelum = [];
+
     for (var i = 0; i < allPegawai.length; i++) {
         var p = allPegawai[i];
-        var daftarPelatihanStr = p.trainings.map(function(t, idx) {
+        var daftarPelatihanStr = p.trainings.length ? p.trainings.map(function(t, idx) {
             return (idx + 1) + '. ' + t.pelatihan + (t.tahun ? ' (' + t.tahun + ')' : '');
-        }).join('; ');
+        }).join('; ') : 'Belum mengikuti pelatihan';
 
-        rows.push({
+        var rowObj = {
             'No': i + 1,
             'NUP': p.nup || '',
             'Nama Pegawai': p.nama,
             'Unit Kerja': p.unit,
-            'Jumlah Pelatihan': p.count,
+            'Status Pelatihan': p.count > 0 ? 'Sudah Pelatihan' : 'Belum Pelatihan',
+            'Frekuensi Pelatihan': p.count,
+            'Hitungan Peserta Unik': p.count > 0 ? '1x (Tetap 1x)' : '0x',
             'Daftar Pelatihan': daftarPelatihanStr,
             'Total Biaya': p.totalBiaya
-        });
+        };
+
+        rowsAll.push(rowObj);
+        if (p.count > 0) {
+            rowsSudah.push({
+                'No': rowsSudah.length + 1,
+                'NUP': p.nup || '',
+                'Nama Pegawai': p.nama,
+                'Unit Kerja': p.unit,
+                'Frekuensi Pelatihan': p.count,
+                'Hitungan Peserta Unik': '1x (Tetap 1x)',
+                'Daftar Pelatihan': daftarPelatihanStr,
+                'Total Biaya': p.totalBiaya
+            });
+        } else {
+            rowsBelum.push({
+                'No': rowsBelum.length + 1,
+                'NUP': p.nup || '',
+                'Nama Pegawai': p.nama,
+                'Unit Kerja': p.unit,
+                'Status': 'Belum Mengikuti Pelatihan ' + (fTahun ? 'Tahun ' + fTahun : '')
+            });
+        }
     }
 
-    var ws = XLSX.utils.json_to_sheet(rows);
     var wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Rekap Tiap Pegawai');
-    var fileName = 'Rekap_Frekuensi_Pelatihan_Pegawai_' + (fTahun ? fTahun + '_' : '') + new Date().toISOString().slice(0, 10) + '.xlsx';
+    var wsAll = XLSX.utils.json_to_sheet(rowsAll);
+    XLSX.utils.book_append_sheet(wb, wsAll, 'Semua Pegawai (' + (fTahun || 'Semua') + ')');
+
+    if (rowsSudah.length) {
+        var wsSudah = XLSX.utils.json_to_sheet(rowsSudah);
+        XLSX.utils.book_append_sheet(wb, wsSudah, 'Sudah Pelatihan (Unik 1x)');
+    }
+
+    if (rowsBelum.length) {
+        var wsBelum = XLSX.utils.json_to_sheet(rowsBelum);
+        XLSX.utils.book_append_sheet(wb, wsBelum, 'Belum Pelatihan');
+    }
+
+    var fileName = 'Rekap_Status_Pegawai_' + (fTahun ? 'Tahun_' + fTahun + '_' : 'Semua_Tahun_') + new Date().toISOString().slice(0, 10) + '.xlsx';
     XLSX.writeFile(wb, fileName);
-    showToast('Berhasil', 'File Rekap Pegawai berhasil diunduh', 'success');
+    showToast('Berhasil', 'File Excel Rekap Pegawai (' + (fTahun ? 'Tahun ' + fTahun : 'Semua Tahun') + ') berhasil diunduh', 'success');
 }
 /* ========== MODUL PANDUAN PENGGUNA & BAHAN PRESENTASI ========== */
 var manualSlideIndex = 0;
