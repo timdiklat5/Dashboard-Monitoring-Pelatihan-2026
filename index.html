@@ -2,12 +2,45 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Monitoring Pelatihan</title>
+    <title>Dashboard Monitoring Pelatihan | NAVIGATE - Academic Journey to Success</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Dashboard monitoring pelatihan, sertifikat, kepesertaan dan anggaran dengan integrasi Firebase." />
-    <meta property="og:title" content="Dashboard Monitoring Pelatihan" />
-    <meta property="og:description" content="Dashboard monitoring pelatihan, sertifikat, kepesertaan dan anggaran dengan integrasi Firebase." />
+
+    <!-- Open Graph / WhatsApp / Facebook Metadata -->
     <meta property="og:type" content="website" />
+    <meta property="og:title" content="Dashboard Monitoring Pelatihan | NAVIGATE - Academic Journey to Success" />
+    <meta property="og:description" content="Dashboard monitoring pelatihan, sertifikat, kepesertaan dan anggaran dengan integrasi Firebase." />
+    <meta property="og:site_name" content="NAVIGATE - Academic Journey to Success" />
+    <meta property="og:image" content="https://i.ibb.co.com/FLrsQVcH/Academic-Journey-to-Success.png" />
+    <meta property="og:image:secure_url" content="https://i.ibb.co.com/FLrsQVcH/Academic-Journey-to-Success.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="640" />
+    <meta property="og:image:height" content="250" />
+    <meta property="og:image:alt" content="Logo NAVIGATE - Academic Journey to Success" />
+
+    <!-- WhatsApp & Browser Icon Links -->
+    <link rel="image_src" href="https://i.ibb.co.com/FLrsQVcH/Academic-Journey-to-Success.png" />
+    <link rel="icon" type="image/png" href="https://i.ibb.co.com/FLrsQVcH/Academic-Journey-to-Success.png" />
+    <link rel="apple-touch-icon" href="https://i.ibb.co.com/FLrsQVcH/Academic-Journey-to-Success.png" />
+
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Dashboard Monitoring Pelatihan | NAVIGATE - Academic Journey to Success" />
+    <meta name="twitter:description" content="Dashboard monitoring pelatihan, sertifikat, kepesertaan dan anggaran dengan integrasi Firebase." />
+    <meta name="twitter:image" content="https://i.ibb.co.com/FLrsQVcH/Academic-Journey-to-Success.png" />
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Dashboard Monitoring Pelatihan",
+      "alternateName": "NAVIGATE - Academic Journey to Success",
+      "description": "Dashboard monitoring pelatihan, sertifikat, kepesertaan dan anggaran dengan integrasi Firebase.",
+      "image": "https://i.ibb.co.com/FLrsQVcH/Academic-Journey-to-Success.png",
+      "applicationCategory": "BusinessApplication"
+    }
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
@@ -2173,7 +2206,6 @@ var databasePegawai={
 "51038": { nama: "SABRINA HARIYANI", unit: "CABANG PRATAMA KOMERSIAL PALEMBANG" },
 "51042": { nama: "RISMAN GURIUM", unit: "CABANG PRATAMA KLAS AMBON" }
 };
-
 function buildPegawaiList(){var list={},k;for(k in databasePegawai)list[k]={nama:databasePegawai[k].nama,unit:databasePegawai[k].unit,nup:k};for(k in allDataFromCloud){var d=allDataFromCloud[k];if(d&&d.nama){var nk=d.nup?String(d.nup).trim():('NAMA_'+d.nama.trim().toLowerCase());if(!list[nk])list[nk]={nama:d.nama.trim(),unit:d.unit||'',nup:d.nup?String(d.nup).trim():''};else if((!list[nk].unit||list[nk].unit==='-')&&d.unit){list[nk].unit=d.unit;}}}return list;}
 function positionDropdown(dd,inp){var r=inp.getBoundingClientRect();dd.style.position='fixed';dd.style.top=(r.bottom+2)+'px';dd.style.left=r.left+'px';dd.style.width=r.width+'px';dd.style.zIndex='10000';}
 function showDropdown(dd,inp,matches){positionDropdown(dd,inp);dd.innerHTML='';activeDropdownIndex=-1;if(!matches.length){dd.innerHTML='<div class="dd-empty">Tidak ditemukan</div>';dd.classList.add('show');return;}for(var i=0;i<matches.length;i++){(function(p,idx){var it=document.createElement('div');it.className='dd-item';it.dataset.index=idx;it.innerHTML='<div><span class="dd-nama">'+highlightMatch(p.nama,inp.value)+'</span><span class="dd-nup">NUP: '+p.nup+'</span></div><div class="dd-unit">'+(p.unit||'-')+'</div>';it.addEventListener('mousedown',function(e){e.preventDefault();selectPeserta(p);hideAllDropdowns();});it.addEventListener('mouseenter',function(){clearActiveItem(dd);this.classList.add('active');activeDropdownIndex=idx;});dd.appendChild(it);})(matches[i],i);}dd.classList.add('show');}
