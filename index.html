@@ -150,16 +150,73 @@
         [data-theme="dark"] .filter-section { background: #1e293b; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
         [data-theme="dark"] .filter-item input, [data-theme="dark"] .filter-item select { background: #0f172a; border-color: #475569; color: #e2e8f0; }
         [data-theme="dark"] .filter-item input::placeholder { color: #64748b; }
-        .table-container { background: white; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); flex: 1; min-height: 120px; display: flex; flex-direction: column; border: 1px solid var(--border); overflow: hidden; }
-        .table-wrap { flex: 1; overflow-y: auto; overflow-x: auto; }
+        .table-container {
+            background: var(--card-bg); border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03);
+            border: 1px solid var(--border); display: flex; flex-direction: column;
+            min-height: 480px; flex-shrink: 0; overflow: hidden; transition: all 0.2s ease;
+        }
+        .table-header-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.55rem 0.9rem; background: var(--card-bg); border-bottom: 1px solid var(--border);
+            flex-shrink: 0; flex-wrap: wrap; gap: 8px;
+        }
+        .thb-left { display: flex; align-items: center; gap: 8px; }
+        .thb-title { font-size: 0.82rem; font-weight: 800; color: var(--text-main); display: inline-flex; align-items: center; gap: 5px; }
+        .thb-count { font-size: 0.68rem; font-weight: 700; color: #4338ca; background: #e0e7ff; padding: 2px 8px; border-radius: 12px; }
+        [data-theme="dark"] .thb-count { background: #312e81; color: #c7d2fe; }
+        .thb-right { display: flex; align-items: center; gap: 10px; }
+        .thb-hint { font-size: 0.68rem; color: var(--text-muted); }
+        .thb-btn-reset {
+            background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px;
+            padding: 3px 8px; font-size: 0.7rem; font-weight: 700; color: #475569;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .thb-btn-reset:hover { background: #e2e8f0; color: #1e293b; border-color: #94a3b8; }
+        [data-theme="dark"] .thb-btn-reset { background: #334155; border-color: #475569; color: #e2e8f0; }
+        .table-wrap { flex: 1; overflow-y: auto; overflow-x: auto; min-height: 400px; max-height: 620px; }
         table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.75rem; min-width: 1100px; }
-        th { background: #f1f5f9; text-align: left; padding: 0.5rem; font-weight: 600; color: #475569; border-bottom: 2px solid #e2e8f0; white-space: nowrap; position: sticky; top: 0; z-index: 1; font-size: 0.75rem; }
-        td { padding: 0.5rem; border-bottom: 1px solid #f1f5f9; }
-        tr:hover { background: #f8fafc; }
+        th { background: #f8fafc; text-align: left; padding: 0.55rem 0.65rem; font-weight: 700; color: #475569; border-bottom: 2px solid #e2e8f0; white-space: nowrap; position: sticky; top: 0; z-index: 2; font-size: 0.72rem; letter-spacing: 0.02em; }
+        td { padding: 0.52rem 0.65rem; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+        tr:nth-child(even) { background: rgba(0,0,0,0.015); }
+        [data-theme="dark"] tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        tr:hover { background: #f0f7ff !important; }
+        [data-theme="dark"] tr:hover { background: #1e3a5f !important; }
         [data-theme="dark"] .table-container { background: #1e293b; }
         [data-theme="dark"] th { background: #0f172a; color: #94a3b8; border-bottom-color: #475569; }
-        [data-theme="dark"] td { border-bottom-color: #1e293b; }
-        [data-theme="dark"] tr:hover { background: #334155; }
+        [data-theme="dark"] td { border-bottom-color: #334155; }
+        .table-footer-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.5rem 0.9rem; background: #f8fafc; border-top: 1px solid var(--border);
+            font-size: 0.72rem; color: var(--text-muted); flex-shrink: 0; flex-wrap: wrap; gap: 8px;
+        }
+        [data-theme="dark"] .table-footer-bar { background: #0f172a; }
+        .table-footer-bar strong { color: var(--text-main); font-weight: 700; }
+        .table-footer-bar .tfoot-grand strong { color: #4338ca; }
+        [data-theme="dark"] .table-footer-bar .tfoot-grand strong { color: #818cf8; }
+        .tb-badge {
+            display: inline-flex; align-items: center; gap: 3px;
+            font-size: 0.68rem; font-weight: 700; padding: 2px 7px;
+            border-radius: 4px; white-space: nowrap; line-height: 1.25;
+        }
+        .tb-badge-seg-klas { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+        .tb-badge-seg-dukbis { background: #fefce8; color: #a16207; border: 1px solid #fef08a; }
+        .tb-badge-seg-komersil { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+        .tb-badge-kat-refresher { background: #eff6ff; color: #2563eb; border: 1px solid #dbeafe; }
+        .tb-badge-kat-new { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
+        .tb-badge-kat-practical { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+        .tb-badge-kat-pendidikan { background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; }
+        .tb-badge-sert-brevet { background: #ecfdf5; color: #047857; border: 1px solid #6ee7b7; font-weight: 800; }
+        .tb-badge-sert-non { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+        [data-theme="dark"] .tb-badge-seg-klas { background: #1e3a8a; color: #93c5fd; border-color: #2563eb; }
+        [data-theme="dark"] .tb-badge-seg-dukbis { background: #713f12; color: #fef08a; border-color: #a16207; }
+        [data-theme="dark"] .tb-badge-seg-komersil { background: #14532d; color: #86efac; border-color: #16a34a; }
+        [data-theme="dark"] .tb-badge-kat-refresher { background: #1e3a8a; color: #93c5fd; border-color: #2563eb; }
+        [data-theme="dark"] .tb-badge-kat-new { background: #064e3b; color: #6ee7b7; border-color: #059669; }
+        [data-theme="dark"] .tb-badge-kat-practical { background: #78350f; color: #fde68a; border-color: #d97706; }
+        [data-theme="dark"] .tb-badge-kat-pendidikan { background: #4c1d95; color: #c4b5fd; border-color: #7c3aed; }
+        [data-theme="dark"] .tb-badge-sert-brevet { background: #064e3b; color: #6ee7b7; border-color: #059669; }
+        [data-theme="dark"] .tb-badge-sert-non { background: #334155; color: #cbd5e1; border-color: #475569; }
         .td-tgl-mulai { font-weight: 600; white-space: nowrap; }
         .td-tgl-selesai { color: var(--text-muted); white-space: nowrap; font-size: 0.72rem; }
         .action-btn { background: none; border: none; cursor: pointer; padding: 4px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; transition: background 0.2s; }
@@ -178,27 +235,27 @@
         .charts-grid { display: flex; flex-direction: column; gap: 0.6rem; flex-shrink: 0; }
         .chart-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6rem; }
         .chart-box {
-            background: var(--card-bg); padding: 0.65rem 0.75rem 0.55rem; border-radius: 12px;
+            background: var(--card-bg); padding: 0.55rem 0.75rem 0.45rem; border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03);
-            border: 1px solid var(--border); height: 205px; position: relative;
+            border: 1px solid var(--border); height: 175px; position: relative;
             display: flex; flex-direction: column; transition: all 0.2s ease;
         }
         .chart-box:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.07); border-color: rgba(99,102,241,0.25); }
         [data-theme="dark"] .chart-box { background: #1e293b; border-color: #334155; box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
         [data-theme="dark"] .chart-box:hover { border-color: #4f46e5; box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
-        .chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.35rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+        .chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem; padding-bottom: 0.25rem; border-bottom: 1px solid var(--border); flex-shrink: 0; }
         .chart-title { font-size: 0.72rem; font-weight: 700; color: var(--text-main); display: inline-flex; align-items: center; gap: 5px; }
         .chart-badge-info { font-size: 0.62rem; color: #6366f1; background: rgba(99,102,241,0.08); padding: 1px 6px; border-radius: 6px; font-weight: 600; }
         [data-theme="dark"] .chart-badge-info { background: rgba(99,102,241,0.2); color: #a5b4fc; }
         .chart-box .chart-canvas-wrap { flex: 1; min-height: 0; position: relative; }
-        .chart-box .chart-legend-custom { flex-shrink: 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 3px 6px; padding-top: 4px; border-top: 1px solid var(--border); margin-top: 4px; }
+        .chart-box .chart-legend-custom { flex-shrink: 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 3px 6px; padding-top: 3px; border-top: 1px solid var(--border); margin-top: 3px; }
         .chart-box .chart-legend-custom .leg-item { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; color: var(--text-main); font-weight: 500; white-space: nowrap; background: rgba(0,0,0,0.02); padding: 1px 5px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.04); }
         [data-theme="dark"] .chart-box .chart-legend-custom .leg-item { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.06); color: #cbd5e1; }
         .chart-box .chart-legend-custom .leg-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
         .chart-box .chart-legend-custom .leg-name { font-weight: 600; }
         .chart-box .chart-legend-custom .leg-val { font-weight: 700; color: #0284c7; }
         [data-theme="dark"] .chart-box .chart-legend-custom .leg-val { color: #38bdf8; }
-        .chart-full { height: 185px; }
+        .chart-full { height: 155px; }
         .rekap-pegawai-banner { background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%); color: white; padding: 0.6rem 0.85rem; border-radius: 10px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; flex-shrink: 0; font-size: 0.75rem; box-shadow: 0 2px 10px rgba(6,78,59,0.25); border: 1px solid #059669; position: relative; overflow: hidden; }
         .rekap-pegawai-banner::before { content: ''; position: absolute; top: -50%; right: -10%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
         .rpb-left { display: flex; align-items: center; gap: 1.2rem; position: relative; z-index: 1; }
@@ -359,13 +416,175 @@
         [data-theme="dark"] .train-badge-chip { background: #0f172a; border-color: #334155; color: #cbd5e1; }
         .train-badge-chip .tbc-year { font-weight: 800; color: #0284c7; }
 
+        .btn-manual {
+            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+            color: white; border: none; padding: 5px 12px;
+            border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 11.5px;
+            display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0; white-space: nowrap;
+            transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(79,70,229,0.15);
+        }
+        .btn-manual:hover { transform: translateY(-1px); box-shadow: 0 3px 8px rgba(79,70,229,0.3); }
+        .modal-header-manual {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.85rem 1.25rem; border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(135deg, #4338ca 0%, #312e81 100%);
+            border-radius: 14px 14px 0 0; color: white;
+        }
+        [data-theme="dark"] .modal-header-manual { border-bottom-color: #334155; }
+        .modal-header-manual h2 { margin: 0; font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .manual-top-toolbar {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 8px; margin-bottom: 0.75rem; padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .manual-nav-tabs {
+            display: flex; gap: 6px;
+        }
+        .manual-tab-btn {
+            background: var(--card-bg); border: 1px solid var(--border); font-size: 0.8rem; font-weight: 700; color: var(--text-muted);
+            padding: 6px 14px; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;
+        }
+        .manual-tab-btn:hover { color: var(--text-main); border-color: #818cf8; }
+        .manual-tab-btn.active {
+            background: #4f46e5; color: white; border-color: #4338ca; box-shadow: 0 1px 3px rgba(79,70,229,0.25);
+        }
+        .manual-actions-row {
+            display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+        }
+        .manual-search-box {
+            position: relative; display: flex; align-items: center;
+        }
+        .manual-search-box input {
+            padding: 5px 26px 5px 10px; font-size: 0.75rem; border: 1px solid var(--border);
+            border-radius: 6px; width: 170px; background: var(--card-bg); color: var(--text-main);
+            outline: none; transition: all 0.2s;
+        }
+        .manual-search-box input:focus { width: 210px; border-color: #6366f1; }
+        .manual-search-clear {
+            position: absolute; right: 6px; background: none; border: none; color: var(--text-muted);
+            cursor: pointer; font-size: 11px; padding: 2px;
+        }
+        .btn-manual-tool {
+            background: var(--card-bg); border: 1px solid var(--border); font-size: 0.75rem;
+            padding: 5px 10px; border-radius: 6px; font-weight: 600; color: var(--text-main);
+            cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s;
+        }
+        .btn-manual-tool:hover { background: #f1f5f9; border-color: #cbd5e1; }
+        [data-theme="dark"] .btn-manual-tool:hover { background: #334155; }
+        .manual-content-section {
+            max-height: 500px; overflow-y: auto; padding-right: 6px;
+        }
+        .manual-card {
+            background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+            padding: 12px 14px; margin-bottom: 10px; transition: all 0.2s;
+        }
+        [data-theme="dark"] .manual-card { background: #0f172a; border-color: #334155; }
+        .manual-card:hover { border-color: #c7d2fe; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+        .manual-card h3 {
+            margin: 0 0 6px 0; font-size: 0.88rem; font-weight: 700; color: #4338ca;
+            display: flex; align-items: center; gap: 6px;
+        }
+        [data-theme="dark"] .manual-card h3 { color: #818cf8; }
+        .manual-card p, .manual-card li {
+            font-size: 0.78rem; line-height: 1.55; color: var(--text-main); margin: 4px 0;
+        }
+        .manual-card ul, .manual-card ol {
+            padding-left: 20px; margin: 4px 0;
+        }
+        .manual-badge {
+            display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 0.68rem; font-weight: 700;
+            background: #e0e7ff; color: #3730a3; margin-right: 4px;
+        }
+        [data-theme="dark"] .manual-badge { background: #312e81; color: #c7d2fe; }
+
+        /* Slide Deck Carousel & Presentation Controls */
+        .slide-toolbar-sub {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 0.75rem; background: rgba(79,70,229,0.06); padding: 6px 12px;
+            border-radius: 8px; border: 1px solid rgba(79,70,229,0.15); flex-wrap: wrap; gap: 8px;
+        }
+        .slide-mode-btn-group { display: flex; gap: 4px; }
+        .slide-mode-btn {
+            font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 4px;
+            border: 1px solid transparent; background: transparent; cursor: pointer; color: var(--text-muted);
+        }
+        .slide-mode-btn.active {
+            background: #4f46e5; color: white; border-color: #4338ca;
+        }
+        .slide-carousel-nav {
+            display: flex; align-items: center; gap: 8px;
+        }
+        .btn-slide-nav {
+            background: var(--card-bg); border: 1px solid var(--border); font-size: 0.75rem;
+            font-weight: 700; padding: 4px 10px; border-radius: 6px; cursor: pointer; color: var(--text-main);
+            transition: all 0.2s;
+        }
+        .btn-slide-nav:hover:not(:disabled) { background: #4f46e5; color: white; border-color: #4338ca; }
+        .btn-slide-nav:disabled { opacity: 0.4; cursor: not-allowed; }
+        .slide-counter-badge {
+            font-size: 0.75rem; font-weight: 800; color: #4338ca; background: #e0e7ff;
+            padding: 3px 8px; border-radius: 12px; white-space: nowrap;
+        }
+        [data-theme="dark"] .slide-counter-badge { background: #312e81; color: #c7d2fe; }
+
+        /* Single Slide Card & Viewer */
+        .slide-single-view {
+            display: none; background: var(--card-bg); border: 2px solid #818cf8;
+            border-radius: 12px; padding: 20px 24px; box-shadow: 0 4px 14px rgba(79,70,229,0.08);
+            position: relative; min-height: 280px; animation: slideFade 0.25s ease-out;
+        }
+        @keyframes slideFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+        .slide-single-header {
+            display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border);
+            padding-bottom: 10px; margin-bottom: 14px;
+        }
+        .slide-single-title {
+            font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;
+        }
+        .slide-single-body { font-size: 0.82rem; line-height: 1.6; color: var(--text-main); }
+        .slide-speaker-notes {
+            margin-top: 16px; background: #f0fdf4; border: 1px dashed #22c55e;
+            border-radius: 8px; padding: 10px 12px; font-size: 0.75rem; color: #166534;
+        }
+        [data-theme="dark"] .slide-speaker-notes { background: #052e16; border-color: #16a34a; color: #86efac; }
+        .slide-speaker-notes strong { color: #15803d; }
+        [data-theme="dark"] .slide-speaker-notes strong { color: #4ade80; }
+
+        /* Grid / List of slides */
+        .slide-card {
+            background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px;
+            padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            border-left: 5px solid #4f46e5; transition: all 0.2s;
+        }
+        [data-theme="dark"] .slide-card { background: #0f172a; border-color: #334155; border-left-color: #6366f1; }
+        .slide-card:hover { transform: translateX(2px); box-shadow: 0 3px 8px rgba(0,0,0,0.06); }
+        .slide-badge {
+            font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
+            color: #4f46e5; background: #eef2ff; padding: 2px 8px; border-radius: 12px; display: inline-block; margin-bottom: 6px;
+        }
+        [data-theme="dark"] .slide-badge { background: #312e81; color: #c7d2fe; }
+        .slide-title {
+            font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 0 0 8px 0;
+        }
+
+        /* Print styles */
+        @media print {
+            body * { visibility: hidden !important; }
+            #manualModal, #manualModal * { visibility: visible !important; }
+            #manualModal { position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; height: auto !important; background: white !important; }
+            .modal-box { max-width: 100% !important; box-shadow: none !important; border: none !important; }
+            .manual-top-toolbar, .modal-close, .slide-toolbar-sub { display: none !important; }
+            .manual-content-section { max-height: none !important; overflow: visible !important; }
+            .slide-card, .manual-card { page-break-inside: avoid; border: 1px solid #ccc !important; }
+        }
+
         @media (max-width: 1440px) { .grid { padding: 0.75rem; gap: 0.75rem; } .header h1 { font-size: 0.95rem; } .chart-box { height: 170px; } .chart-full { height: 160px; } }
         @media (max-height: 800px) { .grid { padding: 0.5rem; gap: 0.5rem; } .chart-box { height: 145px; } .chart-full { height: 135px; } .card { padding: 0.7rem; } .card input, .card select { padding: 0.4rem; margin-bottom: 0.35rem; } .btn-blue, .btn-green, .btn-query, .btn-rekap { padding: 0.45rem; font-size: 0.8rem; } .filter-section { padding: 0.5rem; gap: 0.5rem; } .budget-banner { padding: 0.45rem 0.7rem; } .summary-box { gap: 0.4rem; } .sum-item { padding: 0.4rem 0.35rem; } .rekap-pegawai-banner { padding: 0.45rem 0.7rem; } .date-range-row .dr-field input { padding: 0.4rem; } .query-summary { grid-template-columns: repeat(2, 1fr); } }
         @media (max-height: 650px) { .header h1 { font-size: 0.85rem; } .running-text-wrapper { padding: 2px 0; } .grid { padding: 0.35rem; gap: 0.35rem; } .chart-box { height: 125px; } .chart-full { height: 115px; } .card { padding: 0.5rem; } .card label { font-size: 0.7rem; margin-bottom: 0.25rem; } .card input, .card select { padding: 0.3rem; margin-bottom: 0.25rem; font-size: 0.75rem; } .btn-blue, .btn-green, .btn-gray, .btn-query, .btn-rekap { padding: 0.35rem; font-size: 0.75rem; } .filter-section { padding: 0.4rem; gap: 0.35rem; } .filter-item label { font-size: 0.6rem; } .budget-banner { padding: 0.35rem 0.5rem; font-size: 0.65rem; } .budget-banner .bb-anggaran { font-size: 0.8rem; } .budget-banner .bb-pct { font-size: 0.75rem; } .summary-box { gap: 0.3rem; } .sum-item { padding: 0.3rem 0.25rem; } .sum-item .sum-value { font-size: 0.75rem; } .sum-item small { font-size: 0.55rem; } .logo-right { height: 26px; } .admin-badge { font-size: 10px; padding: 3px 8px; } .theme-select { font-size: 10px; padding: 3px 6px; } .rekap-pegawai-banner { padding: 0.35rem 0.5rem; font-size: 0.65rem; } .rpb-total { font-size: 0.8rem; } .rpb-sudah, .rpb-belum { font-size: 0.75rem; } .rpb-pct { font-size: 0.9rem; } .rpb-bar-outer { width: 100px; height: 6px; } .rpb-pct-inline { font-size: 0.55rem; padding: 0px 5px; } .date-range-row .dr-field input { padding: 0.3rem; font-size: 0.75rem; } .query-summary { grid-template-columns: repeat(2, 1fr); gap: 0.4rem; } .qs-card { padding: 0.5rem 0.6rem; } .qs-card .qs-val { font-size: 0.95rem; } }
         @media (max-width: 1100px) { .grid { grid-template-columns: 280px 1fr; gap: 0.75rem; padding: 0.75rem; } .chart-box { height: 165px; } .chart-full { height: 155px; } .filter-item { min-width: 100px; } }
-        @media (max-width: 900px) { html, body { height: auto !important; overflow: visible !important; } .grid { grid-template-columns: 1fr; height: auto !important; flex: none !important; overflow-y: visible !important; padding: 0.75rem; gap: 0.75rem; } .left { height: auto; overflow: visible; padding-right: 0; } .right { height: auto; overflow: visible; } .table-container { min-height: 250px; flex: none; } .chart-row { grid-template-columns: 1fr 1fr 1fr; } .budget-banner { flex-direction: column; align-items: stretch; } .budget-banner .bb-left, .budget-banner .bb-right { width: 100%; justify-content: space-between; } .rekap-pegawai-banner { flex-direction: column; align-items: stretch; } .rpb-left, .rpb-right { width: 100%; justify-content: space-between; } .modal-box { max-width: 100%; border-radius: 10px; } .modal-header { border-radius: 10px 10px 0 0; } .query-summary { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 768px) { html, body { height: auto !important; overflow: visible !important; } .header { gap: 0.4rem; } .header h1 { font-size: 0.72rem; } .logo-area img { height: 24px; } .logo-right { height: 26px; } #connectionStatus { font-size: 9px; } .btn-lock { font-size: 10px; padding: 4px 8px; } .admin-badge { font-size: 9px; padding: 3px 7px; } .theme-select { font-size: 9px; padding: 3px 5px; } .grid { grid-template-columns: 1fr; height: auto !important; flex: none !important; overflow-y: visible !important; padding: 0.5rem; gap: 0.5rem; } .left { height: auto; overflow: visible; padding-right: 0; } .right { height: auto; overflow: visible; } .card { padding: 0.65rem; } .card label { font-size: 0.72rem; } .card input, .card select { padding: 0.42rem; font-size: 0.8rem; } .filter-section { padding: 0.5rem; gap: 0.4rem; } .filter-item { min-width: calc(50% - 0.4rem); } .filter-item label { font-size: 0.62rem; } .filter-item input, .filter-item select { font-size: 0.75rem; padding: 0.35rem; } .table-container { min-height: 280px; flex: none; } .chart-row { grid-template-columns: 1fr 1fr 1fr; } .chart-box { height: 175px; } .chart-full { height: 165px; } .summary-box { grid-template-columns: 1fr 1fr 1fr; gap: 0.4rem; } .sum-item { padding: 0.45rem 0.3rem; } .sum-item .sum-value { font-size: 0.75rem; } .sum-item small { font-size: 0.55rem; } .sum-item .sum-pct { font-size: 0.65rem; } .budget-banner { padding: 0.5rem; font-size: 0.68rem; flex-direction: column; align-items: stretch; } .budget-banner .bb-left { flex-wrap: wrap; gap: 0.6rem; } .budget-banner .bb-divider { display: none; } .budget-banner .bb-right { justify-content: space-between; flex-wrap: wrap; } .budget-banner .bb-bar-wrap { width: 100px; } .budget-banner .bb-anggaran { font-size: 0.85rem; } .budget-banner .bb-pct { font-size: 0.8rem; } .rekap-pegawai-banner { padding: 0.5rem; font-size: 0.68rem; flex-direction: column; align-items: stretch; } .rpb-left { flex-wrap: wrap; gap: 0.6rem; } .rpb-divider { display: none; } .rpb-right { justify-content: space-between; flex-wrap: wrap; } .rpb-bar-outer { width: 100px; } .rpb-pct { font-size: 0.9rem; } .rpb-pct-inline { font-size: 0.55rem; } .date-range-row .dr-field input { padding: 0.38rem; font-size: 0.78rem; } .modal-overlay { padding: 1rem 0.5rem; } .modal-body { padding: 0.75rem; } .query-search-bar { flex-direction: column; } .query-search-bar .qs-field { min-width: 100%; } .query-peserta-info { flex-direction: column; align-items: flex-start; gap: 0.5rem; } .query-summary { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 480px) { .header { padding: 0.3rem 0.6rem; } .header h1 { font-size: 0.62rem; } .logo-area img { height: 20px; } .logo-right { height: 22px; } #connectionStatus { font-size: 8px; } .btn-lock { font-size: 9px; padding: 3px 6px; gap: 4px; } .admin-badge { font-size: 8px; padding: 2px 6px; } .theme-select { font-size: 8px; padding: 2px 4px; } .grid { padding: 0.4rem; gap: 0.4rem; } .card { padding: 0.55rem; } .card label { font-size: 0.68rem; } .card input, .card select { padding: 0.38rem; font-size: 0.78rem; } .btn-blue, .btn-green, .btn-query, .btn-rekap { padding: 0.45rem; font-size: 0.78rem; } .btn-gray { padding: 0.4rem; font-size: 0.75rem; } .filter-section { padding: 0.4rem; gap: 0.35rem; } .filter-item { min-width: 100%; } .table-container { min-height: 220px; } .chart-row { grid-template-columns: 1fr 1fr; } .chart-box { height: 185px; } .chart-full { height: 175px; } .summary-box { grid-template-columns: 1fr; } .sum-item { padding: 0.5rem 0.4rem; } .sum-item .sum-value { font-size: 0.82rem; } .budget-banner { padding: 0.45rem; font-size: 0.62rem; } .budget-banner .bb-anggaran { font-size: 0.78rem; } .budget-banner .bb-pct { font-size: 0.72rem; min-width: 40px; } .budget-banner .bb-bar-wrap { width: 80px; } .budget-banner .bb-sisa-val { font-size: 0.75rem; } .rekap-pegawai-banner { padding: 0.45rem; font-size: 0.62rem; } .rpb-total { font-size: 0.78rem; } .rpb-pct { font-size: 0.82rem; min-width: 40px; } .rpb-bar-outer { width: 80px; } .rpb-sudah, .rpb-belum { font-size: 0.72rem; } .rpb-pct-inline { font-size: 0.5rem; padding: 0px 4px; } .date-range-row { grid-template-columns: 1fr; gap: 0.25rem; } .date-range-row .dr-separator { display: none; } .query-summary { grid-template-columns: 1fr 1fr; } .query-btn-row { flex-direction: column; } }
+        @media (max-width: 900px) { html, body { height: auto !important; overflow: visible !important; } .grid { grid-template-columns: 1fr; height: auto !important; flex: none !important; overflow-y: visible !important; padding: 0.75rem; gap: 0.75rem; } .left { height: auto; overflow: visible; padding-right: 0; } .right { height: auto; overflow: visible; } .table-container { min-height: 400px; flex: none; } .chart-row { grid-template-columns: 1fr 1fr 1fr; } .budget-banner { flex-direction: column; align-items: stretch; } .budget-banner .bb-left, .budget-banner .bb-right { width: 100%; justify-content: space-between; } .rekap-pegawai-banner { flex-direction: column; align-items: stretch; } .rpb-left, .rpb-right { width: 100%; justify-content: space-between; } .modal-box { max-width: 100%; border-radius: 10px; } .modal-header { border-radius: 10px 10px 0 0; } .query-summary { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { html, body { height: auto !important; overflow: visible !important; } .header { gap: 0.4rem; } .header h1 { font-size: 0.72rem; } .logo-area img { height: 24px; } .logo-right { height: 26px; } #connectionStatus { font-size: 9px; } .btn-lock { font-size: 10px; padding: 4px 8px; } .admin-badge { font-size: 9px; padding: 3px 7px; } .theme-select { font-size: 9px; padding: 3px 5px; } .grid { grid-template-columns: 1fr; height: auto !important; flex: none !important; overflow-y: visible !important; padding: 0.5rem; gap: 0.5rem; } .left { height: auto; overflow: visible; padding-right: 0; } .right { height: auto; overflow: visible; } .card { padding: 0.65rem; } .card label { font-size: 0.72rem; } .card input, .card select { padding: 0.42rem; font-size: 0.8rem; } .filter-section { padding: 0.5rem; gap: 0.4rem; } .filter-item { min-width: calc(50% - 0.4rem); } .filter-item label { font-size: 0.62rem; } .filter-item input, .filter-item select { font-size: 0.75rem; padding: 0.35rem; } .table-container { min-height: 380px; flex: none; } .chart-row { grid-template-columns: 1fr 1fr 1fr; } .chart-box { height: 175px; } .chart-full { height: 165px; } .summary-box { grid-template-columns: 1fr 1fr 1fr; gap: 0.4rem; } .sum-item { padding: 0.45rem 0.3rem; } .sum-item .sum-value { font-size: 0.75rem; } .sum-item small { font-size: 0.55rem; } .sum-item .sum-pct { font-size: 0.65rem; } .budget-banner { padding: 0.5rem; font-size: 0.68rem; flex-direction: column; align-items: stretch; } .budget-banner .bb-left { flex-wrap: wrap; gap: 0.6rem; } .budget-banner .bb-divider { display: none; } .budget-banner .bb-right { justify-content: space-between; flex-wrap: wrap; } .budget-banner .bb-bar-wrap { width: 100px; } .budget-banner .bb-anggaran { font-size: 0.85rem; } .budget-banner .bb-pct { font-size: 0.8rem; } .rekap-pegawai-banner { padding: 0.5rem; font-size: 0.68rem; flex-direction: column; align-items: stretch; } .rpb-left { flex-wrap: wrap; gap: 0.6rem; } .rpb-divider { display: none; } .rpb-right { justify-content: space-between; flex-wrap: wrap; } .rpb-bar-outer { width: 100px; } .rpb-pct { font-size: 0.9rem; } .rpb-pct-inline { font-size: 0.55rem; } .date-range-row .dr-field input { padding: 0.38rem; font-size: 0.78rem; } .modal-overlay { padding: 1rem 0.5rem; } .modal-body { padding: 0.75rem; } .query-search-bar { flex-direction: column; } .query-search-bar .qs-field { min-width: 100%; } .query-peserta-info { flex-direction: column; align-items: flex-start; gap: 0.5rem; } .query-summary { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 480px) { .header { padding: 0.3rem 0.6rem; } .header h1 { font-size: 0.62rem; } .logo-area img { height: 20px; } .logo-right { height: 22px; } #connectionStatus { font-size: 8px; } .btn-lock { font-size: 9px; padding: 3px 6px; gap: 4px; } .admin-badge { font-size: 8px; padding: 2px 6px; } .theme-select { font-size: 8px; padding: 2px 4px; } .grid { padding: 0.4rem; gap: 0.4rem; } .card { padding: 0.55rem; } .card label { font-size: 0.68rem; } .card input, .card select { padding: 0.38rem; font-size: 0.78rem; } .btn-blue, .btn-green, .btn-query, .btn-rekap { padding: 0.45rem; font-size: 0.78rem; } .btn-gray { padding: 0.4rem; font-size: 0.75rem; } .filter-section { padding: 0.4rem; gap: 0.35rem; } .filter-item { min-width: 100%; } .table-container { min-height: 320px; } .chart-row { grid-template-columns: 1fr 1fr; } .chart-box { height: 185px; } .chart-full { height: 175px; } .summary-box { grid-template-columns: 1fr; } .sum-item { padding: 0.5rem 0.4rem; } .sum-item .sum-value { font-size: 0.82rem; } .budget-banner { padding: 0.45rem; font-size: 0.62rem; } .budget-banner .bb-anggaran { font-size: 0.78rem; } .budget-banner .bb-pct { font-size: 0.72rem; min-width: 40px; } .budget-banner .bb-bar-wrap { width: 80px; } .budget-banner .bb-sisa-val { font-size: 0.75rem; } .rekap-pegawai-banner { padding: 0.45rem; font-size: 0.62rem; } .rpb-total { font-size: 0.78rem; } .rpb-pct { font-size: 0.82rem; min-width: 40px; } .rpb-bar-outer { width: 80px; } .rpb-sudah, .rpb-belum { font-size: 0.72rem; } .rpb-pct-inline { font-size: 0.5rem; padding: 0px 4px; } .date-range-row { grid-template-columns: 1fr; gap: 0.25rem; } .date-range-row .dr-separator { display: none; } .query-summary { grid-template-columns: 1fr 1fr; } .query-btn-row { flex-direction: column; } }
         @media (max-width: 360px) { .header h1 { font-size: 0.55rem; } .logo-area img { height: 18px; } .logo-right { height: 20px; } .logo-area { gap: 6px; } .btn-lock { font-size: 8px; padding: 2px 5px; } .card { padding: 0.45rem; } .card input, .card select { font-size: 0.75rem; } .chart-box { height: 170px; } .chart-full { height: 160px; } .chart-row { grid-template-columns: 1fr; } .query-summary { grid-template-columns: 1fr; } .rekap-pegawai-banner { padding: 0.4rem; } .rpb-bar-outer { width: 60px; } .rpb-pct-inline { font-size: 0.48rem; } }
         @media (max-width: 360px) { .header h1 { font-size: 0.55rem; } .logo-area img { height: 18px; } .logo-right { height: 20px; } .logo-area { gap: 6px; } .btn-lock { font-size: 8px; padding: 2px 5px; } .card { padding: 0.45rem; } .card input, .card select { font-size: 0.75rem; } .chart-box { height: 170px; } .chart-full { height: 160px; } .chart-row { grid-template-columns: 1fr; } .query-summary { grid-template-columns: 1fr; } .rekap-pegawai-banner { padding: 0.4rem; } .rpb-bar-outer { width: 60px; } .rpb-pct-inline { font-size: 0.48rem; } }
     </style>
@@ -441,6 +660,308 @@
                 <span class="qe-icon">&#128101;</span>
                 <div class="qe-text">Tidak ada data pegawai yang sesuai pencarian / filter</div>
                 <div class="qe-sub">Coba sesuaikan kata kunci atau filter frekuensi/tahun</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Panduan Pengguna & Bahan Presentasi -->
+<div class="modal-overlay" id="manualModal">
+    <div class="modal-box" style="max-width: 1060px;">
+        <div class="modal-header-manual">
+            <h2><span>📖</span> Panduan Pengguna & Bahan Presentasi Sistem Monitoring Pelatihan</h2>
+            <button class="modal-close" onclick="closeManualModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <!-- Top Toolbar: Tabs, Search & Action Tools -->
+            <div class="manual-top-toolbar">
+                <div class="manual-nav-tabs">
+                    <button type="button" class="manual-tab-btn active" id="tabBtnManual" onclick="switchManualTab('manual')">📘 Panduan Pengguna (User Manual)</button>
+                    <button type="button" class="manual-tab-btn" id="tabBtnSlides" onclick="switchManualTab('slides')">📊 Bahan Presentasi (Slide Deck Eksekutif)</button>
+                </div>
+                <div class="manual-actions-row">
+                    <div class="manual-search-box">
+                        <input type="text" id="manualSearchInput" placeholder="🔍 Cari panduan / materi..." onkeyup="searchManualContent()">
+                        <button type="button" class="manual-search-clear" id="manualSearchClear" onclick="clearManualSearch()" style="display:none;">&times;</button>
+                    </div>
+                    <button type="button" class="btn-manual-tool" onclick="printManualContent()" title="Cetak atau simpan sebagai file PDF">🖨️ Cetak / PDF</button>
+                    <button type="button" class="btn-manual-tool" onclick="copyManualSummary()" title="Salin ringkasan ke clipboard">📋 Salin Teks</button>
+                </div>
+            </div>
+
+            <!-- Tab 1: Comprehensive User Manual (10 Modul Lengkap) -->
+            <div id="manualContentPane" class="manual-content-section">
+                <div class="manual-card" data-keywords="lock unlock akses keamanan admin password nama resmi ridwan zakky elmy muhtar sakti read-only">
+                    <h3><span>🔐</span> Modul 1: Hak Akses & Keamanan Admin (Lock/Unlock)</h3>
+                    <p>Sistem menerapkan pengamanan berbasis peran (*role-based access*) untuk menjaga integritas data kediklatan:</p>
+                    <ul>
+                        <li><span class="manual-badge">Mode Terkunci (LOCKED)</span> Status default. Pengguna umum, pimpinan, dan karyawan dapat membaca grafik, memfilter tabel, menggunakan Query Peserta, dan mengunduh Excel secara aman tanpa risiko data terhapus.</li>
+                        <li><span class="manual-badge">Mode Terbuka (UNLOCKED)</span> Tombol <strong>UNLOCK</strong> di header atas. Masukkan nama Admin resmi: <strong>Ridwan, Zakky, Elmy, Muhtar, Sakti</strong>.</li>
+                        <li>Saat aktif (badge hijau menyala), tombol <strong>SIMPAN</strong>, <strong>EDIT</strong>, <strong>HAPUS</strong>, dan <strong>IMPORT EXCEL</strong> terbuka untuk digunakan.</li>
+                        <li>Klik kembali tombol untuk mengunci sistem setelah selesai melakukan pembaruan data.</li>
+                    </ul>
+                </div>
+
+                <div class="manual-card" data-keywords="input peserta tambah pelatihan batch add antrean autocomplete nup unit biaya training pds">
+                    <h3><span>✍️</span> Modul 2: Alur Input Pelatihan & Peserta (Batch Entry Terpadu)</h3>
+                    <p>Sistem mengadopsi mekanisme *batch entry* efisien sehingga 1 judul pelatihan dapat dialokasikan ke banyak peserta sekaligus:</p>
+                    <ol>
+                        <li><strong>Form Pelatihan (Atas)</strong>:
+                            <ul>
+                                <li>Pilih <strong>Segmen</strong>: <code>KELAS</code>, <code>DUKBIS</code>, atau <code>KOMERSIL</code>.</li>
+                                <li>Pilih <strong>Kategori</strong>: <code>Refresher</code>, <code>New</code>, <code>Practical</code>, atau <code>Pendidikan</code>.</li>
+                                <li>Pilih <strong>Jenis Sertifikat</strong>: <code>Brevet</code> atau <code>Non Brevet</code>.</li>
+                                <li>Ketik <strong>Nama Pelatihan</strong>, tentukan <strong>Tanggal Mulai & Selesai</strong>, serta nominal <strong>Biaya Training</strong> dan <strong>Biaya PDS</strong> (rupiah).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Form Peserta (Bawah)</strong>:
+                            <ul>
+                                <li>Ketik NUP atau Nama peserta. Autocomplete pintar akan mencocokkan data dari master pegawai BKI secara instan.</li>
+                                <li>Pilih nama yang muncul; Unit Kerja akan terisi secara otomatis.</li>
+                                <li>Klik tombol <strong>+ ADD</strong> (atau tekan <em>Enter</em>). Peserta akan masuk ke daftar antrean.</li>
+                                <li>Ulangi untuk peserta berikutnya. Tanda silang merah dapat diklik untuk membatalkan peserta yang keliru.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Simpan ke Cloud</strong>: Klik tombol biru <strong>SIMPAN=>></strong>. Seluruh peserta dalam antrean tersimpan permanen ke cloud Firebase dilengkapi penanda admin penginput (*audit trail*).</li>
+                    </ol>
+                </div>
+
+                <div class="manual-card" data-keywords="kategori pendidikan refresher new practical sertifikat brevet non brevet segmen kelas dukbis komersil">
+                    <h3><span>🎓</span> Modul 3: Manajemen Kategori (Termasuk Pendidikan) & Sertifikasi</h3>
+                    <p>Sistem membedakan rumpun pengembangan kompetensi untuk kebutuhan evaluasi manajemen:</p>
+                    <ul>
+                        <li><span class="manual-badge">Pendidikan</span> Kategori khusus untuk tugas belajar, izin belajar, dan program gelar formal (D3, D4, S1, S2, S3) yang kini terintegrasi langsung di dropdown kategori utama tanpa datalist terpisah.</li>
+                        <li><span class="manual-badge">Refresher</span> Pelatihan penyegaran kompetensi berkala (wajib perpanjangan lisensi / sertifikat keahlian).</li>
+                        <li><span class="manual-badge">New</span> Pelatihan penguasaan bidang ilmu, software, atau teknologi baru.</li>
+                        <li><span class="manual-badge">Practical</span> Pelatihan praktik kerja lapangan, inspeksi teknis, dan workshop laboratorium.</li>
+                        <li><span class="manual-badge">Brevet & Non Brevet</span> Klasifikasi sertifikat kompetensi keahlian surveyor/inspektur yang menjadi standar kelayakan operasional BKI.</li>
+                    </ul>
+                </div>
+
+                <div class="manual-card" data-keywords="tahun berjalan dynamic running year 2026 2025 disembunyikan otomatisasi pagu anggaran 7 milyar 5.2 milyar">
+                    <h3><span>📅</span> Modul 4: Otomatisasi Tahun Berjalan & Pengendalian Anggaran</h3>
+                    <p>Sistem dilengkapi mesin penanggalan dinamis (*Dynamic Running Year Engine*):</p>
+                    <ul>
+                        <li><span class="manual-badge">Default Tahun Berjalan</span> Saat aplikasi dibuka, sistem otomatis memuat kalender tahun berjalan (misal tahun 2026). Banner anggaran dan kepesertaan langsung mengacu pada target tahun aktif.</li>
+                        <li><span class="manual-badge">Tahun 2025 Disembunyikan</span> Arsip tahun sebelumnya (2025) disembunyikan secara default agar tidak membingungkan, dan <strong>hanya akan tampil ketika pengguna memilih opsi 2025 pada filter tahun</strong>.</li>
+                        <li><span class="manual-badge">Transisi Tanpa Edit Kode</span> Pada saat pergantian tahun baru, sistem secara otomatis beralih memuat tahun kalender baru tanpa perlu ubah script kode.</li>
+                        <li><span class="manual-badge">Pagu Anggaran</span> Pagu Rp 7.000.000.000,- (Tahun Berjalan) dan Rp 5.200.000.000,- (2025). Indikator bar visual akan memberikan peringatan perubahan warna saat serapan mendekati batas pagu.</li>
+                    </ul>
+                </div>
+
+                <div class="manual-card" data-keywords="grafik chart persentase bar chart tren bulanan donut doughnut pie segmen kategori sertifikat">
+                    <h3><span>📊</span> Modul 5: Visualisasi Grafik Interaktif dengan Angka & Persentase</h3>
+                    <p>Dashboard menyajikan 4 instrumen visualisasi data analitis yang responsif:</p>
+                    <ul>
+                        <li><strong>Tren Bulanan (Bar Chart)</strong>: Memantau pengeluaran biaya pelatihan (Training + PDS) setiap bulan dari Januari hingga Desember.</li>
+                        <li><strong>Proporsi Segmen, Kategori, & Sertifikat (Doughnut Chart)</strong>:
+                            <ul>
+                                <li>Setiap irisan donat menampilkan <strong>nilai kuantitas sekaligus porsi persentase</strong> (contoh: <code>18 (60.0%)</code>).</li>
+                                <li>Legenda di bawah grafik memuat label warna, nama kategori, dan persentase yang mudah dibaca.</li>
+                                <li>Arahkan kursor (*hover*) pada irisan grafik untuk melihat rincian tooltip secara akurat.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="manual-card" data-keywords="query peserta cari nup nama profil avatar riwayat historis akumulasi investasi biaya training pds">
+                    <h3><span>🔍</span> Modul 6: Fitur Query Peserta (Portofolio & Riwayat Individu)</h3>
+                    <p>Digunakan untuk audit kompetensi perseorangan dan melihat total investasi biaya yang telah dikeluarkan perusahaan:</p>
+                    <ul>
+                        <li>Klik tombol ungu <strong>🔍 QUERY PESERTA</strong> di sidebar kiri bawah.</li>
+                        <li>Ketik Nama atau NUP pegawai, lalu klik <strong>CARI</strong>.</li>
+                        <li>Sistem menampilkan:
+                            <ul>
+                                <li>Avatar inisial, Nama Lengkap, NUP, dan Unit Kerja pegawai.</li>
+                                <li>Total keikutsertaan pelatihan (contoh: <code>4x</code>).</li>
+                                <li>Total Biaya Training, Total Biaya PDS, dan Grand Total Investasi Pengembangan SDM.</li>
+                                <li><em>Badge chips</em> kategori pelatihan yang pernah diambil.</li>
+                                <li>Tabel kronologis seluruh pelatihan yang telah diselesaikan.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="manual-card" data-keywords="rekap frekuensi pegawai pemerataan kesenjangan sidebar 1x 2x 3x multi peserta daftar pelatihan">
+                    <h3><span>👥</span> Modul 7: Rekapitulasi Frekuensi Pegawai (Pemerataan Diklat)</h3>
+                    <p>Instrumen pengawasan untuk mencegah ketimpangan keikutsertaan pelatihan di antara karyawan:</p>
+                    <ul>
+                        <li><strong>Widget Sidebar (Kiri Bawah)</strong>: Daftar peringkat pegawai teraktif mengikuti diklat dengan tab filter cepat <strong>Semua</strong> dan <strong>≥2x Ikut</strong>.</li>
+                        <li><strong>Modal Rekap Komprehensif (Tombol REKAP PEGAWAI)</strong>:
+                            <ul>
+                                <li>4 Kartu Metrik: Total Pegawai Ikut Training, 1x Pelatihan Saja, 2x Pelatihan, dan ≥3x Pelatihan (Multi).</li>
+                                <li>Filter multi-kriteria: Cari kata kunci, Unit Kerja, Tahun, dan Frekuensi Keikutsertaan.</li>
+                                <li>Kolom tabel memuat daftar lengkap judul pelatihan yang pernah diikuti per orang.</li>
+                                <li>Tombol <strong>EXPORT REKAP</strong> untuk mengunduh rekapitulasi ke file Excel resmi.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="manual-card" data-keywords="filter tabel segmen kategori sertifikat bulan tahun unit kerja pencarian bebas sort urut">
+                    <h3><span>🎯</span> Modul 8: Panel Filter Multi-Dimensi & Pencarian Cepat</h3>
+                    <p>Menyaring ribuan data pelatihan secara *real-time* tanpa lag:</p>
+                    <ul>
+                        <li>Dropdown filter: <strong>Segmen</strong>, <strong>Kategori</strong>, <strong>Sertifikat</strong>, <strong>Bulan</strong>, <strong>Tahun</strong>, dan <strong>Unit Kerja</strong>.</li>
+                        <li>Kotak pencarian teks bebas untuk menyaring seketika berdasarkan nama pegawai, NUP, ataupun judul pelatihan.</li>
+                        <li>Semua filter saling terhubung secara kondisional, sehingga grafik dan banner ringkasan di atas tabel akan ikut diperbarui secara simultan.</li>
+                    </ul>
+                </div>
+
+                <div class="manual-card" data-keywords="excel import export format xlsx template nup nama pelatihan upload download unduh">
+                    <h3><span>📥</span> Modul 9: Tata Cara Impor & Ekspor Berkas Excel</h3>
+                    <p>Fasilitas pertukaran data spreadsheet dengan standar format resmi:</p>
+                    <ul>
+                        <li><strong>EXPORT EXCEL</strong>: Mengunduh data tabel yang sedang tampil ke berkas <code>.xlsx</code> dengan format penamaan tanggal otomatis.</li>
+                        <li><strong>IMPORT EXCEL (Batch Upload)</strong>:
+                            <ul>
+                                <li>Pastikan status admin sudah <strong>UNLOCKED</strong>.</li>
+                                <li>Kolom wajib: <code>NUP</code>, <code>Nama</code>, <code>Pelatihan</code>.</li>
+                                <li>Kolom opsional: <code>Segmen</code>, <code>Kategori</code>, <code>Sertifikat</code>, <code>Tanggal</code>, <code>Tanggal Selesai</code>, <code>Unit</code>, <code>Biaya Training</code>, <code>Biaya PDS</code>.</li>
+                                <li>Pilih file melalui tombol <strong>Choose File</strong> lalu klik <strong>IMPORT EXCEL</strong>. Sistem akan mengunggah seluruh data dalam hitungan detik.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="manual-card" data-keywords="faq tanya jawab troubleshooting kendala tombol simpan tidak aktif data tidak muncul cloud database">
+                    <h3><span>💡</span> Modul 10: Tanya Jawab (FAQ) & Solusi Kendala Cepat</h3>
+                    <ul>
+                        <li><strong>Q: Mengapa tombol SIMPAN, EDIT, dan HAPUS tidak bisa diklik?</strong><br>
+                            <em>A: Sistem dalam status terkunci (*LOCKED*). Klik tombol 🔒 UNLOCK di header kanan atas lalu masukkan salah satu nama admin terdaftar.</em></li>
+                        <li><strong>Q: Mengapa data tahun 2025 tidak muncul di tabel utama?</strong><br>
+                            <em>A: Sesuai regulasi sistem, tahun 2025 disembunyikan secara default. Untuk melihatnya, pilih opsi "2025" pada dropdown filter Tahun.</em></li>
+                        <li><strong>Q: Apakah sistem memerlukan koneksi internet?</strong><br>
+                            <em>A: Ya, dashboard menggunakan Firebase Realtime Cloud agar seluruh data tersinkronisasi instan antar-perangkat di seluruh cabang BKI.</em></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tab 2: Executive Presentation Slides (Slide Deck Mode & Carousel) -->
+            <div id="slidesContentPane" class="manual-content-section" style="display:none;">
+                <!-- Slide Sub-Toolbar -->
+                <div class="slide-toolbar-sub">
+                    <div class="slide-mode-btn-group">
+                        <button type="button" class="slide-mode-btn active" id="btnModeCarousel" onclick="setSlideViewMode('carousel')">📽️ Mode Presenter (Slide-by-Slide)</button>
+                        <button type="button" class="slide-mode-btn" id="btnModeAll" onclick="setSlideViewMode('all')">📑 Tampilkan Semua Slide (Ringkasan)</button>
+                    </div>
+                    <div class="slide-carousel-nav" id="slideCarouselNav">
+                        <button type="button" class="btn-slide-nav" id="btnSlidePrev" onclick="prevManualSlide()">&larr; Sebelumnya</button>
+                        <span class="slide-counter-badge" id="slideCounterText">Slide 1 dari 9</span>
+                        <button type="button" class="btn-slide-nav" id="btnSlideNext" onclick="nextManualSlide()">Berikutnya &rarr;</button>
+                    </div>
+                </div>
+
+                <!-- Carousel View: Single Active Slide -->
+                <div id="slideSingleView" class="slide-single-view" style="display:block;">
+                    <div class="slide-single-header">
+                        <span class="slide-badge" id="singleSlideBadge">Slide 1 • Pembukaan Eksekutif</span>
+                        <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">Gunakan tombol &larr; / &rarr; pada keyboard</span>
+                    </div>
+                    <h3 class="slide-single-title" id="singleSlideTitle">DASHBOARD MONITORING & EVALUASI PELATIHAN PEGAWAI</h3>
+                    <div class="slide-single-body" id="singleSlideBody">
+                        <p><strong>Sub-judul:</strong> Modernisasi Tata Kelola Kediklatan, Transparansi Finansial, dan Pemerataan Kompetensi SDM BKI</p>
+                        <p><strong>Penyusun:</strong> Tim Pengelola Diklat PT Biro Klasifikasi Indonesia (Persero)</p>
+                        <p><strong>Target Pagu:</strong> Rp 7.000.000.000,- (Tahun Berjalan) | Rp 5.200.000.000,- (2025)</p>
+                        <p style="font-size:0.8rem; color:var(--text-muted);"><em>"Solusi analitis terintegrasi berbasis real-time cloud untuk pemantauan realisasi anggaran pelatihan, evaluasi sertifikasi pegawai, dan akselerasi pengambilan keputusan eksekutif."</em></p>
+                    </div>
+                    <div class="slide-speaker-notes" id="singleSlideNotes">
+                        <strong>💡 Catatan Presenter (Talking Points):</strong><br>
+                        "Selamat pagi/siang Bapak/Ibu Direksi dan Manajemen. Kami persembahkan Dashboard Monitoring Pelatihan Pegawai sebagai wujud nyata transformasi digital kediklatan BKI demi transparansi anggaran dan pemerataan kompetensi seluruh insan BKI."
+                    </div>
+                </div>
+
+                <!-- Grid / All Slides View (Hidden in Carousel Mode) -->
+                <div id="slideAllGridView" style="display:none;">
+                    <div class="slide-card">
+                        <span class="slide-badge">Slide 1 • Pembukaan Eksekutif</span>
+                        <h4 class="slide-title">DASHBOARD MONITORING & EVALUASI PELATIHAN PEGAWAI</h4>
+                        <p><strong>Sub-judul:</strong> Modernisasi Tata Kelola Kediklatan, Transparansi Finansial, dan Pemerataan Kompetensi SDM BKI</p>
+                        <p><strong>Penyusun:</strong> Tim Diklat PT Biro Klasifikasi Indonesia (Persero)</p>
+                        <p style="font-size:0.75rem; color:var(--text-muted);"><em>"Platform digital terpadu untuk pengawasan realisasi anggaran diklat dan penjaminan mutu kompetensi sumber daya manusia."</em></p>
+                    </div>
+
+                    <div class="slide-card">
+                        <span class="slide-badge">Slide 2 • Latar Belakang Masalah</span>
+                        <h4 class="slide-title">Tantangan Pengelolaan Diklat Sebelumnya</h4>
+                        <ul>
+                            <li><strong>Pencatatan Tercecer:</strong> Data diklat tersebar di berbagai berkas spreadsheet yang rentan selisih, tumpang-tindih, dan salah ketik.</li>
+                            <li><strong>Monitoring Anggaran Terlambat:</strong> Sulit mengetahui penyerapan pagu dan sisa saldo anggaran pelatihan secara *real-time*.</li>
+                            <li><strong>Kesenjangan Pelatihan:</strong> Kurangnya visibilitas mengenai pegawai yang berulang kali ikut pelatihan versus pegawai yang belum pernah terfasilitasi.</li>
+                            <li><strong>Pelaporan Manual Lambat:</strong> Pembuatan rekapitulasi untuk pimpinan memakan waktu berhari-hari.</li>
+                        </ul>
+                    </div>
+
+                    <div class="slide-card">
+                        <span class="slide-badge">Slide 3 • Visi & Tujuan Solusi</span>
+                        <h4 class="slide-title">Tiga Pilar Utama Transformasi Kediklatan</h4>
+                        <ul>
+                            <li><strong>Transparansi Penuh:</strong> Data pelatihan dan sertifikasi pegawai dapat diakses secara transparan oleh manajemen setiap saat.</li>
+                            <li><strong>Akurasi Finansial:</strong> Pemisahan presisi antara Biaya Training dan Biaya Perjalanan Dinas Siswa (PDS).</li>
+                            <li><strong>Keadilan Kompetensi:</strong> Memastikan seluruh divisi dan cabang mendapatkan kesempatan pengembangan kompetensi yang setara.</li>
+                        </ul>
+                    </div>
+
+                    <div class="slide-card">
+                        <span class="slide-badge">Slide 4 • Arsitektur Teknologi</span>
+                        <h4 class="slide-title">Teknologi Modern Berbasis Cloud Real-time</h4>
+                        <ul>
+                            <li><strong>Firebase Realtime Database:</strong> Pembaruan data tersinkronisasi instan di seluruh komputer kerja tanpa jeda.</li>
+                            <li><strong>Dynamic Running Year Engine:</strong> Otomatis menyesuaikan data tahun berjalan kalender tanpa perlu ubah script kode saat tahun baru tiba.</li>
+                            <li><strong>Two-Tier Role Security:</strong> Mode publik untuk pengawasan eksekutif & mode admin khusus untuk entri data yang aman.</li>
+                        </ul>
+                    </div>
+
+                    <div class="slide-card">
+                        <span class="slide-badge">Slide 5 • Fitur 1: Smart Batch Entry</span>
+                        <h4 class="slide-title">Alur Entri Peserta Terpadu & Autocomplete</h4>
+                        <ul>
+                            <li><strong>Autocomplete Cerdas:</strong> Cukup ketik nama atau NUP, profil pegawai langsung terisi otomatis dari master database BKI.</li>
+                            <li><strong>Batch Queuing:</strong> Satu agenda pelatihan dapat langsung dialokasikan ke puluhan peserta sekaligus sebelum disimpan.</li>
+                            <li><strong>Audit Trail:</strong> Label otomatis mencatat admin penginput dan admin pengedit beserta waktu transaksi.</li>
+                        </ul>
+                    </div>
+
+                    <div class="slide-card">
+                        <span class="slide-badge">Slide 6 • Fitur 2: Pengendalian Anggaran</span>
+                        <h4 class="slide-title">Pengawasan Realisasi Keuangan & Pagu</h4>
+                        <ul>
+                            <li><strong>Pagu Anggaran Dinamis:</strong> Target Rp 7 Milyar (Tahun Berjalan) dan Rp 5,2 Milyar (2025).</li>
+                            <li><strong>Early Warning System:</strong> Indikator persentase serapan anggaran dan perubahan warna bar peringatan saat mendekati batas pagu.</li>
+                            <li><strong>Pemisahan Biaya:</strong> Akurasi pemisahan antara pengeluaran biaya registrasi training dan operasional PDS.</li>
+                        </ul>
+                    </div>
+
+                    <div class="slide-card">
+                        <span class="slide-badge">Slide 7 • Fitur 3: Analitik Donat & Persentase</span>
+                        <h4 class="slide-title">Visualisasi Data Angka & Persentase Terpadu</h4>
+                        <ul>
+                            <li><strong>Tiga Dimensi Utama:</strong> Segmen (Klas/Dukbis/Komersil), Kategori (Refresher/New/Practical/Pendidikan), dan Sertifikat (Brevet/Non Brevet).</li>
+                            <li><strong>Label Terpadu:</strong> Setiap irisan lingkaran langsung memuat jumlah peserta beserta persentasenya (contoh: <code>18 (60.0%)</code>).</li>
+                            <li><strong>Legenda & Tooltip Interaktif:</strong> Memudahkan pengambil keputusan membaca proporsi data secara seketika.</li>
+                        </ul>
+                    </div>
+
+                    <div class="slide-card">
+                        <span class="slide-badge">Slide 8 • Fitur 4: Rekap Frekuensi Pegawai</span>
+                        <h4 class="slide-title">Pengawasan Pemerataan Pelatihan Karyawan</h4>
+                        <ul>
+                            <li><strong>Segmentasi Frekuensi:</strong> Mengklasifikasikan pegawai ke dalam kategori 1x Pelatihan, 2x Pelatihan, dan ≥3x Pelatihan (Multi).</li>
+                            <li><strong>Tabel Riwayat Lengkap:</strong> Menampilkan seluruh judul pelatihan yang pernah diikuti per pegawai.</li>
+                            <li><strong>Dasar Kebijakan Objektif:</strong> Landasan data kuat bagi pimpinan untuk menyetujui usulan diklat berikutnya.</li>
+                        </ul>
+                    </div>
+
+                    <div class="slide-card">
+                        <span class="slide-badge">Slide 9 • Dampak Bisnis & Roadmap</span>
+                        <h4 class="slide-title">Nilai Tambah Nyata & Rencana Lanjutan</h4>
+                        <ul>
+                            <li><strong>Efisiensi Waktu 80%:</strong> Penyusunan laporan diklat yang sebelumnya berhari-hari kini selesai dalam hitungan detik.</li>
+                            <li><strong>Akurasi Finansial 100%:</strong> Menghilangkan potensi salah hitung antara anggaran training dan PDS.</li>
+                            <li><strong>Roadmap Lanjutan:</strong> Pengingat otomatis masa kedaluwarsa sertifikat Brevet dan evaluasi pasca-training.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -532,9 +1053,48 @@
             <div class="filter-item" style="flex:2;"><label>Nama Peserta</label><input type="text" id="filterNama" placeholder="Cari..." onkeyup="debouncedFilterText()"></div>
             <div class="filter-item" style="flex:2;"><label>Nama Pelatihan</label><input type="text" id="filterPelatihan" placeholder="Cari pelatihan..." onkeyup="debouncedFilterText()"></div>
         </div>
-        <div class="table-container"><div class="table-wrap">
-            <table id="tabelUtama"><thead><tr><th>No</th><th>Segmen</th><th>Kategori</th><th>Sertifikat</th><th>NUP</th><th>Nama</th><th>Unit</th><th>Pelatihan</th><th>Tgl Mulai</th><th>Tgl Selesai</th><th>Biaya Training</th><th>PDS</th><th>Total</th><th>Oleh</th><th>Aksi</th></tr></thead><tbody id="tableBody"></tbody></table>
-        </div></div>
+        <div class="table-container">
+            <div class="table-header-bar">
+                <div class="thb-left">
+                    <span class="thb-title"><span>📋</span> Data Pelatihan & Peserta</span>
+                    <span class="thb-count" id="tableRowCountBadge">0 data</span>
+                </div>
+                <div class="thb-right">
+                    <span class="thb-hint">💡 Klik baris atau tombol aksi untuk edit / hapus</span>
+                    <button type="button" class="thb-btn-reset" onclick="resetSemuaFilter()" title="Kembalikan semua filter ke default">&#8634; Reset Filter</button>
+                </div>
+            </div>
+            <div class="table-wrap">
+                <table id="tabelUtama">
+                    <thead>
+                        <tr>
+                            <th style="width:38px; text-align:center;">No</th>
+                            <th>Segmen</th>
+                            <th>Kategori</th>
+                            <th>Sertifikat</th>
+                            <th>NUP</th>
+                            <th>Nama Peserta</th>
+                            <th>Unit Kerja</th>
+                            <th>Nama Pelatihan</th>
+                            <th>Tgl Mulai</th>
+                            <th>Tgl Selesai</th>
+                            <th style="text-align:right;">Biaya Training</th>
+                            <th style="text-align:right;">Biaya PDS</th>
+                            <th style="text-align:right;">Total Biaya</th>
+                            <th>Oleh</th>
+                            <th style="text-align:center;">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+            <div class="table-footer-bar">
+                <span>Data Tampil: <strong id="tfootTotalBaris">0</strong> orang</span>
+                <span>Total Biaya Training: <strong id="tfootTotalTraining">Rp 0</strong></span>
+                <span>Total PDS: <strong id="tfootTotalPDS">Rp 0</strong></span>
+                <span class="tfoot-grand">Grand Total: <strong id="tfootGrandTotal">Rp 0</strong></span>
+            </div>
+        </div>
         <div class="charts-grid">
             <div class="chart-box chart-full">
                 <div class="chart-header">
@@ -1669,7 +2229,102 @@ function jalankanFilter(){
     },150);
 }
 
-function renderTable(data){var tbody=document.getElementById('tableBody');if(!data.length){tbody.innerHTML='<tr><td colspan="15" style="text-align:center;padding:2rem;color:#94a3b8;">Tidak ada data</td></tr>';return;}var html='';for(var i=0;i<data.length;i++){var d=data[i];var bt=d.biayaTraining||0;var bp=d.biayaPDS||0;var total=bt+bp;var olehHtml='';if(d.olehEdit){olehHtml='<span class="oleh-tag edit-by"><span class="oleh-icon">&#9998;</span>'+d.olehEdit+'</span>';}else if(d.olehInput){olehHtml='<span class="oleh-tag input-by"><span class="oleh-icon">&#10003;</span>'+d.olehInput+'</span>';}html+='<tr>';html+='<td>'+(i+1)+'</td><td>'+escapeHtml(d.segmen)+'</td><td>'+escapeHtml(d.kategori)+'</td><td>'+escapeHtml(d.sertifikat)+'</td>';html+='<td>'+escapeHtml(d.nup)+'</td><td>'+escapeHtml(d.nama)+'</td><td>'+escapeHtml(d.unit)+'</td><td>'+escapeHtml(d.pelatihan)+'</td>';html+='<td class="td-tgl-mulai">'+formatTglShort(d.tanggal)+'</td><td class="td-tgl-selesai">'+formatTglShort(d.tanggalSelesai)+'</td>';html+='<td>'+formatRp(bt)+'</td><td>'+formatRp(bp)+'</td>';html+='<td style="font-weight:700;">'+formatRp(total)+'</td><td>'+olehHtml+'</td>';html+='<td><div class="action-wrapper"><button class="action-btn btn-edit" onclick="editData(\''+d._id+'\')" title="Edit"'+(!isAdmin?' disabled':'')+'>&#9998;</button><button class="action-btn btn-delete" onclick="deleteData(\''+d._id+'\')" title="Hapus"'+(!isAdmin?' disabled':'')+'>&#128465;</button></div></td>';html+='</tr>';}tbody.innerHTML=html;}
+function renderTable(data){
+    var tbody=document.getElementById('tableBody');
+    var badgeCount=document.getElementById('tableRowCountBadge');
+    var tfBaris=document.getElementById('tfootTotalBaris');
+    var tfTraining=document.getElementById('tfootTotalTraining');
+    var tfPDS=document.getElementById('tfootTotalPDS');
+    var tfGrand=document.getElementById('tfootGrandTotal');
+
+    if(!data.length){
+        tbody.innerHTML='<tr><td colspan="15" style="text-align:center;padding:2.5rem 1rem;color:var(--text-muted);font-size:0.85rem;"><div style="font-size:1.6rem;margin-bottom:6px;">📭</div>Tidak ada data pelatihan yang sesuai filter</td></tr>';
+        if(badgeCount) badgeCount.textContent = '0 data';
+        if(tfBaris) tfBaris.textContent = '0';
+        if(tfTraining) tfTraining.textContent = 'Rp 0';
+        if(tfPDS) tfPDS.textContent = 'Rp 0';
+        if(tfGrand) tfGrand.textContent = 'Rp 0';
+        return;
+    }
+
+    var totalTraining=0, totalPDS=0;
+    var html='';
+    for(var i=0;i<data.length;i++){
+        var d=data[i];
+        var bt=d.biayaTraining||0;
+        var bp=d.biayaPDS||0;
+        var total=bt+bp;
+        totalTraining += bt;
+        totalPDS += bp;
+
+        var olehHtml='';
+        if(d.olehEdit){
+            olehHtml='<span class="oleh-tag edit-by" title="Diedit oleh '+escapeHtml(d.olehEdit)+'"><span class="oleh-icon">&#9998;</span>'+escapeHtml(d.olehEdit)+'</span>';
+        }else if(d.olehInput){
+            olehHtml='<span class="oleh-tag input-by" title="Diinput oleh '+escapeHtml(d.olehInput)+'"><span class="oleh-icon">&#10003;</span>'+escapeHtml(d.olehInput)+'</span>';
+        }
+
+        var segBadge = '-';
+        if(d.segmen){
+            var sLower = String(d.segmen).toLowerCase();
+            var sCls = sLower === 'klas' ? 'tb-badge-seg-klas' : (sLower === 'dukbis' ? 'tb-badge-seg-dukbis' : 'tb-badge-seg-komersil');
+            segBadge = '<span class="tb-badge ' + sCls + '">' + escapeHtml(d.segmen) + '</span>';
+        }
+
+        var katBadge = '-';
+        if(d.kategori){
+            var kLower = String(d.kategori).toLowerCase();
+            var kCls = kLower === 'refresher' ? 'tb-badge-kat-refresher' : (kLower === 'new' ? 'tb-badge-kat-new' : (kLower === 'practical' ? 'tb-badge-kat-practical' : (kLower === 'pendidikan' ? 'tb-badge-kat-pendidikan' : '')));
+            katBadge = '<span class="tb-badge ' + kCls + '">' + escapeHtml(d.kategori) + '</span>';
+        }
+
+        var sertBadge = '-';
+        if(d.sertifikat){
+            var srCls = d.sertifikat === 'Brevet' ? 'tb-badge-sert-brevet' : 'tb-badge-sert-non';
+            sertBadge = '<span class="tb-badge ' + srCls + '">' + escapeHtml(d.sertifikat) + '</span>';
+        }
+
+        html+='<tr>';
+        html+='<td style="text-align:center;font-weight:600;color:var(--text-muted);">' + (i+1) + '</td>';
+        html+='<td>' + segBadge + '</td>';
+        html+='<td>' + katBadge + '</td>';
+        html+='<td>' + sertBadge + '</td>';
+        html+='<td style="font-weight:600;color:var(--text-muted);font-family:monospace;">' + escapeHtml(d.nup||'-') + '</td>';
+        html+='<td style="font-weight:700;color:var(--text-main);">' + escapeHtml(d.nama||'-') + '</td>';
+        html+='<td style="color:var(--text-main);">' + escapeHtml(d.unit||'-') + '</td>';
+        html+='<td style="font-weight:600;color:var(--text-main);max-width:260px;">' + escapeHtml(d.pelatihan||'-') + '</td>';
+        html+='<td class="td-tgl-mulai">' + formatTglShort(d.tanggal) + '</td>';
+        html+='<td class="td-tgl-selesai">' + formatTglShort(d.tanggalSelesai) + '</td>';
+        html+='<td style="text-align:right;">' + formatRp(bt) + '</td>';
+        html+='<td style="text-align:right;">' + formatRp(bp) + '</td>';
+        html+='<td style="text-align:right;font-weight:800;color:#0284c7;">' + formatRp(total) + '</td>';
+        html+='<td>' + olehHtml + '</td>';
+        html+='<td style="text-align:center;"><div class="action-wrapper" style="justify-content:center;"><button class="action-btn btn-edit" onclick="editData(\''+d._id+'\')" title="Edit Data"'+(!isAdmin?' disabled':'')+'>&#9998;</button><button class="action-btn btn-delete" onclick="deleteData(\''+d._id+'\')" title="Hapus Data"'+(!isAdmin?' disabled':'')+'>&#128465;</button></div></td>';
+        html+='</tr>';
+    }
+    tbody.innerHTML=html;
+
+    var grandTotal = totalTraining + totalPDS;
+    if(badgeCount) badgeCount.textContent = data.length + ' data';
+    if(tfBaris) tfBaris.textContent = data.length;
+    if(tfTraining) tfTraining.textContent = formatRp(totalTraining);
+    if(tfPDS) tfPDS.textContent = formatRp(totalPDS);
+    if(tfGrand) tfGrand.textContent = formatRp(grandTotal);
+}
+
+function resetSemuaFilter(){
+    if(document.getElementById('filterSegmen')) document.getElementById('filterSegmen').value = '';
+    if(document.getElementById('filterKategori')) document.getElementById('filterKategori').value = '';
+    if(document.getElementById('filterSertifikat')) document.getElementById('filterSertifikat').value = '';
+    if(document.getElementById('filterBulan')) document.getElementById('filterBulan').value = '';
+    if(document.getElementById('filterUnit')) document.getElementById('filterUnit').value = '';
+    if(document.getElementById('filterNama')) document.getElementById('filterNama').value = '';
+    if(document.getElementById('filterPelatihan')) document.getElementById('filterPelatihan').value = '';
+    var fTahun = document.getElementById('filterTahun');
+    if(fTahun) fTahun.value = TAHUN_BERJALAN;
+    jalankanFilter();
+    showToast('Filter Direset', 'Semua filter dikembalikan ke tampilan default tahun berjalan ' + TAHUN_BERJALAN, 'info', 2500);
+}
 
 function updateCharts(data){
     var cc=getChartColors();
@@ -2520,7 +3175,286 @@ function exportRekapPegawaiKeExcel() {
     XLSX.writeFile(wb, fileName);
     showToast('Berhasil', 'File Rekap Pegawai berhasil diunduh', 'success');
 }
-/* ========== AKHIR REKAP FREKUENSI PELATIHAN TIAP PEGAWAI ========== */
+/* ========== MODUL PANDUAN PENGGUNA & BAHAN PRESENTASI ========== */
+var manualSlideIndex = 0;
+var manualSlideMode = 'carousel'; // 'carousel' or 'all'
+var manualCurrentTab = 'manual';
+
+var presentationSlides = [
+    {
+        badge: 'Slide 1 • Pembukaan Eksekutif',
+        title: 'DASHBOARD MONITORING & EVALUASI PELATIHAN PEGAWAI',
+        body: '<p><strong>Sub-judul:</strong> Modernisasi Tata Kelola Kediklatan, Transparansi Finansial, dan Pemerataan Kompetensi SDM BKI</p>' +
+              '<p><strong>Penyusun:</strong> Tim Pengelola Diklat PT Biro Klasifikasi Indonesia (Persero)</p>' +
+              '<p><strong>Target Pagu:</strong> Rp 7.000.000.000,- (Tahun Berjalan) | Rp 5.200.000.000,- (2025)</p>' +
+              '<p style="font-size:0.8rem; color:var(--text-muted);"><em>"Solusi analitis terintegrasi berbasis real-time cloud untuk pemantauan realisasi anggaran pelatihan, evaluasi sertifikasi pegawai, dan akselerasi pengambilan keputusan eksekutif."</em></p>',
+        notes: '"Selamat pagi/siang Bapak/Ibu Direksi dan Manajemen. Kami persembahkan Dashboard Monitoring Pelatihan Pegawai sebagai wujud nyata transformasi digital kediklatan BKI demi transparansi anggaran dan pemerataan kompetensi seluruh insan BKI."'
+    },
+    {
+        badge: 'Slide 2 • Latar Belakang Masalah',
+        title: 'Tantangan Pengelolaan Diklat Sebelumnya',
+        body: '<ul>' +
+              '<li><strong>Pencatatan Tercecer:</strong> Data diklat tersebar di banyak berkas spreadsheet yang rentan selisih, tumpang-tindih, dan salah pengetikan.</li>' +
+              '<li><strong>Monitoring Anggaran Terlambat:</strong> Sulit mengetahui penyerapan pagu dan sisa saldo anggaran pelatihan secara <em>real-time</em>.</li>' +
+              '<li><strong>Kesenjangan Pelatihan:</strong> Kurangnya visibilitas mengenai pegawai yang berulang kali ikut pelatihan versus pegawai yang belum pernah terfasilitasi.</li>' +
+              '<li><strong>Pelaporan Manual Lambat:</strong> Pembuatan rekapitulasi untuk pimpinan memakan waktu berhari-hari.</li>' +
+              '</ul>',
+        notes: '"Sebelumnya data tersebar di berbagai file terpisah, pemantauan pagu sering terlambat, dan kita kesulitan mendeteksi kesenjangan frekuensi pelatihan antara satu pegawai dengan pegawai lainnya."'
+    },
+    {
+        badge: 'Slide 3 • Visi & Tujuan Solusi',
+        title: 'Tiga Pilar Utama Transformasi Kediklatan',
+        body: '<ul>' +
+              '<li><strong>Transparansi Penuh:</strong> Data pelaksanaan pelatihan dan sertifikasi dapat diakses kapan saja oleh seluruh pemangku kepentingan.</li>' +
+              '<li><strong>Akurasi Finansial:</strong> Pemisahan presisi antara Biaya Training dan Biaya Perjalanan Dinas Siswa (PDS).</li>' +
+              '<li><strong>Keadilan Kompetensi:</strong> Memastikan seluruh divisi dan cabang mendapatkan kesempatan pengembangan kompetensi yang setara.</li>' +
+              '</ul>',
+        notes: '"Tujuan kami bertumpu pada 3 hal: transparansi operasional, akurasi pemisahan pos biaya training vs PDS, dan keadilan akses pelatihan bagi seluruh unit kerja."'
+    },
+    {
+        badge: 'Slide 4 • Arsitektur Teknologi',
+        title: 'Teknologi Modern Berbasis Cloud Real-time',
+        body: '<ul>' +
+              '<li><strong>Firebase Realtime Database:</strong> Pembaruan data tersinkronisasi instan di seluruh komputer kerja tanpa jeda.</li>' +
+              '<li><strong>Dynamic Running Year Engine:</strong> Otomatis menyesuaikan data tahun berjalan kalender tanpa perlu ubah script kode saat tahun baru tiba.</li>' +
+              '<li><strong>Two-Tier Role Security:</strong> Mode publik untuk pengawasan eksekutif & mode admin khusus untuk entri data yang aman.</li>' +
+              '<li><strong>Multi-Device:</strong> Tampilan responsif optimal untuk layar desktop, laptop ruang rapat, maupun gawai tablet.</li>' +
+              '</ul>',
+        notes: '"Platform menggunakan Firebase Realtime Cloud sehingga aman, tidak hilang, dan otomatis beralih ke tahun kalender baru tanpa perlu ubah baris kode."'
+    },
+    {
+        badge: 'Slide 5 • Fitur Unggulan 1: Smart Batch Entry',
+        title: 'Alur Entri Peserta Terpadu & Autocomplete',
+        body: '<ul>' +
+              '<li><strong>Autocomplete Cerdas:</strong> Cukup ketik nama atau NUP, profil pegawai langsung terisi otomatis dari master database BKI.</li>' +
+              '<li><strong>Batch Queuing (+ADD):</strong> Satu agenda pelatihan dapat langsung dialokasikan ke puluhan peserta sekaligus sebelum disimpan.</li>' +
+              '<li><strong>Audit Trail:</strong> Label otomatis mencatat admin penginput dan admin pengedit beserta waktu transaksi.</li>' +
+              '</ul>',
+        notes: '"Admin dapat mendaftarkan banyak peserta sekaligus dalam 1 kali input, dengan autocomplete dari master data pegawai BKI untuk mencegah kesalahan penulisan."'
+    },
+    {
+        badge: 'Slide 6 • Fitur Unggulan 2: Pengendalian Anggaran',
+        title: 'Pengawasan Realisasi Keuangan & Pagu Berjalan',
+        body: '<ul>' +
+              '<li><strong>Pagu Anggaran Dinamis:</strong> Target Rp 7 Milyar (Tahun Berjalan) dan Rp 5,2 Milyar (2025).</li>' +
+              '<li><strong>Early Warning System:</strong> Indikator persentase serapan anggaran dan perubahan warna bar peringatan saat mendekati batas pagu.</li>' +
+              '<li><strong>Pemisahan Biaya:</strong> Akurasi pemisahan antara pengeluaran biaya registrasi training dan operasional PDS.</li>' +
+              '<li><strong>Arsip 2025 Terisolasi:</strong> Tahun lalu disembunyikan otomatis agar fokus ke pencapaian tahun berjalan.</li>' +
+              '</ul>',
+        notes: '"Manajemen memiliki radar serapan anggaran secara real-time. Banner dan bar visual langsung memperingatkan kita jika serapan mendekati pagu Rp 7 Milyar."'
+    },
+    {
+        badge: 'Slide 7 • Fitur Unggulan 3: Analitik Donat & Persentase',
+        title: 'Visualisasi Data Angka & Persentase Terpadu',
+        body: '<ul>' +
+              '<li><strong>Tiga Dimensi Utama:</strong> Segmen (Klas/Dukbis/Komersil), Kategori (Refresher/New/Practical/Pendidikan), dan Sertifikat (Brevet/Non Brevet).</li>' +
+              '<li><strong>Label Terpadu:</strong> Setiap irisan lingkaran langsung memuat jumlah peserta beserta persentasenya (contoh: 18 (60.0%)).</li>' +
+              '<li><strong>Legenda & Tooltip Interaktif:</strong> Memudahkan pengambil keputusan membaca proporsi data secara seketika.</li>' +
+              '</ul>',
+        notes: '"Diagram donat analitis tidak hanya memuat angka mati tetapi langsung menampilkan persentase yang jelas, memudahkan evaluasi jenis sertifikasi dan kategori pelatihan termasuk jenjang Pendidikan."'
+    },
+    {
+        badge: 'Slide 8 • Fitur Unggulan 4: Rekap Frekuensi Pegawai',
+        title: 'Pengawasan Pemerataan Pelatihan Karyawan',
+        body: '<ul>' +
+              '<li><strong>Segmentasi Frekuensi:</strong> Mengklasifikasikan pegawai ke dalam kategori 1x Pelatihan, 2x Pelatihan, dan ≥3x Pelatihan (Multi).</li>' +
+              '<li><strong>Tabel Riwayat Lengkap:</strong> Menampilkan seluruh judul pelatihan yang pernah diikuti per pegawai.</li>' +
+              '<li><strong>Dasar Kebijakan Objektif:</strong> Landasan data kuat bagi pimpinan untuk menyetujui usulan diklat berikutnya agar kesempatan belajar merata.</li>' +
+              '</ul>',
+        notes: '"Dengan rekapitulasi frekuensi, kita bisa segera mengetahui pegawai mana yang sudah ikut berkali-kali dan siapa yang belum pernah, sehingga peluang diklat dapat dibagi secara adil."'
+    },
+    {
+        badge: 'Slide 9 • Dampak Bisnis & Roadmap',
+        title: 'Nilai Tambah Nyata & Rencana Lanjutan',
+        body: '<ul>' +
+              '<li><strong>Efisiensi Waktu 80%:</strong> Penyusunan laporan diklat yang sebelumnya berhari-hari kini selesai dalam hitungan detik.</li>' +
+              '<li><strong>Akurasi Finansial 100%:</strong> Menghilangkan potensi salah hitung antara anggaran training dan PDS.</li>' +
+              '<li><strong>Peningkatan Kualitas SDM:</strong> Terciptanya portofolio kompetensi karyawan yang rapi dan terukur.</li>' +
+              '<li><strong>Roadmap Lanjutan:</strong> Integrasi reminder masa berlaku Brevet dan evaluasi pasca-training.</li>' +
+              '</ul>',
+        notes: '"Sebagai penutup, sistem ini memberikan efisiensi nyata hingga 80% dan akurasi 100%. Kami siap menerima masukan Bapak/Ibu Direksi untuk pengembangan tahap berikutnya."'
+    }
+];
+
+function openManualModal(tab) {
+    var modal = document.getElementById('manualModal');
+    if (modal) {
+        modal.classList.add('show');
+        switchManualTab(tab || 'manual');
+        renderCurrentSlide();
+    }
+}
+
+function closeManualModal() {
+    var modal = document.getElementById('manualModal');
+    if (modal) modal.classList.remove('show');
+}
+
+function switchManualTab(tab) {
+    manualCurrentTab = tab;
+    var btnM = document.getElementById('tabBtnManual');
+    var btnS = document.getElementById('tabBtnSlides');
+    var paneM = document.getElementById('manualContentPane');
+    var paneS = document.getElementById('slidesContentPane');
+
+    if (tab === 'slides') {
+        if (btnM) btnM.classList.remove('active');
+        if (btnS) btnS.classList.add('active');
+        if (paneM) paneM.style.display = 'none';
+        if (paneS) paneS.style.display = 'block';
+        renderCurrentSlide();
+    } else {
+        if (btnM) btnM.classList.add('active');
+        if (btnS) btnS.classList.remove('active');
+        if (paneM) paneM.style.display = 'block';
+        if (paneS) paneS.style.display = 'none';
+    }
+}
+
+function setSlideViewMode(mode) {
+    manualSlideMode = mode;
+    var btnC = document.getElementById('btnModeCarousel');
+    var btnA = document.getElementById('btnModeAll');
+    var viewSingle = document.getElementById('slideSingleView');
+    var viewAll = document.getElementById('slideAllGridView');
+    var nav = document.getElementById('slideCarouselNav');
+
+    if (mode === 'all') {
+        if (btnC) btnC.classList.remove('active');
+        if (btnA) btnA.classList.add('active');
+        if (viewSingle) viewSingle.style.display = 'none';
+        if (viewAll) viewAll.style.display = 'block';
+        if (nav) nav.style.opacity = '0.35';
+    } else {
+        if (btnC) btnC.classList.add('active');
+        if (btnA) btnA.classList.remove('active');
+        if (viewSingle) viewSingle.style.display = 'block';
+        if (viewAll) viewAll.style.display = 'none';
+        if (nav) nav.style.opacity = '1';
+        renderCurrentSlide();
+    }
+}
+
+function renderCurrentSlide() {
+    if (manualSlideIndex < 0) manualSlideIndex = 0;
+    if (manualSlideIndex >= presentationSlides.length) manualSlideIndex = presentationSlides.length - 1;
+
+    var s = presentationSlides[manualSlideIndex];
+    if (!s) return;
+
+    var elBadge = document.getElementById('singleSlideBadge');
+    var elTitle = document.getElementById('singleSlideTitle');
+    var elBody = document.getElementById('singleSlideBody');
+    var elNotes = document.getElementById('singleSlideNotes');
+    var elCounter = document.getElementById('slideCounterText');
+    var btnPrev = document.getElementById('btnSlidePrev');
+    var btnNext = document.getElementById('btnSlideNext');
+
+    if (elBadge) elBadge.textContent = s.badge;
+    if (elTitle) elTitle.textContent = s.title;
+    if (elBody) elBody.innerHTML = s.body;
+    if (elNotes) elNotes.innerHTML = '<strong>💡 Catatan Presenter (Talking Points):</strong><br>' + s.notes;
+    if (elCounter) elCounter.textContent = 'Slide ' + (manualSlideIndex + 1) + ' dari ' + presentationSlides.length;
+
+    if (btnPrev) btnPrev.disabled = (manualSlideIndex === 0);
+    if (btnNext) btnNext.disabled = (manualSlideIndex === presentationSlides.length - 1);
+}
+
+function nextManualSlide() {
+    if (manualSlideIndex < presentationSlides.length - 1) {
+        manualSlideIndex++;
+        renderCurrentSlide();
+    }
+}
+
+function prevManualSlide() {
+    if (manualSlideIndex > 0) {
+        manualSlideIndex--;
+        renderCurrentSlide();
+    }
+}
+
+function searchManualContent() {
+    var input = document.getElementById('manualSearchInput');
+    var q = input ? input.value.trim().toLowerCase() : '';
+    var clearBtn = document.getElementById('manualSearchClear');
+    if (clearBtn) clearBtn.style.display = q ? 'block' : 'none';
+
+    var cards = document.querySelectorAll('#manualContentPane .manual-card');
+    for (var i = 0; i < cards.length; i++) {
+        var card = cards[i];
+        if (!q) {
+            card.style.display = 'block';
+            continue;
+        }
+        var text = (card.textContent || '').toLowerCase();
+        var kw = (card.getAttribute('data-keywords') || '').toLowerCase();
+        if (text.indexOf(q) !== -1 || kw.indexOf(q) !== -1) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    }
+
+    var slideCards = document.querySelectorAll('#slideAllGridView .slide-card');
+    for (var j = 0; j < slideCards.length; j++) {
+        var sc = slideCards[j];
+        if (!q) {
+            sc.style.display = 'block';
+            continue;
+        }
+        var sText = (sc.textContent || '').toLowerCase();
+        if (sText.indexOf(q) !== -1) {
+            sc.style.display = 'block';
+        } else {
+            sc.style.display = 'none';
+        }
+    }
+}
+
+function clearManualSearch() {
+    var input = document.getElementById('manualSearchInput');
+    if (input) input.value = '';
+    searchManualContent();
+}
+
+function printManualContent() {
+    window.print();
+}
+
+function copyManualSummary() {
+    var summaryText = "DASHBOARD MONITORING & EVALUASI PELATIHAN PEGAWAI BKI\n" +
+        "Target Pagu: Rp 7 Milyar (Tahun Berjalan) | Rp 5,2 Milyar (2025)\n" +
+        "Fitur Utama: Batch Entry Peserta, Autocomplete Pegawai BKI, Deteksi Tahun Berjalan Otomatis, Visualisasi Tren Biaya Bulanan, Donut Chart Persentase (Segmen, Kategori termasuk Pendidikan, Sertifikat Brevet), Query Peserta, dan Rekap Frekuensi Pemerataan Pelatihan Tiap Pegawai.\n" +
+        "Admin Terdaftar: Ridwan, Zakky, Elmy, Muhtar, Sakti.";
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(summaryText).then(function() {
+            showToast('Tersalin', 'Ringkasan panduan & presentasi disalin ke clipboard', 'success');
+        }).catch(function() {
+            showToast('Info', summaryText, 'info');
+        });
+    } else {
+        showToast('Info', summaryText, 'info');
+    }
+}
+
+// Keyboard shortcuts for slides navigation (Left/Right arrow) and modal close (Esc)
+window.addEventListener('keydown', function(e) {
+    var modal = document.getElementById('manualModal');
+    if (!modal || !modal.classList.contains('show')) return;
+
+    if (e.key === 'Escape') {
+        closeManualModal();
+    } else if (manualCurrentTab === 'slides' && manualSlideMode === 'carousel') {
+        if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+            nextManualSlide();
+        } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+            prevManualSlide();
+        }
+    }
+});
+/* ========== AKHIR MODUL PANDUAN PENGGUNA & BAHAN PRESENTASI ========== */
 
 function toggleAuth(){
     if(isAdmin){
