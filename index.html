@@ -3815,7 +3815,7 @@ function toggleAuth(){
         if(b) b.classList.remove('show');
         jalankanFilter();
     } else {
-        var name=prompt('Masukkan nama admin:');
+        var name=prompt('Masukkan PIN:');
         if(!name)return;
         name=name.trim();
         if(ALLOWED_ADMINS.indexOf(name)===-1){
